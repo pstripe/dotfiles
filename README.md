@@ -7,6 +7,7 @@ This repository contains _my_ dotfiles for
   * bpytop
   * neovim
   * tmux
+  * top
   * zsh
 
 ## Installation
