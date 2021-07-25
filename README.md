@@ -11,12 +11,16 @@ This repository contains _my_ dotfiles for
   * zsh
 
 ## Installation
-To install all dotfiles call
+To install actual dotfiles call
 ```
 make install
 ```
 
-You can install dotfiles for required application by calling
+The next deprecated dotfiles will not be installed with the command above:
+  * top
+
+
+You can install dotfiles for any required application by calling
 ```
 make APP_NAME
 ```
