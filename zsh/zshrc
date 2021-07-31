@@ -76,7 +76,6 @@ plugins=(
   fzf
   genpass
   git
-  git-prompt
   ripgrep
   rsync
   sudo

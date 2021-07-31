@@ -25,11 +25,13 @@ bpytop: bpytop_bkp bpytop.conf
 
 
 tmux_bkp: ${HOME}/.tmux.conf
+	$(call backup_existing_data,${HOME}/.tmux)
 	$(call backup_existing_data,${HOME}/.tmux.conf)
 
-tmux: tmux_bkp tmux.conf
+tmux: tmux_bkp tmux_plugins tmux.conf
 	echo "Installing tmux dotifiles"
-	ln -s ${CURDIR}/tmux.conf ${HOME}/.tmux.conf
+	ln -s ${CURDIR}/tmux/tmux.conf ${HOME}/.tmux.conf
+	ln -s ${CURDIR}/tmux/plugins ${HOME}/.tmux
 
 
 top_bkp: ${HOME}/.toprc
