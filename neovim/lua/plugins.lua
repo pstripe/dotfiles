@@ -57,7 +57,7 @@ return require('packer').startup(function()
           theme = 'oceanicnext'
         },
         sections = {
-          lualine_b = { 'filename' },
+          lualine_b = { { 'filename', path = 1 } },
           lualine_c = { lspstatus },
         },
         extensions = {

@@ -47,6 +47,7 @@ go.undodir='/tmp/nvim/undo'
 -- Search
 go.hlsearch = true
 go.incsearch = true
+go.inccommand = 'nosplit'
 go.ignorecase = true
 go.smartcase = true
 
