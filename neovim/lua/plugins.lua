@@ -109,12 +109,9 @@ return require('packer').startup(function()
   -- INFO: fallback for telescope
   use {
     'junegunn/fzf.vim',
-    disable = true,
+    disable = false,
     config = function()
-      vim.api.nvim_set_keymap('n', '<C-p>', ':Files<CR>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>ff', ':Rg<CR>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fw', ':exec "Rg " . expand("<cword>")<CR>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fl', ':Lines<CR>', { noremap = true })
+      vim.o.runtimepath = vim.o.runtimepath .. ',/usr/local/opt/fzf'
     end
   }
 
@@ -160,7 +157,7 @@ return require('packer').startup(function()
           open_on_start = false
         }
       })
-      vim.api.nvim_set_keymap('n', '<leader>d', ':lua require("dapui").toggle()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>dd', ':lua require("dapui").toggle()<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>de', ':lua require("dapui").eval(vim.fn.input("Eval expression: "))', { noremap = true })
       vim.api.nvim_set_keymap('v', '<leader>de', ':lua require("dapui").eval()<CR>', { noremap = true, silent = true })
 
@@ -190,11 +187,11 @@ return require('packer').startup(function()
         }
       }
 
-      vim.api.nvim_set_keymap('n', '<F5>', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<F8>', ':lua require("dap").toggle_breakpoint()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<F9>', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<F10>', ':lua require("dap").step_into()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<F12>', ':lua require("dap").step_out()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>dc', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>ds', ':lua require("dap").toggle_breakpoint()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>dn', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>d[', ':lua require("dap").step_into()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>do', ':lua require("dap").step_out()<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>db', ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>dl', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { noremap = true, silent = true })
     end

@@ -1,3 +1,5 @@
+# TODO: Fix unexisting dependencies breaks installation process
+
 CONFIG_DIR = ${HOME}/.config
 OMZ = ${HOME}/.oh-my-zsh/custom
 
@@ -31,7 +33,7 @@ tmux_bkp: ${HOME}/.tmux.conf
 	$(call backup_existing_data,${HOME}/.tmux)
 	$(call backup_existing_data,${HOME}/.tmux.conf)
 
-tmux: tmux_bkp tmux_plugins tmux.conf
+tmux: tmux_bkp tmux/tmux.conf tmux/plugins
 	echo "Installing tmux dotifiles"
 	ln -s ${CURDIR}/tmux/tmux.conf ${HOME}/.tmux.conf
 	ln -s ${CURDIR}/tmux/plugins ${HOME}/.tmux

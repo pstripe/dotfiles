@@ -86,3 +86,4 @@ function IDE()
 end
 
 vim.cmd([[autocmd BufWrite *.php %s/\s\+$//e]])
+vim.cmd([[autocmd TextYankPost * silent! lua vim.highlight.on_yank({on_visual=false, timeout=150})]])
