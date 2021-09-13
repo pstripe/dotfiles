@@ -74,15 +74,15 @@ plugins=(
   brew
   cp
   fd
-  fzf
   genpass
   git
+  git-fzf
+  git-prompt
   ripgrep
   rsync
   sudo
-  zsh-interactive-cd
-  git-fzf
   web-search
+  zsh-interactive-cd
 )
 
 ZSH_WEB_SEARCH_ENGINES=(
@@ -133,7 +133,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   # brew
   export PATH="/usr/local/opt/curl/bin:$PATH"
   export PATH="/usr/local/opt/sqlite/bin:$PATH"
-  export PATH="/usr/local/opt/php/bin:$PATH"
+  export PATH="/usr/local/opt/php@7.4/bin:$PATH"
+  export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
   export PATH="/usr/local/opt/neovim/bin:$PATH"
 
   # other package managers

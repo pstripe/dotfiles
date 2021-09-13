@@ -88,7 +88,13 @@ return require('packer').startup(function()
     end
   }
 
-  use { 'tpope/vim-fugitive' }
+  use {
+    'tpope/vim-fugitive',
+    config = function()
+      vim.api.nvim_set_keymap('n', '<leader>gp',  '<cmd>Git push<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<leader>gpf', '<cmd>Git push --force-with-lease<CR>', { noremap = true, silent = false })
+    end
+  }
 
   -- Finder
   use {
@@ -109,7 +115,7 @@ return require('packer').startup(function()
   -- INFO: fallback for telescope
   use {
     'junegunn/fzf.vim',
-    disable = false,
+    disable = true,
     config = function()
       vim.o.runtimepath = vim.o.runtimepath .. ',/usr/local/opt/fzf'
     end
