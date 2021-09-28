@@ -147,21 +147,18 @@ return require('packer').startup(function()
     },
     ft = 'php',
     config = function()
-      require('dapui').setup({
+      local dapui = require('dapui')
+      dapui.setup({
         sidebar = {
-          open_on_start = true,
           elements = {
             "scopes",
             "breakpoints",
             "stacks",
             "watches"
           },
-          width = 40,
+          size = 40,
           position = "left" -- Can be "left" or "right"
         },
-        tray = {
-          open_on_start = false
-        }
       })
       vim.api.nvim_set_keymap('n', '<leader>dd', ':lua require("dapui").toggle()<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>de', ':lua require("dapui").eval(vim.fn.input("Eval expression: "))', { noremap = true })
@@ -169,6 +166,10 @@ return require('packer').startup(function()
 
 
       local dap = require('dap')
+      dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open() end
+      dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+      dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+
       dap.adapters.php = {
         type = 'executable',
         command = 'node',
