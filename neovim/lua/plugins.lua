@@ -91,8 +91,9 @@ return require('packer').startup(function()
   use {
     'tpope/vim-fugitive',
     config = function()
-      vim.api.nvim_set_keymap('n', '<leader>gp',  '<cmd>Git push<CR>', { noremap = true, silent = false })
-      vim.api.nvim_set_keymap('n', '<leader>gpf', '<cmd>Git push --force-with-lease<CR>', { noremap = true, silent = false })
+      vim.api.nvim_set_keymap('n', '<leader>gp',  '<cmd>Git push<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>gpf', '<cmd>Git push --force-with-lease<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>gyb', "<cmd>call setreg('+', FugitiveHead())<CR><cmd>echo 'Git branch yanked!'<CR>", { noremap = true, silent = false })
     end
   }
 
@@ -109,6 +110,7 @@ return require('packer').startup(function()
       vim.api.nvim_set_keymap('n', '<leader>fw', '<cmd>lua require("telescope.builtin").grep_string()<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>fl', '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>fs', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>gsb', '<cmd>lua require("telescope.builtin").git_branches()<CR>', { noremap = true, silent = true })
     end
   }
 
@@ -164,7 +166,6 @@ return require('packer').startup(function()
         },
       })
       vim.api.nvim_set_keymap('n', '<leader>dd', ':lua require("dapui").toggle()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>de', ':lua require("dapui").eval(vim.fn.input("Eval expression: "))', { noremap = true })
       vim.api.nvim_set_keymap('v', '<leader>de', ':lua require("dapui").eval()<CR>', { noremap = true, silent = true })
 
 
@@ -267,6 +268,7 @@ return require('packer').startup(function()
 
       require('lspconfig').intelephense.setup({
         on_attach = on_attach,
+        filetypes = { 'php', 'js' },
         capabilities = lsp_status.capabilities
       })
     end
@@ -294,11 +296,15 @@ return require('packer').startup(function()
     config = function()
       vim.o.completeopt = 'menuone,noselect'
       require('compe').setup({
+        enabled = true,
         source = {
           nvim_lsp = true,
           nvim_lua = true,
         }
       })
+
+      vim.api.nvim_set_keymap('i', '<CR>', 'compe#confirm("<CR>")', { expr = true })
+      vim.api.nvim_set_keymap('i', '<C-Space>', 'compe#complete()', { expr = true })
     end
   }
 
