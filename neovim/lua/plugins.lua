@@ -41,15 +41,14 @@ return require('packer').startup(function()
   use {
     'hoob3rt/lualine.nvim',
     requires = {
-      'nvim-lua/lsp-status.nvim',
       { 'kyazdani42/nvim-web-devicons', opt = true },
     },
     config = function()
       vim.o.cmdheight = 2
       vim.o.showmode = false
 
-      local function lspstatus()
-        return require('lsp-status').status()
+      local function status()
+        return require('nvim-treesitter').statusline()
       end
 
       require('lualine').setup({
@@ -58,7 +57,7 @@ return require('packer').startup(function()
         },
         sections = {
           lualine_b = { { 'filename', path = 1 } },
-          lualine_c = { lspstatus },
+          lualine_c = { status },
         },
         extensions = {
           'fugitive',
@@ -211,24 +210,9 @@ return require('packer').startup(function()
   -- LSP
   use {
     'neovim/nvim-lspconfig',
-    requires = {
-      'nvim-lua/lsp-status.nvim'
-    },
     config = function()
-      local lsp_status = require('lsp-status')
-      lsp_status.register_progress()
-      lsp_status.config({
-        current_function = true,
-        indicator_info = 'ℹ',
-        status_symbol = '★'
-      })
-
       local function on_attach(client, bufnr)
         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-
-        -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-        lsp_status.on_attach(client, bufnr)
 
         -- Mappings.
         local opts = { noremap=true, silent=true }
@@ -308,17 +292,15 @@ return require('packer').startup(function()
     end
   }
 
-  -- INFO: waiting for stabilization
   use {
     'nvim-treesitter/nvim-treesitter',
-    disable = true,
     config = function()
       require('nvim-treesitter.configs').setup({
         highlight = {
           enable = true,
         },
         indent = {
-          enable = false,
+          enable = true,
         }
       })
     end
