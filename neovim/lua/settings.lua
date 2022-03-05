@@ -58,6 +58,10 @@ wo.wrap = false
 go.sidescroll = 5
 
 
+-- Key bindings
+vim.api.nvim_set_keymap('', 'Q', '<NOP>', {})
+
+-- Functions
 function isempty(s)
   return s == nil or s == ''
 end
