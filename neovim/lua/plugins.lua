@@ -50,6 +50,7 @@ return require('packer').startup(function()
   use {
     'hoob3rt/lualine.nvim',
     requires = {
+      { 'nvim-treesitter/nvim-treesitter' },
       { 'kyazdani42/nvim-web-devicons', opt = true },
     },
     config = function()
@@ -325,23 +326,6 @@ return require('packer').startup(function()
   }
 
   use {
-    'hrsh7th/nvim-compe',
-    config = function()
-      vim.o.completeopt = 'menuone,noselect'
-      require('compe').setup({
-        enabled = true,
-        source = {
-          nvim_lsp = true,
-          nvim_lua = true,
-        }
-      })
-
-      vim.api.nvim_set_keymap('i', '<CR>', 'compe#confirm("<CR>")', { expr = true })
-      vim.api.nvim_set_keymap('i', '<C-Space>', 'compe#complete()', { expr = true })
-    end
-  }
-
-  use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
       require('nvim-treesitter.configs').setup({
@@ -350,7 +334,74 @@ return require('packer').startup(function()
         },
         indent = {
           enable = true,
-        }
+        },
+      })
+    end
+  }
+
+  use {
+    'nvim-treesitter/nvim-treesitter-refactor',
+    requires = {
+      'nvim-treesitter/nvim-treesitter'
+    },
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        refactor = {
+          highlight_definitions = {
+            enable = true,
+            -- Set to false if you have an `updatetime` of ~100.
+            clear_on_cursor_move = true,
+          },
+          smart_rename = {
+            enable = true,
+            keymaps = {
+              smart_rename = '<leader>ln',
+            },
+          },
+          -- TODO: add jumps over function usage
+          navigation = {
+            enable = true,
+            keymaps = {
+              goto_definition_lsp_fallback = '<leader>ld',
+              -- TODO: change next bindings
+              goto_next_usage = '<C-j>',
+              goto_previous_usage = '<C-k>',
+            },
+          },
+        },
+      })
+    end
+  }
+
+  use {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    requires = {
+      'nvim-treesitter/nvim-treesitter'
+    },
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        textobjects = {
+          move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+              ["]m"] = "@function.outer",
+              ["]]"] = "@class.outer",
+            },
+            goto_previous_start = {
+              ["[m"] = "@function.outer",
+              ["[["] = "@class.outer",
+            },
+          },
+          lsp_interop = {
+            enable = true,
+            border = 'single',
+            peek_definition_code = {
+              ["<leader>df"] = "@function.outer",
+              ["<leader>dF"] = "@class.outer",
+            },
+          },
+        },
       })
     end
   }
