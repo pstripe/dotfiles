@@ -62,11 +62,16 @@ return require('packer').startup(function()
 
       require('lualine').setup({
         options = {
-          theme = 'oceanicnext'
+          theme = 'oceanicnext',
         },
         sections = {
           lualine_b = { { 'filename', path = 1 } },
           lualine_c = { status },
+        },
+        tabline = {
+          lualine_a = { { 'filename', file_status = false } },
+          lualine_x = { 'branch', 'diff' },
+          lualine_z = { 'tabs' },
         },
         extensions = {
           'fugitive',
