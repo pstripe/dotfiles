@@ -68,5 +68,3 @@ zsh: zsh_bkp
 	ln -s ${CURDIR}/zsh/zshrc ${HOME}/.zshrc
 	ln -s ${CURDIR}/zsh/zshrc_local ${HOME}/.zshrc_local
 	ln -s ${CURDIR}/zsh/zshrc_local_plugin ${HOME}/.zshrc_local_plugin
-	ln -s ${CURDIR}/zsh/themes ${OMZ}
-	ln -s ${CURDIR}/zsh/plugins ${OMZ}
