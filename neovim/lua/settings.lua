@@ -27,7 +27,7 @@ go.tabstop = 2
 -- UI
 go.termguicolors = true
 go.laststatus = 2
-go.scrolloff = 7
+go.scrolloff = 3
 go.splitright = true
 go.splitbelow = true
 wo.number = true
@@ -59,7 +59,7 @@ go.sidescroll = 5
 
 
 -- Key bindings
-vim.api.nvim_set_keymap('', 'Q', '<NOP>', {})
+vim.keymap.set('', 'Q', '<NOP>')
 
 -- Functions
 function isempty(s)
@@ -84,5 +84,5 @@ function IDE()
   print(FnameRelToProjectRoot() .. ':' .. vim.fn.line('.'))
 end
 
-vim.cmd([[autocmd BufWrite *.php %s/\s\+$//e]])
-vim.cmd([[autocmd TextYankPost * silent! lua vim.highlight.on_yank({on_visual=false, timeout=150})]])
+vim.api.nvim_create_autocmd('BufWrite', { pattern = '*.php', command = '%s/\\s\\+$//e' })
+vim.api.nvim_create_autocmd('TextYankPost', { pattern = '*', command = 'lua vim.highlight.on_yank({on_visual=false, timeout=150})' })

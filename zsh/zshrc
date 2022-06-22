@@ -82,7 +82,7 @@ plugins=(
   sudo
   web-search
   zsh-interactive-cd
-)
+ pass)
 
 ZSH_WEB_SEARCH_ENGINES=(
   trans "https://translate.yandex.ru/?text="
@@ -107,6 +107,12 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
+export EDITOR='nvim'
+
+# nnn configs
+BLK="0B" CHR="0B" DIR="04" EXE="06" REG="00" HARDLINK="06" SYMLINK="06" MISSING="00" ORPHAN="09" FIFO="06" SOCK="0B" OTHER="06"
+#export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -119,6 +125,7 @@ alias grep="rg"
 alias cat="bat"
 alias cal="cal -m"
 alias vim="nvim"
+alias gci="git branch --sort=authordate | fzf | xargs git checkout"
 
 
 source $HOME/.zshrc_local
@@ -128,6 +135,7 @@ source $HOME/.zshrc_local
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # brew configs
   alias ctags="`brew --prefix`/bin/ctags"
+  export HOMEBREW_BAT=1 # use bat in 'brew cat' command
 
   # brew
   export PATH="/usr/local/opt/curl/bin:$PATH"
@@ -139,7 +147,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   # other package managers
   export PATH="$HOME/node_modules/yarn/bin:$PATH" # npm dependencies
   export PATH="$HOME/vendor/bin:$PATH"            # composer dependencies
-
 elif [[ "$OSTYPE" == "linux"* ]]; then
 
 fi

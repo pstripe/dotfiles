@@ -1,10 +1,9 @@
--- Bootstrap
-local execute = vim.api.nvim_command
+ -- Bootstrap
 local fn = vim.fn
-
 local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
+  local execute = vim.api.nvim_command
   execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
   execute('packadd packer.nvim')
 end
@@ -13,8 +12,7 @@ end
 vim.cmd([[packadd packer.nvim]])
 
 -- Auto update plugins' list
-vim.cmd([[autocmd BufWritePost plugins.lua PackerCompile]])
-
+vim.api.nvim_create_autocmd('BufWritePost', { pattern = 'plugins.lua', command = 'PackerCompile' })
 return require('packer').startup(function()
   -- Packer can manage itself as an optional plugin
   use {'wbthomason/packer.nvim', opt = true}
@@ -50,6 +48,7 @@ return require('packer').startup(function()
   use {
     'hoob3rt/lualine.nvim',
     requires = {
+      { 'stevearc/aerial.nvim' },
       { 'nvim-treesitter/nvim-treesitter' },
       { 'kyazdani42/nvim-web-devicons', opt = true },
     },
@@ -66,16 +65,26 @@ return require('packer').startup(function()
           theme = 'oceanicnext',
         },
         sections = {
-          lualine_b = { { 'filename', path = 1 } },
-          lualine_c = { status },
+          lualine_b = { {
+            'filename',
+            path = 1,
+            shorting_target = 60,
+            symbols = {
+              modified = ' ',
+              readonly = ' ',
+            }
+          } },
+          lualine_c = { 'aerial' },
         },
         tabline = {
-          lualine_a = { { 'filename', file_status = false } },
-          lualine_x = { 'branch', 'diff' },
+          lualine_a = { 'branch', 'diff' },
           lualine_z = { 'tabs' },
         },
         extensions = {
+          'aerial',
           'fugitive',
+          'nvim-tree',
+          'quickfix',
         }
       })
     end
@@ -94,8 +103,10 @@ return require('packer').startup(function()
 
       require('vgit').setup({
         keymaps = {
-          ['n ]c'] = 'hunk_up',
-          ['n [c'] = 'hunk_down',
+          ['n ]c']         = 'hunk_up',
+          ['n [c']         = 'hunk_down',
+          ['n <leader>hp'] = 'buffer_hunk_preview',
+          ['n <leader>hb'] = 'buffer_blame_preview',
         },
         settings = {
           live_blame = {
@@ -126,33 +137,13 @@ return require('packer').startup(function()
       })
     end
   }
-  --- INFO: replaced with vgit
-  use {
-    'lewis6991/gitsigns.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    },
-    disable = true,
-    config = function()
-      require('gitsigns').setup({
-        -- GitGutter theme and new signs
-        signs = {
-          add          = {hl = 'GitGutterAdd'   , text = '|', numhl='GitSignsAddNr'},
-          change       = {hl = 'GitGutterChange', text = '|', numhl='GitSignsChangeNr'},
-          delete       = {hl = 'GitGutterDelete', text = '_', numhl='GitSignsDeleteNr'},
-          topdelete    = {hl = 'GitGutterDelete', text = '‾', numhl='GitSignsDeleteNr'},
-          changedelete = {hl = 'GitGutterChange', text = '~', numhl='GitSignsChangeNr'},
-        },
-      })
-    end
-  }
 
   use {
     'tpope/vim-fugitive',
     config = function()
-      vim.api.nvim_set_keymap('n', '<leader>gp',  '<cmd>Git push<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>gpf', '<cmd>Git push --force-with-lease<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>gyb', "<cmd>call setreg('+', FugitiveHead())<CR><cmd>echo 'Git branch yanked!'<CR>", { noremap = true, silent = false })
+      vim.keymap.set('n', '<leader>gp',  '<cmd>Git push<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<leader>gpf', '<cmd>Git push --force-with-lease<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<leader>gyb', "<cmd>call setreg('+', FugitiveHead())<CR><cmd>echo 'Git branch yanked!'<CR>", { noremap = true, silent = false })
     end
   }
 
@@ -164,12 +155,12 @@ return require('packer').startup(function()
       {'nvim-lua/plenary.nvim'},
     },
     config = function()
-      vim.api.nvim_set_keymap('n', '<C-p>', '<cmd>lua require("telescope.builtin").find_files()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>lua require("telescope.builtin").live_grep()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>fw', '<cmd>lua require("telescope.builtin").grep_string()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>fl', '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>fs', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>gsb', '<cmd>lua require("telescope.builtin").git_branches()<CR>', { noremap = true, silent = true })
+      local telescope_builtin = require('telescope.builtin')
+      vim.keymap.set('n', '<C-p>',      telescope_builtin.find_files,  { noremap = true })
+      vim.keymap.set('n', '<leader>ff', telescope_builtin.live_grep,   { noremap = true })
+      vim.keymap.set('n', '<leader>fw', telescope_builtin.grep_string, { noremap = true })
+      vim.keymap.set('n', '<leader>ft', telescope_builtin.treesitter,  { noremap = true })
+      vim.keymap.set('n', '<leader>fl', telescope_builtin.current_buffer_fuzzy_find, { noremap = true })
     end
   }
   use {
@@ -179,14 +170,12 @@ return require('packer').startup(function()
     },
     config = function()
       require('nvim-tree').setup()
+      vim.keymap.set('n', '<leader>n', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = true })
     end
   }
 
   use {
-    'ggandor/lightspeed.nvim',
-    config = function()
-      vim.api.nvim_set_keymap('n', 's', '<Plug>Lightspeed_s', { noremap = false, silent = true })
-    end
+    'ggandor/lightspeed.nvim'
   }
 
   -- Debugger
@@ -196,6 +185,7 @@ return require('packer').startup(function()
       'mfussenegger/nvim-dap'
     },
     run = {
+      -- FIXME: what if already cloned?
       'git clone https://github.com/xdebug/vscode-php-debug.git',
       'cd vscode-php-debug && npm install && npm run build'
     },
@@ -203,19 +193,27 @@ return require('packer').startup(function()
     config = function()
       local dapui = require('dapui')
       dapui.setup({
-        sidebar = {
-          elements = {
-            "scopes",
-            "breakpoints",
-            "stacks",
-            "watches"
+        layout = {
+          {
+            elements = {
+              "scopes",
+              "stacks",
+            },
+            size = 40,
+            position = "left" -- Can be "left" or "right"
           },
-          size = 40,
-          position = "left" -- Can be "left" or "right"
+          {
+            elements = {
+              "breakpoints",
+              "watches"
+            },
+            size = 10,
+            position = "bottom",
+          },
         },
       })
-      vim.api.nvim_set_keymap('n', '<leader>dd', ':lua require("dapui").toggle()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('v', '<leader>de', ':lua require("dapui").eval()<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<leader>dd', require("dapui").toggle, { noremap = true })
+      vim.keymap.set('v', '<leader>de', require("dapui").eval,   { noremap = true })
 
 
       local dap = require('dap')
@@ -247,13 +245,12 @@ return require('packer').startup(function()
         }
       }
 
-      vim.api.nvim_set_keymap('n', '<leader>dc', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>ds', ':lua require("dap").toggle_breakpoint()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>dn', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>d[', ':lua require("dap").step_into()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>do', ':lua require("dap").step_out()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>db', ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>dl', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<leader>dc', require("dap").continue,          { noremap = true })
+      vim.keymap.set('n', '<leader>ds', require("dap").toggle_breakpoint, { noremap = true })
+      vim.keymap.set('n', '<leader>dn', require("dap").step_over,         { noremap = true })
+      vim.keymap.set('n', '<leader>d[', require("dap").step_into,         { noremap = true })
+      vim.keymap.set('n', '<leader>do', require("dap").step_out,          { noremap = true })
+      vim.keymap.set('n', '<leader>dl', function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end, { noremap = true })
     end
   }
 
@@ -261,58 +258,89 @@ return require('packer').startup(function()
   use {
     'neovim/nvim-lspconfig',
     config = function()
+      local opts = { noremap = true }
+      vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, opts)
+      vim.keymap.set('n', '<leader>le', vim.diagnostic.open_float, opts)
+      vim.keymap.set('n', '[d',         vim.diagnostic.goto_prev,  opts)
+      vim.keymap.set('n', ']d',         vim.diagnostic.goto_next,  opts)
+
       local function on_attach(client, bufnr)
-        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+        local opts = { noremap = true, buffer = bufnr }
+        -- <c-x><c-o>
+        vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
         -- Mappings.
-        local opts = { noremap=true, silent=true }
-        buf_set_keymap('n', '<leader>lD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-        buf_set_keymap('n', '<leader>ld', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-        buf_set_keymap('n', '<leader>lh', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-        buf_set_keymap('n', '<leader>li', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-        buf_set_keymap('n', '<C-k>'     , '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-        buf_set_keymap('n', '<leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-        buf_set_keymap('n', '<leader>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-        buf_set_keymap('n', '<leader>lr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-        buf_set_keymap('n', '<leader>le', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-        buf_set_keymap('n', '[d'        , '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-        buf_set_keymap('n', ']d'        , '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+        vim.keymap.set('n', '<leader>lD', vim.lsp.buf.declaration,     opts)
+        vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover,           opts)
+        vim.keymap.set('n', '<leader>li', vim.lsp.buf.implementation,  opts)
+        vim.keymap.set('n', '<leader>lt', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', '<leader>lr', vim.lsp.buf.references,      opts)
 
         -- Set some keybinds conditional on server capabilities
         if client.resolved_capabilities.document_formatting then
-          buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+          vim.keymap.set('n', '<leader>lf', vim.lsp.buf.formatting, opts)
         elseif client.resolved_capabilities.document_range_formatting then
-          buf_set_keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-        end
-
-        -- Set autocommands conditional on server_capabilities
-        if client.resolved_capabilities.document_highlight then
-          vim.api.nvim_exec([[
-            hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-            hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-            hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-            augroup lsp_document_highlight
-            autocmd! * <buffer>
-            autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-            autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-            augroup END
-          ]], false)
+          vim.keymap.set('n', '<leader>lf', vim.lsp.buf.range_formatting, opts)
         end
       end
 
-      require('lspconfig').intelephense.setup({
-        on_attach = on_attach,
-        filetypes = { 'php', 'js' },
-        capabilities = lsp_status.capabilities
-      })
+      local lspconfig = require('lspconfig')
+      for _, server in pairs({ 'intelephense', 'clangd' }) do
+        lspconfig[server].setup({
+          on_attach = on_attach,
+        })
+      end
     end
   }
 
   -- Code
   use {
-    'raimondi/delimitmate',
+    'stevearc/aerial.nvim',
+    requires = {
+      { 'kyazdani42/nvim-web-devicons', opt = true },
+    },
     config = function()
-      vim.g.delimitMate_expand_space = 1
+      require('aerial').setup({
+        disable_max_lines = 15000,
+        nerd_font = true,
+      })
+    end
+  }
+
+  use {
+    'windwp/nvim-autopairs',
+    config = function()
+      local npairs = require('nvim-autopairs')
+      local Rule   = require('nvim-autopairs.rule')
+
+      npairs.setup({
+        check_ts = true
+      })
+      npairs.add_rules({
+        Rule(' ', ' ')
+          :with_pair(function (opts)
+            local pair = opts.line:sub(opts.col - 1, opts.col)
+            return vim.tbl_contains({ '()', '[]', '{}' }, pair)
+          end),
+        Rule('( ', ' )')
+          :with_pair(function() return false end)
+          :with_move(function(opts)
+            return opts.prev_char:match('.%)') ~= nil
+          end)
+          :use_key(')'),
+        Rule('{ ', ' }')
+          :with_pair(function() return false end)
+          :with_move(function(opts)
+            return opts.prev_char:match('.%}') ~= nil
+          end)
+          :use_key('}'),
+        Rule('[ ', ' ]')
+          :with_pair(function() return false end)
+          :with_move(function(opts)
+            return opts.prev_char:match('.%]') ~= nil
+          end)
+          :use_key(']')
+      })
     end
   }
 
@@ -403,29 +431,6 @@ return require('packer').startup(function()
           },
         },
       })
-    end
-  }
-
-  -- INFO: waiting for gitui features
-  use {
-    'akinsho/nvim-toggleterm.lua',
-    disable = true,
-    config = function()
-      require('toggleterm').setup()
-
-      local Terminal = require('toggleterm.terminal').Terminal
-      local gitui = Terminal:new({
-        cmd = 'gitui',
-        direction = 'float',
-        hidden = true
-      })
-
-      function _gitui_toggle()
-        gitui:toggle()
-      end
-
-      vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>lua _gitui_toggle()<CR>', {noremap = true, silent = true})
-      vim.api.nvim_set_keymap('n', '<leader>i', '<cmd>ToggleTerm<CR>', {noremap = true, silent = true})
     end
   }
 end)
