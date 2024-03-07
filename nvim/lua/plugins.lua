@@ -270,7 +270,7 @@ return require('packer').startup(function()
     "folke/flash.nvim",
     config = function()
       vim.keymap.set({ 'n', 'o', 'x' }, 's', require('flash').jump)
-      vim.keymap.set({ 'n', 'o', 'x' }, 'S', require('flash').treesitter)
+      vim.keymap.set({ 'n', 'o', 'x' }, '<C-s>', require('flash').treesitter)
       vim.keymap.set({ 'o' },           'r', require('flash').remote)
       vim.keymap.set({ 'o', 'x' },      'R', require('flash').treesitter_search)
       vim.keymap.set({ 'c' },       '<C-s>', require('flash').toggle)
