@@ -155,12 +155,12 @@ return require('packer').startup(function()
       {'nvim-lua/plenary.nvim'},
     },
     config = function()
-      local telescope_builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<C-p>',      telescope_builtin.find_files,  { noremap = true })
-      vim.keymap.set('n', '<leader>ff', telescope_builtin.live_grep,   { noremap = true })
-      vim.keymap.set('n', '<leader>fw', telescope_builtin.grep_string, { noremap = true })
-      vim.keymap.set('n', '<leader>ft', telescope_builtin.treesitter,  { noremap = true })
-      vim.keymap.set('n', '<leader>fl', telescope_builtin.current_buffer_fuzzy_find, { noremap = true })
+      local builtin = require('telescope.builtin')
+      vim.keymap.set('n', '<C-p>',      builtin.find_files)
+      vim.keymap.set('n', '<leader>ff', builtin.live_grep)
+      vim.keymap.set('n', '<leader>fw', builtin.grep_string)
+      vim.keymap.set('n', '<leader>ft', builtin.treesitter)
+      vim.keymap.set('n', '<leader>fl', builtin.current_buffer_fuzzy_find)
     end
   }
   use {
@@ -267,9 +267,6 @@ return require('packer').startup(function()
 
       local function on_attach(client, bufnr)
         local opts = { noremap = true, buffer = bufnr }
-        -- <c-x><c-o>
-        vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
         -- Mappings.
         vim.keymap.set('n', '<leader>lD', vim.lsp.buf.declaration,     opts)
         vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover,           opts)
@@ -286,9 +283,12 @@ return require('packer').startup(function()
       end
 
       local lspconfig = require('lspconfig')
+      local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
       for _, server in pairs({ 'intelephense', 'clangd' }) do
         lspconfig[server].setup({
           on_attach = on_attach,
+          capabilities = capabilities,
         })
       end
     end
@@ -354,6 +354,81 @@ return require('packer').startup(function()
     end
   }
 
+  use {
+    'hrsh7th/nvim-cmp',
+    requires = {
+      'ray-x/cmp-treesitter',
+      'hrsh7th/cmp-nvim-lsp',
+      'neovim/nvim-lspconfig',
+      'saadparwaiz1/cmp_luasnip',
+      'L3MON4D3/LuaSnip',
+      'onsails/lspkind.nvim',
+    },
+    config = function()
+      vim.o.completeopt = 'menuone,noselect'
+      local cmp = require('cmp')
+      local luasnip = require('luasnip')
+      local lspkind = require('lspkind')
+
+      vim.keymap.set('i', '<C-x><C-o>', cmp.complete)
+
+      cmp.setup({
+        completion = {
+          autocomplete = false
+        },
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = {
+          ['<C-e>'] = cmp.mapping(function(fallback)
+            if luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+
+          ['<C-S-e>'] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<CR>']  = cmp.mapping.confirm({ select = true }),
+          ['<C-n>'] = cmp.mapping(function()
+            if cmp.visible() then
+              cmp.mapping.select_next_item()
+            else
+              cmp.complete()
+            end
+          end, {'i','c'}),
+          ['<C-p>'] = cmp.mapping(function()
+            if cmp.visible() then
+              cmp.mapping.select_prev_item()
+            else
+              cmp.complete()
+            end
+          end, {'i','c'}),
+        },
+        sources = {
+          { name = 'nvim_lsp' },
+          { name = 'treesitter' },
+          { name = 'luasnip' },
+        },
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = 'symbol_text',
+            maxwidth = 60,
+          })
+        }
+      })
+    end
+  }
+
+  -- Treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
@@ -426,8 +501,8 @@ return require('packer').startup(function()
             enable = true,
             border = 'single',
             peek_definition_code = {
-              ["<leader>df"] = "@function.outer",
-              ["<leader>dF"] = "@class.outer",
+              ["<leader>lsf"] = "@function.outer",
+              ["<leader>lsc"] = "@class.outer",
             },
           },
         },
