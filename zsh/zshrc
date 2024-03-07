@@ -84,10 +84,9 @@ plugins=(
   ripgrep
   rsync
   sudo
-  tmux
   web-search
   zsh-interactive-cd
- jira)
+ jira colored-man-pages)
 
 ZSH_WEB_SEARCH_ENGINES=(
   translate "https://translate.yandex.ru/?text="
