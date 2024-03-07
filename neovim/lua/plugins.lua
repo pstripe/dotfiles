@@ -516,4 +516,15 @@ return require('packer').startup(function()
   }
 
   use { 'nvim-treesitter/nvim-treesitter-context' }
+
+  use {
+    'HiPhish/nvim-ts-rainbow2',
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        rainbow = {
+          enable = true
+        }
+      })
+    end
+  }
 end)
