@@ -73,6 +73,7 @@ HIST_STAMPS="yyyy-mm-dd"
 plugins=(
   brew
   cp
+  fd
   fzf
   genpass
   git
