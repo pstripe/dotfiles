@@ -150,7 +150,7 @@ font:
     style: Bold
 
   # Point size
-  size: 11.0
+  size: 10.0
 
 
   # Offset is the extra space around each character. `offset.y` can be thought
