@@ -3,7 +3,10 @@ OMZ = ${HOME}/.oh-my-zsh/custom
 
 backup_existing_data = if [[ -e $(1) && ! -h $(1) ]]; then mv $(1) $(1).old ; fi
 
-install: alacritty bpytop tmux neovim zsh
+install: update alacritty bpytop tmux neovim zsh
+
+update:
+	git pull origin main
 
 
 alacritty_bkp: ${CONFIG_DIR}/alacritty/alacritty.yml
