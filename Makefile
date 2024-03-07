@@ -14,6 +14,7 @@ GUI_PACKAGES    += nerdfonts
 DEV_PACKAGES    := php phpactor
 # go-tools: staticcheck
 DEV_PACKAGES    += go gopls go-tools
+DEV_PACKAGES    += cargo rustc rustfmt rust-analyzer
 UNFREE_PACKAGES := zoom-us
 
 .PHONY: configs
