@@ -444,7 +444,14 @@ return require('packer').startup(function()
         indent = {
           enable = true,
         },
+        incremental_selection = {
+          enable = true,
+        },
       })
+
+      -- Folding
+      --vim.o.foldmethod = 'expr'
+      --vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
     end
   }
 
