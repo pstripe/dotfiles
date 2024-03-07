@@ -9,7 +9,8 @@ CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,karabiner)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
-ENV_PACKAGES    := bat bottom delta eza fd sd fish fzf git git-stack neovim nushell ripgrep zellij
+ENV_PACKAGES    := bat bottom delta eza fd sd fish fzf jq git git-stack neovim nushell ripgrep\
+									 zellij
 ENV_PACKAGES    += nix # Manage itself
 # TODO: Requires symlink to /Application on MacOS
 # Karabiner-elements: complex installation. Requires a lot of symlinks
