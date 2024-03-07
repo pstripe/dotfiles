@@ -147,6 +147,10 @@ return require('packer').startup(function()
 
   -- Tools
   use {
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  }
+  use {
     'nvim-telescope/telescope.nvim',
     requires = {
       {'nvim-lua/popup.nvim'},

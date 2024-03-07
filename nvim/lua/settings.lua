@@ -9,7 +9,7 @@ go.compatible = false
 go.autoread = true
 
 go.lazyredraw = true
-go.encoding = 'UTF-8'
+go.encoding = 'utf-8'
 go.fileencodings = 'utf-8,cp1251,default'
 
 go.title = true
@@ -56,12 +56,6 @@ go.hidden = true
 
 wo.wrap = false
 go.sidescroll = 5
-
--- File
-go.path = go.path .. 'www/**'
-
--- NetRW
-
 
 -- Key bindings
 vim.g.mapleader = ' '
@@ -130,5 +124,4 @@ function IDE()
   print('"' .. path .. '" yanked!')
 end
 
-vim.api.nvim_create_autocmd('BufWrite', { pattern = '*.php', command = '%s/\\s\\+$//e' })
 vim.api.nvim_create_autocmd('TextYankPost', { pattern = '*', command = 'lua vim.highlight.on_yank({on_visual=false, timeout=150})' })

@@ -1,81 +1,31 @@
-# TODO: Fix unexisting dependencies breaks installation process
-
 CONFIG_DIR = ${HOME}/.config
 
-backup_existing_data = if [[ -e $(1) && ! -h $(1) ]]; then mv $(1) $(1).old ; fi
+NIX_TARGET     = $(addprefix ${CONFIG_DIR}/,nix)
+CONFIG_TARGETS = $(addprefix ${CONFIG_DIR}/,alacritty nvim fish zellij bottom)
+HOME_TARGETS   = $(addprefix ${HOME}/,.editorconfig)
 
-bootstrap: env configs
-configs: alacritty neovim fish nix zellij bottom
+# TODO: auto configure MacOS Applications: Alacritty, Zoom
+# TODO: add neovim dependencies: lsp, treesitter, ...
+PACKAGES        := alacritty bat bottom delta exa fd fish fzf git git-stack neovim nerdfonts nushell ripgrep zellij
+PACKAGES        += php phpactor
+UNFREE_PACKAGES := zoom-us
 
-.PHONY: env
-env:
+.PHONY: configs
+configs: ${CONFIG_TARGETS} ${NIX_TARGET} ${HOME_TARGETS}
+
+.PHONY: nix
+nix:
 	sh <(curl -L https://nixos.org/nix/install)
 
-	nix profile install nixpkgs#alacritty
-	nix profile install nixpkgs#bat
-	nix profile install nixpkgs#bottom
-	nix profile install nixpkgs#delta
-	nix profile install nixpkgs#exa
-	nix profile install nixpkgs#fd
-	nix profile install nixpkgs#fish
-	nix profile install nixpkgs#fzf
-	nix profile install nixpkgs#git
-	nix profile install nixpkgs#git-stack
-	nix profile install nixpkgs#neovim
-	nix profile install nixpkgs#nerdfonts
-	nix profile install nixpkgs#nushell
-	nix profile install nixpkgs#php
-	nix profile install nixpkgs#phpactor
-	nix profile install nixpkgs#ripgrep
-	nix profile install nixpkgs#zellij
+.PHONY: packages
+packages: env ${NIX_TARGET}
+	nix profile install $(addprefix nixpkgs#,${PACKAGES})
+	NIXPKGS_ALLOW_UNFREE=1 nix profile install --impure $(addprefix nixpkgs#,${UNFREE_PACKAGES})
 
+${CONFIG_TARGETS} ${NIX_TARGET}:
+	@echo "Installing config $@"
+	ln -s ${CURDIR}/$(notdir $@) $@
 
-.PHONY: alacrytty_bkp
-alacritty_bkp:
-	$(call backup_existing_data,${CONFIG_DIR}/alacritty)
-
-alacritty: alacritty_bkp
-	echo "Installing alacritty dotfiles"
-	ln -s ${CURDIR}/alacritty ${CONFIG_DIR}
-
-.PHONY: neovim_bkp
-neovim_bkp:
-	$(call backup_existing_data,${CONFIG_DIR}/nvim)
-
-neovim: neovim_bkp
-	echo "Installing neovim dotfiles"
-	ln -s ${CURDIR}/nvim ${CONFIG_DIR}
-
-
-.PHONY: fish_bkp
-fish_bkp:
-	$(call backup_existing_data,${CONFIG_DIR}/fish)
-
-fish: fish_bkp
-	echo "Installing Fish dotfiles"
-	ln -s ${CURDIR}/fish ${CONFIG_DIR}
-
-.PHONY: nix_bkp
-nix_bkp:
-	$(call backup_existing_data,${CONFIG_DIR}/nix)
-
-nix: nix_bkp
-	echo "Installing Nix dotfiles"
-	ln -s ${CURDIR}/nix ${CONFIG_DIR}
-
-.PHONY: zellij_bkp
-zellij_bkp:
-	$(call backup_existing_data,${CONFIG_DIR}/zellij)
-
-zellij: zellij_bkp
-	echo "Installing Zellij dotfiles"
-	ln -s ${CURDIR}/zellij ${CONFIG_DIR}
-
-.PHONY: bottom_bkp
-bottom_bkp:
-	$(call backup_existing_data,${CONFIG_DIR}/bottom)
-
-bottom: bottom_bkp
-	echo "Installing Bottom dotfiles"
-	ln -s ${CURDIR}/bottom ${CONFIG_DIR}
-
+${HOME_TARGETS}:
+	@echo "Installing config $@"
+	ln -s ${CURDIR}/$(subst .,,$(notdir $@)) $@
