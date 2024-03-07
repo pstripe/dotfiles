@@ -457,6 +457,8 @@ return require('packer').startup(function()
     config = function()
       require('nvim-treesitter.configs').setup({
         ensure_installed = {
+          'bash',
+          'fish',
           'gitcommit',
           'go',
           'json',
@@ -465,7 +467,9 @@ return require('packer').startup(function()
           'markdown',
           'php',
           'phpdoc',
+          'python',
           'query',
+          'rust',
           'toml',
           'yaml',
         },
