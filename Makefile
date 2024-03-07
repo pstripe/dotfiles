@@ -1,68 +1,65 @@
 # TODO: Fix unexisting dependencies breaks installation process
 
 CONFIG_DIR = ${HOME}/.config
-OMZ = ${HOME}/.oh-my-zsh/custom
 
 backup_existing_data = if [[ -e $(1) && ! -h $(1) ]]; then mv $(1) $(1).old ; fi
 
-install: update alacritty bpytop tmux neovim zsh
+configs: alacritty neovim fish nix zellij bottom
+
+.PHONY: env
+env:
+	# TODO: application list
 
 update:
 	git pull origin main
 
 
-alacritty_bkp: ${CONFIG_DIR}/alacritty/alacritty.yml
-	$(call backup_existing_data,${CONFIG_DIR}/alacritty/alacritty.yml)
+.PHONY: alacrytty_bkp
+alacritty_bkp:
+	$(call backup_existing_data,${CONFIG_DIR}/alacritty)
 
-alacritty: alacritty_bkp alacritty.yml
+alacritty: alacritty_bkp
 	echo "Installing alacritty dotfiles"
-	mkdir -p ${CONFIG_DIR}/alacritty
-	ln -s ${CURDIR}/alacritty.yml ${CONFIG_DIR}/alacritty/alacritty.yml
+	ln -s ${CURDIR}/alacritty/ ${CONFIG_DIR}
 
-
-bpytop_bkp: ${CONFIG_DIR}/bpytop/bpytop.conf
-	$(call backup_existing_data,${CONFIG_DIR}/bpytop/bpytop.conf)
-
-bpytop: bpytop_bkp bpytop.conf
-	echo "Installing bpytop dotfiles"
-	mkdir -p ${CONFIG_DIR}/bpytop
-	ln -s ${CURDIR}/bpytop.conf ${CONFIG_DIR}/bpytop/bpytop.conf
-
-
-tmux_bkp: ${HOME}/.tmux.conf
-	$(call backup_existing_data,${HOME}/.tmux)
-	$(call backup_existing_data,${HOME}/.tmux.conf)
-
-tmux: tmux_bkp tmux/tmux.conf tmux/plugins
-	echo "Installing tmux dotifiles"
-	ln -s ${CURDIR}/tmux/tmux.conf ${HOME}/.tmux.conf
-	ln -s ${CURDIR}/tmux/plugins ${HOME}/.tmux
-
-
-top_bkp: ${HOME}/.toprc
-	$(call backup_existing_data,${HOME}/.toprc)
-
-top: top_bkp toprc
-	echo "Installing top dotfiles"
-	ln -s ${CURDIR}/toprc ${HOME}/.toprc
-
-
-neovim_bkp: ${CONFIG_DIR}/nvim/init.lua ${CONFIG_DIR}/nvim/lua
-	$(call backup_existing_data,${CONFIG_DIR}/nvim/init.lua)
-	$(call backup_existing_data,${CONFIG_DIR}/nvim/lua)
+.PHONY: neovim_bkp
+neovim_bkp:
+	$(call backup_existing_data,${CONFIG_DIR}/nvim)
 
 neovim: neovim_bkp
 	echo "Installing neovim dotfiles"
-	mkdir -p ${CONFIG_DIR}/nvim
-	ln -s ${CURDIR}/neovim/init.lua ${CONFIG_DIR}/nvim/init.lua
-	ln -s ${CURDIR}/neovim/lua ${CONFIG_DIR}/nvim/
+	ln -s ${CURDIR}/nvim ${CONFIG_DIR}
 
 
-zsh_bkp: ${HOME}/.zshrc ${OMZ}/themes ${OMZ}/plugins
-	$(call backup_existing_data,${HOME}/.zshrc)
-	$(call backup_existing_data,${OMZ}/themes)
-	$(call backup_existing_data,${OMZ}/plugins)
+.PHONY: fish_bkp
+fish_bkp:
+	$(call backup_existing_data,${CONFIG_DIR}/fish)
 
-zsh: zsh_bkp
-	echo "Installing ZSH dotfiles"
-	ln -s ${CURDIR}/zsh/zshrc ${HOME}/.zshrc
+fish: fish_bkp
+	echo "Installing Fish dotfiles"
+	ln -s ${CURDIR}/fish ${CONFIG_DIR}
+
+.PHONY: nix_bkp
+nix_bkp:
+	$(call backup_existing_data,${CONFIG_DIR}/nix)
+
+nix: nix_bkp
+	echo "Installing Nix dotfiles"
+	ln -s ${CURDIR}/nix ${CONFIG_DIR}
+
+.PHONY: zellij_bkp
+zellij_bkp:
+	$(call backup_existing_data,${CONFIG_DIR}/zellij)
+
+zellij: zellij_bkp
+	echo "Installing Zellij dotfiles"
+	ln -s ${CURDIR}/zellij ${CONFIG_DIR}
+
+.PHONY: bottom_bkp
+bottom_bkp:
+	$(call backup_existing_data,${CONFIG_DIR}/bottom)
+
+bottom: bottom_bkp
+	echo "Installing Bottom dotfiles"
+	ln -s ${CURDIR}/bottom ${CONFIG_DIR}
+
