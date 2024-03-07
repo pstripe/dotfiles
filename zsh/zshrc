@@ -86,7 +86,7 @@ plugins=(
   tmux
   web-search
   zsh-interactive-cd
-)
+ jira)
 
 ZSH_WEB_SEARCH_ENGINES=(
   translate "https://translate.yandex.ru/?text="
