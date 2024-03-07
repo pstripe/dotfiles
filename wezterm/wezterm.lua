@@ -30,10 +30,6 @@ return {
 
   -- Fonts
   font_size = 12,
-  font = wezterm.font {
-    family = 'JetBrains Mono',
-    harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
-  },
 
   -- Tabs
   tab_max_width = 64,
