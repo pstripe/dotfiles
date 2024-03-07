@@ -1,4 +1,4 @@
- -- Bootstrap
+-- Bootstrap
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 
@@ -175,7 +175,8 @@ return require('packer').startup(function()
   }
 
   use {
-    'ggandor/lightspeed.nvim'
+    'ggandor/leap.nvim',
+    config = require('leap').set_default_keymaps
   }
 
   -- Debugger
