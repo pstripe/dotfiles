@@ -1,8 +1,9 @@
+LOCAL_NIX_PROFILE=$HOME/.nix-profile
 # If you come from bash you might have to change your $PATH.
-#export PATH=$HOME/vendor/bin:$PATH
+export PATH=$LOCAL_NIX_PROFILE/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="$LOCAL_NIX_PROFILE"/share/oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -26,7 +27,7 @@ CASE_SENSITIVE="true"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
@@ -95,8 +96,7 @@ ZSH_WEB_SEARCH_ENGINES=(
 
 # platform specific plugin inicialization
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  plugins+=(brew)
-  source "$HOMEBREW_PREFIX"/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source "$LOCAL_NIX_PROFILE"/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 elif [[ "$OSTYPE" == "linux"* ]]; then
   plugins+=(zsh-autosuggestions)
 fi
@@ -108,9 +108,9 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
+export LANG=en_US.UTF-8
 export EDITOR='nvim'
+export TERM='xterm-256color'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -127,23 +127,18 @@ alias vim="nvim"
 alias gci="git branch --sort=authordate | fzf | xargs git checkout"
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Configure fzf
+if [[ -x "$(which fzf-share)" ]]; then
+  source "$(fzf-share)"/completion.zsh
+  source "$(fzf-share)"/key-bindings.zsh
+fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # brew configs
-  alias ctags="`brew --prefix`/bin/ctags"
   export HOMEBREW_BAT=1 # use bat in 'brew cat' command
 
   # brew
   export PATH="/usr/local/opt/curl/bin:$PATH"
-  export PATH="/usr/local/opt/sqlite/bin:$PATH"
-  export PATH="/usr/local/opt/php@7.4/bin:$PATH"
-  export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
-  export PATH="/usr/local/opt/neovim/bin:$PATH"
-
-  # other package managers
-  export PATH="$HOME/node_modules/yarn/bin:$PATH" # npm dependencies
-  export PATH="$HOME/vendor/bin:$PATH"            # composer dependencies
 fi
 
 export STARSHIP_CONFIG=~/.dotfiles/starship/starship.toml
