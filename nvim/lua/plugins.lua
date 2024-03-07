@@ -329,6 +329,14 @@ return require('packer').startup(function()
 
   -- Code
   use {
+    'chipsenkbeil/distant.nvim',
+    branch = 'v0.3',
+    config = function()
+      require('distant'):setup()
+    end
+  }
+
+  use {
     'windwp/nvim-autopairs',
     config = function()
       local npairs = require('nvim-autopairs')
