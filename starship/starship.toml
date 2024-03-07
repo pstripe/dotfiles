@@ -1,5 +1,5 @@
 format = """
-┌ $hostname$git_branch$git_status$memory_usage$env_var$custom
+┌ $hostname$git_branch$memory_usage$env_var$custom
 └ $jobs$status$character$directory\
  """
 

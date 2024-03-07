@@ -28,7 +28,6 @@ return require('packer').startup(function()
     end
   }
   use {
-    disable = false,
     'sainnhe/sonokai',
     config = function()
       vim.cmd.colorscheme('sonokai')
@@ -111,49 +110,32 @@ return require('packer').startup(function()
 
   -- Git
   use {
-    'tanvirtin/vgit.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    },
+    'lewis6991/gitsigns.nvim',
     config = function()
-      vim.o.updatetime = 300
-      vim.wo.signcolumn = 'yes'
+      require('gitsigns').setup({
+        on_attach = function(bufnr)
+          local gs = package.loaded.gitsigns
+          vim.keymap.set('n', '<leader>gp', gs.preview_hunk)
+          vim.keymap.set('n', '<leader>gb', function() gs.blame_line({full = true}) end, { buffer = bufnr })
 
-      require('vgit').setup({
-        keymaps = {
-          ['n ]c']         = 'hunk_up',
-          ['n [c']         = 'hunk_down',
-          ['n <leader>hp'] = 'buffer_hunk_preview',
-          ['n <leader>hb'] = 'buffer_blame_preview',
-        },
-        settings = {
-          live_blame = {
-            enabled = false
-          },
-          signs = {
-            priority = 0,
-            definitions = {
-              GitSignsAdd = {
-                texthl = 'GitSignsAdd',
-                text = '|',
-              },
-              GitSignsDeleteLn = {
-                linehl = 'GitSignsDeleteLn',
-                text = '‾',
-              },
-              GitSignsDelete = {
-                texthl = 'GitSignsDelete',
-                text = '_',
-              },
-              GitSignsChange = {
-                texthl = 'GitSignsChange',
-                text = '|',
-              },
-            },
-          },
-        }
+          vim.keymap.set('n', ']c', function()
+            if vim.wo.diff then return ']c' end
+            vim.schedule(function() gs.next_hunk() end)
+            return '<Ignore>'
+          end, { expr = true, buffer = bufnr })
+
+          vim.keymap.set('n', '[c', function()
+            if vim.wo.diff then return '[c' end
+            vim.schedule(function() gs.prev_hunk() end)
+            return '<Ignore>'
+          end, { expr = true, buffer = bufnr })
+        end
       })
     end
+  }
+  use {
+    'sindrets/diffview.nvim',
+    requires = { 'nvim-lua/plenary.nvim' }
   }
 
   use {
@@ -202,11 +184,18 @@ return require('packer').startup(function()
     end
   }
 
+  use { "chrisgrieser/nvim-spider" }
   use {
-    'ggandor/leap.nvim',
-    disable = true,
-    config = require('leap').set_default_keymaps
+    "chrisgrieser/nvim-alt-substitute",
+    config = function() require("alt-substitute").setup({}) end,
   }
+
+
+  --use {
+  --  'ggandor/leap.nvim',
+  --  disable = true,
+  --  config = require('leap').set_default_keymaps
+  --}
 
   -- Debugger
   use {

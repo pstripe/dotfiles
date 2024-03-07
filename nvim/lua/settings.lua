@@ -65,6 +65,7 @@ go.path = go.path .. 'www/**'
 
 -- Key bindings
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 --
 vim.keymap.set('', 'Q', '<nop>')
 vim.keymap.set({'n', 'v'}, '<leader>y', '"+y')
@@ -87,6 +88,40 @@ function FnameRelToProjectRoot()
   end
 
   return rel_fname:absolute()
+end
+
+function Upload()
+  local rel_fname = FnameRelToProjectRoot()
+  local esc_fname = vim.fn.fnameescape(rel_fname)
+  vim.api.nvim_command('Nwrite rsync://adm512:data/' .. esc_fname)
+end
+
+function Confdata()
+  local word = vim.fn.expand("<cword>")
+
+  local result = vim.fn.execute("!ssh -S none adm512 'cd www; php 00pnsmirnov.php confdata " .. word .. "'")
+  local buf = vim.api.nvim_create_buf(false, true)
+
+  result = vim.split(result, '\n')
+
+  table.remove(result, 1)
+  table.remove(result, 1)
+  table.remove(result, 1)
+  table.remove(result, 5)
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, true, result)
+
+  local opts = {
+    relative = 'cursor',
+    width = 30,
+    height = 4,
+    row = 0,
+    col = 0,
+    style = 'minimal',
+    border = 'single',
+  }
+
+  vim.api.nvim_open_win(buf, 0, opts)
 end
 
 function IDE()

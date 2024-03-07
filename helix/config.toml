@@ -1,0 +1,18 @@
+theme = "penumbra+"
+
+[editor]
+auto-format = false
+cursorline = true
+line-number = "absolute"
+mouse = false
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.file-picker]
+hidden = false
+
+[editor.whitespace.render]
+space = "all"
+tab = "all"
+
