@@ -174,7 +174,19 @@ return require('packer').startup(function()
     end
   }
   use {
+    "nvim-telescope/telescope-file-browser.nvim",
+    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    config = function()
+      local telescope = require('telescope')
+      telescope.load_extension('file_browser')
+
+      
+      vim.keymap.set('n', '<leader>n', function() telescope.extensions.file_browser.file_browser({ path = '%:p:h' }) end)
+    end
+  }
+  use {
     'kyazdani42/nvim-tree.lua',
+    disable = true,
     requires = {
       'kyazdani42/nvim-web-devicons'
     },
