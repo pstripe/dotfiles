@@ -1,3 +1,7 @@
+# Disable default mode prompt
+function fish_mode_prompt
+end
+
 function fish_prompt --description 'Write out the prompt'
     set -g __fish_git_prompt_showstashstate no
 
@@ -29,6 +33,6 @@ function fish_prompt --description 'Write out the prompt'
         set prompt_status $status_color "[" $last_status "]" $normal
     end
 
-    echo -s    '┌ ' $hostname_color $suffix_first ' (' (prompt_hostname) ')' $vcs_color (fish_git_prompt) $normal ' ' $prompt_status
+    echo -s    '┌ ' $hostname_color $suffix_first $normal ' ' (fish_default_mode_prompt) $hostname_color '(' (prompt_hostname) ')' $vcs_color (fish_git_prompt) $normal ' ' $prompt_status
     echo -n -s '└ ' $status_color   $suffix_second ' ' $cwd_color (prompt_pwd) ' ' $normal
 end
