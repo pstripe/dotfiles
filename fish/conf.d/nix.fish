@@ -1,3 +1,7 @@
+if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+  source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+end
+
 set local_share_dir $HOME/.local/share
 set nix_share_dir $HOME/.nix-profile/share
 

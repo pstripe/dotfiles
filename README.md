@@ -17,7 +17,6 @@ Then
 cd .dotfiles
 make nix
 make packages
-make configs
 ```
 
 ## TODO
