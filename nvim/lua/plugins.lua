@@ -1,21 +1,22 @@
 -- Bootstrap
 local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
   local execute = vim.api.nvim_command
-  execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
-  execute('packadd packer.nvim')
+  vim.cmd('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+  vim.cmd.packadd('packer.nvim')
+  requre('packer').sync()
 end
 
 -- Only required if you have packer in your `opt` pack
-vim.cmd([[packadd packer.nvim]])
+vim.cmd.packadd('packer.nvim')
 
 -- Auto update plugins' list
 vim.api.nvim_create_autocmd('BufWritePost', { pattern = 'plugins.lua', command = 'PackerCompile' })
 return require('packer').startup(function()
   -- Packer can manage itself as an optional plugin
-  use {'wbthomason/packer.nvim', opt = true}
+  use { 'wbthomason/packer.nvim', opt = true }
 
   -- Theme
   use {
@@ -61,8 +62,8 @@ return require('packer').startup(function()
   use {
     'folke/which-key.nvim',
     config = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
+      vim.opt.timeout = true
+      vim.opt.timeoutlen = 300
       require('which-key').setup({
         -- your configuration comes here
         -- or leave it empty to use the default settings
@@ -76,8 +77,8 @@ return require('packer').startup(function()
       { 'kyazdani42/nvim-web-devicons' },
     },
     config = function()
-      vim.o.cmdheight = 2
-      vim.o.showmode = false
+      vim.opt.cmdheight = 2
+      vim.opt.showmode = false
 
       require('lualine').setup({
         options = {

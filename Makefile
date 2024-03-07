@@ -1,7 +1,6 @@
-# TODO: bootstrap process when no git installed on system
 # TODO: Install fonts. By some reason alacritty doesn't search it in default paths (.fonts, .local/share/fonts)
 # TODO: auto configure MacOS Applications: Alacritty, Zoom
-# TODO: add neovim dependencies: lsp, treesitter, ...
+# TODO: add `clean` target
 
 CONFIG_DIR = ${HOME}/.config
 
@@ -26,7 +25,7 @@ nix:
 	curl -L https://nixos.org/nix/install | sh
 
 .PHONY: env-packages
-env-packages: # TODO: depends on config
+env-packages: # TODO: depends on config and nix
 	nix profile install $(addprefix nixpkgs#,${ENV_PACKAGES})
 
 .PHONY: dev-packages

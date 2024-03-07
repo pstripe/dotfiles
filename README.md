@@ -20,6 +20,5 @@ make packages
 ```
 
 ## TODO
-1. Add bootstrapping script.
-2. Bootstrap neovim plugins
-3. Add script for auto commit+push. Configure auto commit+push
+1. Add bootstrapping script (if no git available).
+2. Add script for auto commit+push. Configure auto commit+push
