@@ -78,10 +78,55 @@ return require('packer').startup(function()
 
   -- Git
   use {
+    'tanvirtin/vgit.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function()
+      vim.o.updatetime = 300
+      vim.wo.signcolumn = 'yes'
+
+      require('vgit').setup({
+        keymaps = {
+          ['n ]c'] = 'hunk_up',
+          ['n [c'] = 'hunk_down',
+        },
+        settings = {
+          live_blame = {
+            enabled = false
+          },
+          signs = {
+            priority = 0,
+            definitions = {
+              GitSignsAdd = {
+                texthl = 'GitSignsAdd',
+                text = '|',
+              },
+              GitSignsDeleteLn = {
+                linehl = 'GitSignsDeleteLn',
+                text = '‾',
+              },
+              GitSignsDelete = {
+                texthl = 'GitSignsDelete',
+                text = '_',
+              },
+              GitSignsChange = {
+                texthl = 'GitSignsChange',
+                text = '|',
+              },
+            },
+          },
+        }
+      })
+    end
+  }
+  --- INFO: replaced with vgit
+  use {
     'lewis6991/gitsigns.nvim',
     requires = {
       'nvim-lua/plenary.nvim'
     },
+    disable = true,
     config = function()
       require('gitsigns').setup({
         -- GitGutter theme and new signs
