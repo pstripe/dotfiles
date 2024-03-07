@@ -7,35 +7,6 @@ local t = luasnip.text_node
 local i = luasnip.insert_node
 local c = luasnip.choice_node
 
-luasnip.add_snippets('yaml', {
-  s('modulite', {
-    t('name: "@'), i(1, 'module'), t({'"'}),
-    t({'', 'namespace: "\\\\VK\\\\Messages\\\\v2\\\\'}), i(2, 'Some'), t({'"'}),
-
-    t({
-      '', '',
-      'owners:',
-      '', '',
-      'public:',
-      '  - "'
-    }), i(0, 'SomePublicSymbol') , t('"'),
-
-    t({
-      '', '',
-      'internal:',
-      '', '',
-      'requires:',
-      '  modules:',
-      '  composer-packages:',
-      '  functions:',
-      '  classes:',
-      '  variables:',
-      '  constants:',
-      '',
-      'allow-internal-access:',
-    })
-  })
-})
 
 luasnip.add_snippets('php', {
   s('phptag', {
@@ -76,7 +47,7 @@ luasnip.add_snippets('php', {
 
   s('strict', {
     t({
-      '/** @kphp-strict-types-enabled */',
+      '/** @kphp-strict-types-enable */',
       'declare(strict_types = 1);',
     })
   }),
