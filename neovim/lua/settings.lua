@@ -64,9 +64,11 @@ go.path = go.path .. 'www/**'
 
 
 -- Key bindings
-vim.keymap.set('', 'Q', '<NOP>')
-vim.keymap.set('', '<leader>y', '"+y')
-vim.keymap.set('', '<leader>p', '"+p')
+vim.g.mapleader = ' '
+--
+vim.keymap.set('', 'Q', '<nop>')
+vim.keymap.set({'n', 'v'}, '<leader>y', '"+y')
+vim.keymap.set({'n', 'v'}, '<leader>p', '"+p')
 
 -- Functions
 function isempty(s)

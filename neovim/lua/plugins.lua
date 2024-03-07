@@ -159,8 +159,6 @@ return require('packer').startup(function()
   use {
     'tpope/vim-fugitive',
     config = function()
-      vim.keymap.set('n', '<leader>gp',  '<cmd>Git push<CR>', { noremap = true, silent = true })
-      vim.keymap.set('n', '<leader>gpf', '<cmd>Git push --force-with-lease<CR>', { noremap = true, silent = true })
       vim.keymap.set('n', '<leader>gyb', "<cmd>call setreg('+', FugitiveHead())<CR><cmd>echo 'Git branch yanked!'<CR>", { noremap = true, silent = false })
     end
   }
@@ -174,11 +172,11 @@ return require('packer').startup(function()
     },
     config = function()
       local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<C-p>',      builtin.git_files)
-      vim.keymap.set('n', '<leader>ff', builtin.live_grep)
-      vim.keymap.set('n', '<leader>fb', builtin.buffers)
+      vim.keymap.set('n', '<leader>f',  builtin.git_files)
+      vim.keymap.set('n', '<leader>/',  builtin.live_grep)
+      vim.keymap.set('n', '<leader>b',  builtin.buffers)
       vim.keymap.set('n', '<leader>fw', builtin.grep_string)
-      vim.keymap.set('n', '<leader>ft', builtin.treesitter)
+      vim.keymap.set('n', '<leader>fs', builtin.treesitter)
       vim.keymap.set('n', '<leader>fl', builtin.current_buffer_fuzzy_find)
     end
   }
@@ -189,7 +187,6 @@ return require('packer').startup(function()
       local telescope = require('telescope')
       telescope.load_extension('file_browser')
 
-      
       vim.keymap.set('n', '<leader>n', function() telescope.extensions.file_browser.file_browser({ path = '%:p:h' }) end)
     end
   }
@@ -207,6 +204,7 @@ return require('packer').startup(function()
 
   use {
     'ggandor/leap.nvim',
+    disable = true,
     config = require('leap').set_default_keymaps
   }
 
@@ -245,8 +243,8 @@ return require('packer').startup(function()
           },
         },
       })
-      vim.keymap.set('n', '<leader>dd', require("dapui").toggle, { noremap = true })
-      vim.keymap.set('v', '<leader>de', require("dapui").eval,   { noremap = true })
+      vim.keymap.set('n', '<leader>dd', dapui.toggle)
+      vim.keymap.set('v', '<leader>de', dapui.eval)
 
 
       local dap = require('dap')
@@ -278,12 +276,12 @@ return require('packer').startup(function()
         }
       }
 
-      vim.keymap.set('n', '<leader>dc', require("dap").continue,          { noremap = true })
-      vim.keymap.set('n', '<leader>ds', require("dap").toggle_breakpoint, { noremap = true })
-      vim.keymap.set('n', '<leader>dn', require("dap").step_over,         { noremap = true })
-      vim.keymap.set('n', '<leader>d[', require("dap").step_into,         { noremap = true })
-      vim.keymap.set('n', '<leader>do', require("dap").step_out,          { noremap = true })
-      vim.keymap.set('n', '<leader>dl', function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end, { noremap = true })
+      vim.keymap.set('n', '<leader>dc', dap.continue)
+      vim.keymap.set('n', '<leader>ds', dap.toggle_breakpoint)
+      vim.keymap.set('n', '<leader>dn', dap.step_over)
+      vim.keymap.set('n', '<leader>d[', dap.step_into)
+      vim.keymap.set('n', '<leader>do', dap.step_out)
+      vim.keymap.set('n', '<leader>dl', function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end)
     end
   }
 
@@ -292,19 +290,17 @@ return require('packer').startup(function()
     'neovim/nvim-lspconfig',
     config = function()
       local opts = { noremap = true }
-      vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, opts)
-      vim.keymap.set('n', '<leader>le', vim.diagnostic.open_float, opts)
-      vim.keymap.set('n', '[d',         vim.diagnostic.goto_prev,  opts)
-      vim.keymap.set('n', ']d',         vim.diagnostic.goto_next,  opts)
+      vim.keymap.set('n', '<leader>d',  vim.diagnostic.setloclist, opts)
+      vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, opts)
+      vim.keymap.set('n', '[d',        vim.diagnostic.goto_prev,  opts)
+      vim.keymap.set('n', ']d',        vim.diagnostic.goto_next,  opts)
 
       local function on_attach(client, bufnr)
         local opts = { noremap = true, buffer = bufnr }
         -- Mappings.
-        vim.keymap.set('n', '<leader>lD', vim.lsp.buf.declaration,     opts)
-        vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover,           opts)
-        vim.keymap.set('n', '<leader>li', vim.lsp.buf.implementation,  opts)
-        vim.keymap.set('n', '<leader>lt', vim.lsp.buf.type_definition, opts)
-        vim.keymap.set('n', '<leader>lr', vim.lsp.buf.references,      opts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references,  opts)
+        vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover, opts)
 
         -- Set some keybinds conditional on server capabilities
         if client.server_capabilities.document_formatting then
@@ -480,14 +476,14 @@ return require('packer').startup(function()
           smart_rename = {
             enable = true,
             keymaps = {
-              smart_rename = '<leader>ln',
+              smart_rename = '<leader>r',
             },
           },
           -- TODO: add jumps over function usage
           navigation = {
             enable = true,
             keymaps = {
-              goto_definition_lsp_fallback = '<leader>ld',
+              goto_definition_lsp_fallback = 'gd',
               -- TODO: change next bindings
               goto_next_usage = '<C-j>',
               goto_previous_usage = '<C-k>',
