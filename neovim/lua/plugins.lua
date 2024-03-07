@@ -48,17 +48,11 @@ return require('packer').startup(function()
   use {
     'hoob3rt/lualine.nvim',
     requires = {
-      { 'stevearc/aerial.nvim' },
-      { 'nvim-treesitter/nvim-treesitter' },
       { 'kyazdani42/nvim-web-devicons', opt = true },
     },
     config = function()
       vim.o.cmdheight = 2
       vim.o.showmode = false
-
-      local function status()
-        return require('nvim-treesitter').statusline()
-      end
 
       require('lualine').setup({
         options = {
@@ -72,20 +66,17 @@ return require('packer').startup(function()
           lualine_b = { {
             'filename',
             path = 1,
-            shorting_target = 80,
             symbols = {
               modified = ' ',
               readonly = ' ',
             }
           } },
-          lualine_c = { 'aerial' },
         },
         tabline = {
           lualine_a = { 'branch', 'diff' },
           lualine_z = { 'tabs' },
         },
         extensions = {
-          'aerial',
           'fugitive',
           'nvim-tree',
           'quickfix',
@@ -186,13 +177,14 @@ return require('packer').startup(function()
   -- Debugger
   use {
     'rcarriga/nvim-dap-ui',
+    disable = true,
     requires = {
       'mfussenegger/nvim-dap'
     },
     run = {
       -- FIXME: what if already cloned?
-      'git clone https://github.com/xdebug/vscode-php-debug.git',
-      'cd vscode-php-debug && npm install && npm run build'
+      -- 'git clone https://github.com/xdebug/vscode-php-debug.git',
+      -- 'cd vscode-php-debug && npm install && npm run build'
     },
     ft = 'php',
     config = function()
@@ -303,34 +295,12 @@ return require('packer').startup(function()
     config = function()
       vim.keymap.set('i', '<C-s>', require('luasnip.extras.select_choice'))
 
+      -- TODO: migrate
       require('snippets')
     end
   }
 
-  -- Markdown
-  use {
-    'iamcco/markdown-preview.nvim',
-    run = 'cd app && npm install',
-    ft = { 'markdown' },
-    setup = function()
-      vim.g.mkdp_filetypes = { 'markdown' }
-    end,
-  }
-
   -- Code
-  use {
-    'stevearc/aerial.nvim',
-    requires = {
-      { 'kyazdani42/nvim-web-devicons', opt = true },
-    },
-    config = function()
-      require('aerial').setup({
-        disable_max_lines = 20000,
-        nerd_font = true,
-      })
-    end
-  }
-
   use {
     'windwp/nvim-autopairs',
     config = function()
@@ -404,43 +374,28 @@ return require('packer').startup(function()
             luasnip.lsp_expand(args.body)
           end,
         },
-        mapping = {
-          ['<C-e>'] = cmp.mapping(function(fallback)
-            if luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-
-          ['<C-S-e>'] = cmp.mapping(function(fallback)
-            if luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<CR>']  = cmp.mapping.confirm({ select = true }),
+        mapping = cmp.mapping.preset.insert({
           ['<C-n>'] = cmp.mapping(function()
             if cmp.visible() then
-              cmp.mapping.select_next_item()
+              cmp.select_next_item()
             else
               cmp.complete()
             end
           end, {'i','c'}),
           ['<C-p>'] = cmp.mapping(function()
             if cmp.visible() then
-              cmp.mapping.select_prev_item()
+              cmp.select_prev_item()
             else
               cmp.complete()
             end
           end, {'i','c'}),
-        },
-        sources = {
+          ['<CR>']  = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+        }),
+        sources = cmp.config.sources({
           { name = 'nvim_lsp' },
           { name = 'treesitter' },
           { name = 'luasnip' },
-        },
+        }),
         formatting = {
           format = lspkind.cmp_format({
             mode = 'symbol_text',
