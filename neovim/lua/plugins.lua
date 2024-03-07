@@ -22,16 +22,16 @@ return require('packer').startup(function()
     disable = true,
     'bluz71/vim-moonfly-colors',
     config = function()
-      vim.cmd [[colorscheme moonfly]]
-      vim.cmd [[highlight Comment cterm=italic]]
-      vim.cmd [[highlight Whitespace guifg=LightGray]]
+      vim.cmd.colorscheme('moonfly')
+      vim.cmd.highlight({ 'Comment', 'cterm=italic' })
+      vim.cmd.highlight({ 'Whitespace', 'guifg=LightGray' })
     end
   }
   use {
     disable = false,
     'sainnhe/sonokai',
     config = function()
-      vim.cmd [[colorscheme sonokai]]
+      vim.cmd.colorscheme('sonokai')
     end
   }
   use {
@@ -39,7 +39,7 @@ return require('packer').startup(function()
     'catppuccin/nvim',
     as = 'catppuccin',
     config = function()
-      vim.cmd [[colorscheme catppuccin-latte]]
+      vim.cmd.colorscheme('catppuccin-latte')
     end
   }
   -- UI

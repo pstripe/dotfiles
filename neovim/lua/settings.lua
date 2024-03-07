@@ -18,7 +18,7 @@ go.redrawtime = 40000
 
 -- Spaces & tabs
 wo.list = true
-go.listchars = 'tab:► ,trail:•'
+vim.opt.listchars = { tab = '► ', trail = '•' }
 go.expandtab = true
 go.softtabstop = 2
 go.shiftwidth = 2
@@ -42,7 +42,7 @@ go.backup = false
 go.writebackup = false
 bo.swapfile = false
 bo.undofile = true
-go.undodir='/tmp/nvim/undo'
+go.undodir = '/tmp/nvim/undo'
 -- Search
 go.hlsearch = true
 go.incsearch = true
