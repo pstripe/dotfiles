@@ -485,6 +485,11 @@ return require('packer').startup(function()
           enable = true,
         },
       })
+
+      vim.opt.foldnestmax = 2
+      vim.opt.foldenable  = false
+      vim.opt.foldmethod  = "expr"
+      vim.opt.foldexpr    = "v:lua.vim.treesitter.foldexpr()"
     end
   }
 
