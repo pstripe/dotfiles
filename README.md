@@ -2,17 +2,22 @@
 
 ## Bootstrapping
 ### MacOS
-First of all you need to get `make` and `git` executables if they are missed.
+Getting `make` and `git` executables if they are missed.
 ```sh
 xcode-select --install
 ```
 
-Next cloning this repo. You need to add machine's public SSH key to Github first.
+Generation then adding SSH keys to Github.
+```sh
+ssh-keygen -t ed25519
+```
+
+Cloning the repo.
 ```sh
 git clone git@github.com:pstripe/dotfiles.git .dotfiles
 ```
 
-Then
+Bootstrapping environment.
 ```sh
 cd .dotfiles
 make nix
