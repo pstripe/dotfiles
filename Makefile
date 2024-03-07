@@ -4,7 +4,7 @@
 
 CONFIG_DIR = ${HOME}/.config
 
-CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,alacritty git nvim nix fish zellij bottom)
+CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,alacritty git nvim nix fish zellij bottom wezterm)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
