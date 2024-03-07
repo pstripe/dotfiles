@@ -266,6 +266,17 @@ return require('packer').startup(function()
     end
   }
 
+  use {
+    "folke/flash.nvim",
+    config = function()
+      vim.keymap.set({ 'n', 'o', 'x' }, 's', require('flash').jump)
+      vim.keymap.set({ 'n', 'o', 'x' }, 'S', require('flash').treesitter)
+      vim.keymap.set({ 'o' },           'r', require('flash').remote)
+      vim.keymap.set({ 'o', 'x' },      'R', require('flash').treesitter_search)
+      vim.keymap.set({ 'c' },       '<C-s>', require('flash').toggle)
+    end
+  }
+
   -- LSP
   use {
     'neovim/nvim-lspconfig',
