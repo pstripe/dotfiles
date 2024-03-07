@@ -20,26 +20,9 @@ return require('packer').startup(function()
 
   -- Theme
   use {
-    disable = true,
-    'bluz71/vim-moonfly-colors',
-    config = function()
-      vim.cmd.colorscheme('moonfly')
-      vim.cmd.highlight({ 'Comment', 'cterm=italic' })
-      vim.cmd.highlight({ 'Whitespace', 'guifg=LightGray' })
-    end
-  }
-  use {
     'sainnhe/sonokai',
     config = function()
       vim.cmd.colorscheme('sonokai')
-    end
-  }
-  use {
-    disable = true,
-    'catppuccin/nvim',
-    as = 'catppuccin',
-    config = function()
-      vim.cmd.colorscheme('catppuccin-latte')
     end
   }
   -- UI
@@ -182,12 +165,6 @@ return require('packer').startup(function()
   }
 
   use { 'chrisgrieser/nvim-spider' }
-
-  --use {
-  --  'ggandor/leap.nvim',
-  --  disable = true,
-  --  config = require('leap').set_default_keymaps
-  --}
 
   -- Debugger
   use {
@@ -339,14 +316,6 @@ return require('packer').startup(function()
   }
 
   -- Code
-  use {
-    'chipsenkbeil/distant.nvim',
-    branch = 'v0.3',
-    config = function()
-      require('distant'):setup()
-    end
-  }
-
   use {
     'windwp/nvim-autopairs',
     config = function()
