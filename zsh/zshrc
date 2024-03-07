@@ -76,7 +76,6 @@ plugins=(
   fd
   genpass
   git
-  git-fzf
   git-prompt
   ripgrep
   rsync
