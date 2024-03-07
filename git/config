@@ -1,6 +1,5 @@
 [user]
   name = Pavel Smirnov
-  email = pn.smirnov@corp.vk.com
 
 [core]
   editor = nvim

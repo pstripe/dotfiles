@@ -154,7 +154,7 @@ return require('packer').startup(function()
     },
     config = function()
       local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<leader>f',  builtin.git_files)
+      vim.keymap.set('n', '<leader>f',  builtin.find_files)
       vim.keymap.set('n', '<leader>/',  builtin.live_grep)
       vim.keymap.set('n', '<leader>b',  builtin.buffers)
       vim.keymap.set('n', '<leader>fw', builtin.grep_string)
@@ -295,17 +295,12 @@ return require('packer').startup(function()
       local lspconfig = require('lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      for _, server in pairs({ 'clangd', 'rust_analyzer' }) do
+      for _, server in pairs({ 'clangd', 'rust_analyzer', 'phpactor' }) do
         lspconfig[server].setup({
           on_attach = on_attach,
           capabilities = capabilities,
         })
       end
-      lspconfig['phpactor'].setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-        cmd = { '/Users/pn.smirnov/phpactor/bin/phpactor', 'language-server' },
-      })
     end
   }
 
@@ -448,10 +443,6 @@ return require('packer').startup(function()
           enable = true,
         },
       })
-
-      -- Folding
-      --vim.o.foldmethod = 'expr'
-      --vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
     end
   }
 
@@ -529,6 +520,20 @@ return require('packer').startup(function()
     config = function()
       require('nvim-treesitter.configs').setup({
         rainbow = {
+          enable = true
+        }
+      })
+    end
+  }
+
+  use {
+    'nvim-treesitter/playground',
+    requires = {
+      'nvim-treesitter/nvim-treesitter'
+    },
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        playground = {
           enable = true
         }
       })
