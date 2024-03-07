@@ -73,7 +73,7 @@ return require('packer').startup(function()
   use {
     'hoob3rt/lualine.nvim',
     requires = {
-      { 'kyazdani42/nvim-web-devicons', opt = true },
+      { 'kyazdani42/nvim-web-devicons' },
     },
     config = function()
       vim.o.cmdheight = 2
@@ -163,8 +163,11 @@ return require('packer').startup(function()
     end
   }
   use {
-    "nvim-telescope/telescope-file-browser.nvim",
-    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    'nvim-telescope/telescope-file-browser.nvim',
+    requires = {
+      'nvim-telescope/telescope.nvim',
+      'nvim-lua/plenary.nvim'
+    },
     config = function()
       local telescope = require('telescope')
       telescope.load_extension('file_browser')
@@ -173,7 +176,7 @@ return require('packer').startup(function()
     end
   }
 
-  use { "chrisgrieser/nvim-spider" }
+  use { 'chrisgrieser/nvim-spider' }
 
   --use {
   --  'ggandor/leap.nvim',
@@ -265,36 +268,55 @@ return require('packer').startup(function()
       local opts = { noremap = true }
       vim.keymap.set('n', '<leader>d',  vim.diagnostic.setloclist, opts)
       vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, opts)
-      vim.keymap.set('n', '[d',        vim.diagnostic.goto_prev,  opts)
-      vim.keymap.set('n', ']d',        vim.diagnostic.goto_next,  opts)
+      vim.keymap.set('n', '[d',         vim.diagnostic.goto_prev,  opts)
+      vim.keymap.set('n', ']d',         vim.diagnostic.goto_next,  opts)
 
       local function on_attach(client, bufnr)
         local opts = { noremap = true, buffer = bufnr }
         -- Mappings.
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references,  opts)
-        vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        vim.keymap.set('n', 'K',  vim.lsp.buf.hover, opts)
+
+        vim.keymap.set('n', '<leader>D',  vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', '<leader>k',  vim.lsp.buf.signature_help, opts)
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
 
         -- Set some keybinds conditional on server capabilities
         if client.server_capabilities.document_formatting then
-          vim.keymap.set('n', '<leader>lf', vim.lsp.buf.formatting, opts)
+          vim.keymap.set('n', '<leader>f', vim.lsp.buf.format({ async = true }), opts)
         elseif client.server_capabilities.document_range_formatting then
-          vim.keymap.set('n', '<leader>lf', vim.lsp.buf.range_formatting, opts)
+          vim.keymap.set('n', '<leader>f', vim.lsp.buf.range_formatting, opts)
         end
       end
 
       local lspconfig = require('lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      for _, server in pairs({ 'intelephense', 'clangd', 'rust_analyzer' }) do
+      for _, server in pairs({ 'clangd', 'rust_analyzer' }) do
         lspconfig[server].setup({
           on_attach = on_attach,
           capabilities = capabilities,
         })
       end
+      lspconfig['phpactor'].setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        cmd = { '/Users/pn.smirnov/phpactor/bin/phpactor', 'language-server' },
+      })
     end
   }
 
+  use {
+    'j-hui/fidget.nvim',
+    config = function()
+      require('fidget').setup({})
+    end
+  }
+
+  -- Snippets
   use {
     'L3MON4D3/LuaSnip',
     config = function()

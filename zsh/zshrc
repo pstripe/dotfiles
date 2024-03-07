@@ -1,9 +1,11 @@
-LOCAL_NIX_PROFILE=$HOME/.nix-profile
+LOCAL_NIX_PROFILE="$HOME"/.nix-profile
+LOCAL_NIX_SHARE="$LOCAL_NIX_PROFILE"/share
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$LOCAL_NIX_PROFILE/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="$LOCAL_NIX_PROFILE"/share/oh-my-zsh
+export ZSH="$LOCAL_NIX_SHARE"/oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -96,12 +98,12 @@ ZSH_WEB_SEARCH_ENGINES=(
 
 # platform specific plugin inicialization
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  source "$LOCAL_NIX_PROFILE"/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source "$LOCAL_NIX_SHARE"/zsh-autosuggestions/zsh-autosuggestions.zsh
 elif [[ "$OSTYPE" == "linux"* ]]; then
   plugins+=(zsh-autosuggestions)
 fi
 
-source $ZSH/oh-my-zsh.sh
+#source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -136,13 +138,6 @@ fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # brew configs
   export HOMEBREW_BAT=1 # use bat in 'brew cat' command
-
-  # brew
-  export PATH="/usr/local/opt/curl/bin:$PATH"
 fi
-
-export STARSHIP_CONFIG=~/.dotfiles/starship/starship.toml
-
-eval "$(starship init zsh)"
 
 exec fish
