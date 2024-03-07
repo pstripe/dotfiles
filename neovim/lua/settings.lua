@@ -3,7 +3,6 @@ local bo = vim.bo;
 local wo = vim.wo;
 
 vim.cmd('syntax on')
-vim.cmd('filetype plugin indent on')
 
 
 go.compatible = false
@@ -50,10 +49,6 @@ go.incsearch = true
 go.inccommand = 'nosplit'
 go.ignorecase = true
 go.smartcase = true
-
--- Indent
-bo.autoindent = true
-bo.smartindent = true
 
 go.history = 100
 
