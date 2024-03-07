@@ -30,7 +30,7 @@ nix:
 	curl -L https://nixos.org/nix/install | sh
 
 .PHONY: env-packages
-env-packages: # TODO: depends on config and nix
+env-packages: configs # TODO: depends on nix
 	nix profile install $(addprefix nixpkgs#,${ENV_PACKAGES})
 
 .PHONY: dev-packages
