@@ -53,13 +53,10 @@ return require('packer').startup(function()
     end
   }
   use {
-    'mhinz/vim-startify',
-    config = function()
-      vim.g.startify_change_to_dir = 0
-      vim.g.startify_change_to_vcs_root = 1
-      vim.g.startify_fortune_use_unicode = 1
-      vim.g.startify_bookmarks = { '~/.config/nvim/lua/plugin.lua', '~/.config/nvim/lua/settings.lua', '~/.zshrc' }
-      vim.g.startify_commands = {{ G = ':Git' }}
+    'goolord/alpha-nvim',
+    requires = { 'nvim-tree/nvim-web-devicons' },
+    config = function ()
+      require('alpha').setup(require('alpha.themes.startify').config)
     end
   }
   use {
