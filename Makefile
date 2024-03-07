@@ -12,6 +12,7 @@ HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 PACKAGES        := bat bottom delta exa fd fish fzf git git-stack neovim nerdfonts nushell ripgrep zellij
 PACKAGES        += alacritty monitorcontrol # Requires symlink to /Application on MacOS
 PACKAGES        += php phpactor
+PACKAGES        += go gopls
 UNFREE_PACKAGES := zoom-us
 
 .PHONY: configs

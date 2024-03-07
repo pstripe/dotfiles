@@ -299,7 +299,7 @@ return require('packer').startup(function()
       local lspconfig = require('lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      for _, server in pairs({ 'clangd', 'rust_analyzer', 'phpactor' }) do
+      for _, server in pairs({ 'clangd', 'rust_analyzer', 'phpactor', 'gopls' }) do
         lspconfig[server].setup({
           on_attach = on_attach,
           capabilities = capabilities,
@@ -437,6 +437,21 @@ return require('packer').startup(function()
     'nvim-treesitter/nvim-treesitter',
     config = function()
       require('nvim-treesitter.configs').setup({
+        ensure_installed = {
+          'gitcommit',
+          'go',
+          'json',
+          'kdl',
+          'lua',
+          'markdown',
+          'php',
+          'phpdoc',
+          'query',
+          'toml',
+          'yaml',
+        },
+        sync_install = false,
+
         highlight = {
           enable = true,
         },
