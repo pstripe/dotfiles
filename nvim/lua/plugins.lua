@@ -289,7 +289,7 @@ return require('packer').startup(function()
       local lspconfig = require('lspconfig')
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      for _, server in pairs({ 'clangd', 'rust_analyzer', 'phpactor', 'gopls' }) do
+      for _, server in pairs({ 'clangd', 'rust_analyzer', 'phpactor', 'gopls', 'pyright' }) do
         lspconfig[server].setup({
           on_attach = on_attach,
           capabilities = capabilities,
