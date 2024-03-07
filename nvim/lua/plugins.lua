@@ -131,8 +131,32 @@ return require('packer').startup(function()
 
   -- Tools
   use {
-    "iamcco/markdown-preview.nvim",
-    run = function() vim.fn["mkdp#util#install"]() end,
+    'iamcco/markdown-preview.nvim',
+    run = function() vim.fn['mkdp#util#install']() end,
+  }
+  use {
+    'luckasRanarison/nvim-devdocs',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = function()
+      vim.keymap.set('n', '<leader>k', '<cmd>DevdocsOpenCurrentFloat')
+
+      require('nvim-devdocs').setup({
+        ensure_installed = {
+          'fish-3.7',
+          'go',
+          'lua-5.4',
+          'nushell',
+          'php',
+          'phpunit-9',
+          'python-3.12',
+          'rust',
+        }
+      })
+    end
   }
   use {
     'nvim-telescope/telescope.nvim',
@@ -431,6 +455,7 @@ return require('packer').startup(function()
           'fish',
           'gitcommit',
           'go',
+          'html', -- For nvim-devdocs
           'json',
           'kdl',
           'lua',
@@ -559,4 +584,6 @@ return require('packer').startup(function()
       })
     end
   }
+
+  use { 'nushell/tree-sitter-nu' }
 end)

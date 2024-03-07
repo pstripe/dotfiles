@@ -19,7 +19,7 @@ return {
   keys = {
     { key = 'h', mods = 'ALT', action = act.ActivateTabRelative(-1) },
     { key = 'l', mods = 'ALT', action = act.ActivateTabRelative(1) },
-    { key = 'p', mods = 'ALT', action = act.ActivateKeyTable({ name = 'pane_spawn' }) }
+    { key = 'p', mods = 'ALT', action = act.ActivateKeyTable({ name = 'pane_spawn' }) },
   },
   key_tables = {
     pane_spawn = {
