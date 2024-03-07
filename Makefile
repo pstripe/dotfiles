@@ -36,6 +36,16 @@ tmux: tmux_bkp tmux.conf
 	ln -s ${CURDIR}/tmux.conf ${HOME}/.tmux.conf
 
 
+top_bkp: ${HOME}/.toprc
+	if [[ -e ${HOME}/.toprc && ! -h ${HOME}/.toprc ]]; then \
+		mv ${HOME}/.toprc ${HOME}/.toprc.old ; \
+	fi
+
+top: top_bkp toprc
+	echo "Installing top dotfiles"
+	ln -s ${CURDIR}/toprc ${HOME}/.toprc
+
+
 neovim_bkp: ${CONFIG_DIR}/nvim/init.lua ${CONFIG_DIR}/nvim/lua
 	if [[ -e ${CONFIG_DIR}/nvim/init.lua && ! -h ${CONFIG_DIR}/nvim/init.lua ]]; then \
 		mv ${CONFIG_DIR}/nvim/init.lua ${CONFIG_DIR}/nvim/init.lua.old ; \
