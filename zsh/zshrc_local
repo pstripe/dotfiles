@@ -1,0 +1,3 @@
+# Place local configurations here.
+# This config will be sourced after oh-my-zsh initialization.
+# So do not put OH-MY-ZSH plugin configurations here
