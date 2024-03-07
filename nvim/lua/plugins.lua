@@ -172,24 +172,8 @@ return require('packer').startup(function()
       vim.keymap.set('n', '<leader>n', function() telescope.extensions.file_browser.file_browser({ path = '%:p:h' }) end)
     end
   }
-  use {
-    'kyazdani42/nvim-tree.lua',
-    disable = true,
-    requires = {
-      'kyazdani42/nvim-web-devicons'
-    },
-    config = function()
-      require('nvim-tree').setup()
-      vim.keymap.set('n', '<leader>n', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = true })
-    end
-  }
 
   use { "chrisgrieser/nvim-spider" }
-  use {
-    "chrisgrieser/nvim-alt-substitute",
-    config = function() require("alt-substitute").setup({}) end,
-  }
-
 
   --use {
   --  'ggandor/leap.nvim',

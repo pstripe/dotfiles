@@ -66,5 +66,3 @@ zsh_bkp: ${HOME}/.zshrc ${OMZ}/themes ${OMZ}/plugins
 zsh: zsh_bkp
 	echo "Installing ZSH dotfiles"
 	ln -s ${CURDIR}/zsh/zshrc ${HOME}/.zshrc
-	ln -s ${CURDIR}/zsh/zshrc_local ${HOME}/.zshrc_local
-	ln -s ${CURDIR}/zsh/zshrc_local_plugin ${HOME}/.zshrc_local_plugin

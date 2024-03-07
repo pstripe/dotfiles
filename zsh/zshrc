@@ -86,11 +86,12 @@ plugins=(
   sudo
   web-search
   zsh-interactive-cd
- jira colored-man-pages)
+ colored-man-pages)
 
 ZSH_WEB_SEARCH_ENGINES=(
   translate "https://translate.yandex.ru/?text="
   phpdoc "https://www.php.net/search.php?show=quickref&pattern="
+  jira "https://jira.mvk.com/browse/"
 )
 
 # platform specific plugin inicialization
