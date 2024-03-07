@@ -29,13 +29,22 @@ return require('packer').startup(function()
     end
   }
   use {
+    'folke/todo-comments.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function()
+      require('todo-comments').setup()
+    end
+  }
+  use {
     'mhinz/vim-startify',
     config = function()
       vim.g.startify_change_to_dir = 0
       vim.g.startify_change_to_vcs_root = 1
       vim.g.startify_fortune_use_unicode = 1
-      vim.g.startify_bookmarks = { '~/.config/nvim/init.lua', '~/.zshrc' }
-      vim.g.startify_commands = {{ G = ':Gstatus' }}
+      vim.g.startify_bookmarks = { '~/.config/nvim/lua/plugin.lua', '~/.config/nvim/lua/settings.lua', '~/.zshrc' }
+      vim.g.startify_commands = {{ G = ':Git' }}
     end
   }
   use {
@@ -96,7 +105,7 @@ return require('packer').startup(function()
     end
   }
 
-  -- Finder
+  -- Tools
   use {
     'nvim-telescope/telescope.nvim',
     requires = {
@@ -112,17 +121,6 @@ return require('packer').startup(function()
       vim.api.nvim_set_keymap('n', '<leader>gsb', '<cmd>lua require("telescope.builtin").git_branches()<CR>', { noremap = true, silent = true })
     end
   }
-
-  -- INFO: fallback for telescope
-  use {
-    'junegunn/fzf.vim',
-    disable = true,
-    config = function()
-      vim.o.runtimepath = vim.o.runtimepath .. ',/usr/local/opt/fzf'
-    end
-  }
-
-  -- Tools
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {
@@ -140,6 +138,7 @@ return require('packer').startup(function()
     end
   }
 
+  -- Debugger
   use {
     'rcarriga/nvim-dap-ui',
     requires = {
@@ -326,16 +325,6 @@ return require('packer').startup(function()
 
       vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>lua _gitui_toggle()<CR>', {noremap = true, silent = true})
       vim.api.nvim_set_keymap('n', '<leader>i', '<cmd>ToggleTerm<CR>', {noremap = true, silent = true})
-    end
-  }
-
-  use {
-    'folke/todo-comments.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    },
-    config = function()
-      require('todo-comments').setup()
     end
   }
 end)
