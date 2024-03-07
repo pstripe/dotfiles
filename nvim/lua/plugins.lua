@@ -373,12 +373,11 @@ return require('packer').startup(function()
     end
   }
 
-  -- WARN: key bind intersections with lightspeed
   use {
-    'blackCauldron7/surround.nvim',
-    disable = true,
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
     config = function()
-      require('surround').setup({})
+        require("nvim-surround").setup()
     end
   }
 
