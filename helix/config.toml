@@ -1,4 +1,4 @@
-theme = "penumbra+"
+theme = "sonokai"
 
 [editor]
 auto-format = false
@@ -15,4 +15,3 @@ hidden = false
 [editor.whitespace.render]
 space = "all"
 tab = "all"
-

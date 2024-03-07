@@ -1,8 +1,9 @@
-[language-server]
-phpactor = { command = "/Users/pn.smirnov/phpactor/bin/phpactor", args = [ "language-server" ] }
+[language-server.phpactor]
+command = "/Users/pn.smirnov/.nix-profile/bin/phpactor"
+args = [ "language-server" ]
 
 [[language]]
 name = "php"
 file-types = ["php"]
 indent = { tab-width = 2, unit = " " }
-language-server = { command = "/Users/pn.smirnov/phpactor/bin/phpactor", args = [ "language-server" ] }
+language-servers = [ "phpactor" ]

@@ -4,13 +4,14 @@
 
 CONFIG_DIR = ${HOME}/.config
 
+EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,helix)
 CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,alacritty bat git nvim nix fish zellij bottom wezterm)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,karabiner)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
 ENV_PACKAGES    := bat bottom delta eza fd sd fish fzf jq git git-stack neovim nushell ripgrep\
-									 zellij
+									 zellij zstd
 ENV_PACKAGES    += nix # Manage itself
 # TODO: Requires symlink to /Application on MacOS
 # Karabiner-elements: complex installation. Requires a lot of symlinks
@@ -53,6 +54,10 @@ ${CONFIG_DIR}:
 	mkdir ${CONFIG_DIR}
 
 ${CONFIG_TARGETS}: ${CONFIG_DIR}
+	@echo "Installing config $@"
+	ln -s ${CURDIR}/$(notdir $@) $@
+
+${EXTRA_CONFIGS}: ${CONFIG_DIR}
 	@echo "Installing config $@"
 	ln -s ${CURDIR}/$(notdir $@) $@
 
