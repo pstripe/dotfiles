@@ -56,7 +56,7 @@ return require('packer').startup(function()
 
       require('lualine').setup({
         options = {
-          theme = 'oceanicnext',
+          theme = 'palenight',
         },
         sections = {
           lualine_a = { {
@@ -66,11 +66,8 @@ return require('packer').startup(function()
           lualine_b = { {
             'filename',
             path = 1,
-            symbols = {
-              modified = ' ',
-              readonly = ' ',
-            }
           } },
+          lualine_c = {},
         },
         tabline = {
           lualine_a = { 'branch', 'diff' },
