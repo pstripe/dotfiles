@@ -17,8 +17,9 @@ return require('packer').startup(function()
   -- Packer can manage itself as an optional plugin
   use {'wbthomason/packer.nvim', opt = true}
 
-  -- UI
+  -- Theme
   use {
+    disable = true,
     'bluz71/vim-moonfly-colors',
     config = function()
       vim.cmd [[colorscheme moonfly]]
@@ -26,6 +27,22 @@ return require('packer').startup(function()
       vim.cmd [[highlight Whitespace guifg=LightGray]]
     end
   }
+  use {
+    disable = false,
+    'sainnhe/sonokai',
+    config = function()
+      vim.cmd [[colorscheme sonokai]]
+    end
+  }
+  use {
+    disable = true,
+    'catppuccin/nvim',
+    as = 'catppuccin',
+    config = function()
+      vim.cmd [[colorscheme catppuccin-latte]]
+    end
+  }
+  -- UI
   use {
     'folke/todo-comments.nvim',
     requires = {
