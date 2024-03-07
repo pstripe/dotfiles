@@ -65,10 +65,14 @@ return require('packer').startup(function()
           theme = 'oceanicnext',
         },
         sections = {
+          lualine_a = { {
+            'mode',
+            fmt = function(str) return str:sub(1, 1) end
+          } },
           lualine_b = { {
             'filename',
             path = 1,
-            shorting_target = 60,
+            shorting_target = 80,
             symbols = {
               modified = ' ',
               readonly = ' ',
@@ -294,6 +298,25 @@ return require('packer').startup(function()
     end
   }
 
+  use {
+    'L3MON4D3/LuaSnip',
+    config = function()
+      vim.keymap.set('i', '<C-s>', require('luasnip.extras.select_choice'))
+
+      require('snippets')
+    end
+  }
+
+  -- Markdown
+  use {
+    'iamcco/markdown-preview.nvim',
+    run = 'cd app && npm install',
+    ft = { 'markdown' },
+    setup = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
+    end,
+  }
+
   -- Code
   use {
     'stevearc/aerial.nvim',
@@ -302,7 +325,7 @@ return require('packer').startup(function()
     },
     config = function()
       require('aerial').setup({
-        disable_max_lines = 15000,
+        disable_max_lines = 20000,
         nerd_font = true,
       })
     end
