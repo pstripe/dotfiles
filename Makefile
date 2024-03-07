@@ -1,13 +1,13 @@
 CONFIG_DIR = ${HOME}/.config
 OMZ = ${HOME}/.oh-my-zsh/custom
 
+backup_existing_data = if [[ -e $(1) && ! -h $(1) ]]; then mv $(1) $(1).old ; fi
+
 install: alacritty bpytop tmux neovim zsh
 
 
 alacritty_bkp: ${CONFIG_DIR}/alacritty/alacritty.yml
-	if [[ -e ${CONFIG_DIR}/alacritty/alacritty.yml && ! -h ${CONFIG_DIR}/alacritty/alacritty.yml ]]; then \
-		mv ${CONFIG_DIR}/alacritty/alacritty.yml ${CONFIG_DIR}/alacritty/alacritty.yml.old ; \
-	fi
+	$(call backup_existing_data,${CONFIG_DIR}/alacritty/alacritty.yml)
 
 alacritty: alacritty_bkp alacritty.yml
 	echo "Installing alacritty dotfiles"
@@ -16,9 +16,7 @@ alacritty: alacritty_bkp alacritty.yml
 
 
 bpytop_bkp: ${CONFIG_DIR}/bpytop/bpytop.conf
-	if [[ -e ${CONFIG_DIR}/bpytop/bpytop.conf && ! -h ${CONFIG_DIR}/bpytop/bpytop.conf ]]; then \
-		mv ${CONFIG_DIR}/bpytop/bpytop.conf ${CONFIG_DIR}/bpytop/bpytop.conf.old ; \
-	fi
+	$(call backup_existing_data,${CONFIG_DIR}/bpytop/bpytop.conf)
 
 bpytop: bpytop_bkp bpytop.conf
 	echo "Installing bpytop dotfiles"
@@ -27,9 +25,7 @@ bpytop: bpytop_bkp bpytop.conf
 
 
 tmux_bkp: ${HOME}/.tmux.conf
-	if [[ -e ${HOME}/.tmux.conf && ! -h ${HOME}/.tmux.conf ]]; then \
-		mv ${HOME}/.tmux.conf ${HOME}/.tmux.conf.old ; \
-	fi
+	$(call backup_existing_data,${HOME}/.tmux.conf)
 
 tmux: tmux_bkp tmux.conf
 	echo "Installing tmux dotifiles"
@@ -37,9 +33,7 @@ tmux: tmux_bkp tmux.conf
 
 
 top_bkp: ${HOME}/.toprc
-	if [[ -e ${HOME}/.toprc && ! -h ${HOME}/.toprc ]]; then \
-		mv ${HOME}/.toprc ${HOME}/.toprc.old ; \
-	fi
+	$(call backup_existing_data,${HOME}/.toprc)
 
 top: top_bkp toprc
 	echo "Installing top dotfiles"
@@ -47,12 +41,8 @@ top: top_bkp toprc
 
 
 neovim_bkp: ${CONFIG_DIR}/nvim/init.lua ${CONFIG_DIR}/nvim/lua
-	if [[ -e ${CONFIG_DIR}/nvim/init.lua && ! -h ${CONFIG_DIR}/nvim/init.lua ]]; then \
-		mv ${CONFIG_DIR}/nvim/init.lua ${CONFIG_DIR}/nvim/init.lua.old ; \
-	fi
-	if [[ -e ${CONFIG_DIR}/nvim/lua && ! -h ${CONFIG_DIR}/nvim/lua ]]; then \
-		mv ${CONFIG_DIR}/nvim/lua ${CONFIG_DIR}/nvim/lua.old ; \
-	fi
+	$(call backup_existing_data,${CONFIG_DIR}/nvim/init.lua)
+	$(call backup_existing_data,${CONFIG_DIR}/nvim/lua)
 
 neovim: neovim_bkp
 	echo "Installing neovim dotfiles"
@@ -62,15 +52,9 @@ neovim: neovim_bkp
 
 
 zsh_bkp: ${HOME}/.zshrc ${OMZ}/themes ${OMZ}/plugins
-	if [[ -e ${HOME}/.zshrc && ! -h ${HOME}/.zshrc ]]; then \
-		mv ${HOME}/.zshrc ${HOME}/.zshrc.old ; \
-	fi
-	if [[ -e ${OMZ}/themes && ! -h ${OMZ}/themes ]]; then \
-		mv ${OMZ}/themes ${OMZ}/themes.old ; \
-	fi
-	if [[ -e ${OMZ}/plugins && ! -h ${OMZ}/plugins ]]; then \
-		mv ${OMZ}/plugins ${OMZ}/plugins.old ; \
-	fi
+	$(call backup_existing_data,${HOME}/.zshrc)
+	$(call backup_existing_data,${OMZ}/themes)
+	$(call backup_existing_data,${OMZ}/plugins)
 
 zsh: zsh_bkp
 	echo "Installing ZSH dotfiles"
