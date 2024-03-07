@@ -57,9 +57,16 @@ go.hidden = true
 wo.wrap = false
 go.sidescroll = 5
 
+-- File
+go.path = go.path .. 'www/**'
+
+-- NetRW
+
 
 -- Key bindings
 vim.keymap.set('', 'Q', '<NOP>')
+vim.keymap.set('', '<leader>y', '"+y')
+vim.keymap.set('', '<leader>p', '"+p')
 
 -- Functions
 function isempty(s)
@@ -81,7 +88,9 @@ function FnameRelToProjectRoot()
 end
 
 function IDE()
-  print(FnameRelToProjectRoot() .. ':' .. vim.fn.line('.'))
+  local path = FnameRelToProjectRoot() .. ':' .. vim.fn.line('.');
+  vim.fn.setreg('+', path)
+  print('"' .. path .. '" yanked!')
 end
 
 vim.api.nvim_create_autocmd('BufWrite', { pattern = '*.php', command = '%s/\\s\\+$//e' })

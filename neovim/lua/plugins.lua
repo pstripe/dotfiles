@@ -151,8 +151,9 @@ return require('packer').startup(function()
     },
     config = function()
       local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<C-p>',      builtin.find_files)
+      vim.keymap.set('n', '<C-p>',      builtin.git_files)
       vim.keymap.set('n', '<leader>ff', builtin.live_grep)
+      vim.keymap.set('n', '<leader>fb', builtin.buffers)
       vim.keymap.set('n', '<leader>fw', builtin.grep_string)
       vim.keymap.set('n', '<leader>ft', builtin.treesitter)
       vim.keymap.set('n', '<leader>fl', builtin.current_buffer_fuzzy_find)
@@ -271,17 +272,17 @@ return require('packer').startup(function()
         vim.keymap.set('n', '<leader>lr', vim.lsp.buf.references,      opts)
 
         -- Set some keybinds conditional on server capabilities
-        if client.resolved_capabilities.document_formatting then
+        if client.server_capabilities.document_formatting then
           vim.keymap.set('n', '<leader>lf', vim.lsp.buf.formatting, opts)
-        elseif client.resolved_capabilities.document_range_formatting then
+        elseif client.server_capabilities.document_range_formatting then
           vim.keymap.set('n', '<leader>lf', vim.lsp.buf.range_formatting, opts)
         end
       end
 
       local lspconfig = require('lspconfig')
-      local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      for _, server in pairs({ 'intelephense', 'clangd' }) do
+      for _, server in pairs({ 'intelephense', 'clangd', 'rust_analyzer' }) do
         lspconfig[server].setup({
           on_attach = on_attach,
           capabilities = capabilities,
@@ -487,4 +488,6 @@ return require('packer').startup(function()
       })
     end
   }
+
+  use { 'nvim-treesitter/nvim-treesitter-context' }
 end)
