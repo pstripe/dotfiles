@@ -291,9 +291,9 @@ return require('packer').startup(function()
 
         -- Set some keybinds conditional on server capabilities
         if client.server_capabilities.document_formatting then
-          vim.keymap.set('n', '<leader>f', vim.lsp.buf.format({ async = true }), opts)
+          vim.keymap.set('n', '<leader>fmt', vim.lsp.buf.format({ async = true }), opts)
         elseif client.server_capabilities.document_range_formatting then
-          vim.keymap.set('n', '<leader>f', vim.lsp.buf.range_formatting, opts)
+          vim.keymap.set('n', '<leader>fmt', vim.lsp.buf.range_formatting, opts)
         end
       end
 
