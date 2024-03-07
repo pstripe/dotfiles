@@ -9,10 +9,12 @@ CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,alacritty git nvim nix fish zellij 
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
-PACKAGES        := bat bottom delta exa fd fish fzf git git-stack neovim nerdfonts nushell ripgrep zellij
-PACKAGES        += alacritty monitorcontrol # Requires symlink to /Application on MacOS
-PACKAGES        += php phpactor
-PACKAGES        += go gopls
+ENV_PACKAGES    := bat bottom delta exa fd fish fzf git git-stack neovim nushell ripgrep zellij
+GUI_PACKAGES    := alacritty monitorcontrol # Requires symlink to /Application on MacOS
+GUI_PACKAGES    += nerdfonts
+DEV_PACKAGES    := php phpactor
+# go-tools: staticcheck
+DEV_PACKAGES    += go gopls go-tools
 UNFREE_PACKAGES := zoom-us
 
 .PHONY: configs
@@ -23,10 +25,24 @@ configs: ${CONFIG_TARGETS} ${HOME_TARGETS}
 nix:
 	curl -L https://nixos.org/nix/install | sh
 
-.PHONY: packages
-packages: configs
-	nix profile install $(addprefix nixpkgs#,${PACKAGES})
+.PHONY: env-packages
+env-packages: # TODO: depends on config
+	nix profile install $(addprefix nixpkgs#,${ENV_PACKAGES})
+
+.PHONY: dev-packages
+dev-packages: configs
+	nix profile install $(addprefix nixpkgs#,${DEV_PACKAGES})
+
+.PHONY: gui-packages
+gui-packages: configs
+	nix profile install $(addprefix nixpkgs#,${GUI_PACKAGES})
+
+.PHONY: unfree-packages
+unfree-packages: configs
 	NIXPKGS_ALLOW_UNFREE=1 nix profile install --impure $(addprefix nixpkgs#,${UNFREE_PACKAGES})
+
+.PHONY: packages
+packages: env-packages gui-packages dev-packages unfree-packages
 
 ${CONFIG_DIR}:
 	mkdir ${CONFIG_DIR}

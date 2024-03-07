@@ -1,6 +1,0 @@
-[submodule "tmux/tmux-simple-git-status"]
-	path = tmux/tmux-simple-git-status
-	url = https://github.com/pstripe/tmux-simple-git-status.git
-[submodule "tmux/plugins/tmux-simple-git-status"]
-	path = tmux/plugins/tmux-simple-git-status
-	url = https://github.com/pstripe/tmux-simple-git-status.git
