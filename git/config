@@ -1,3 +1,6 @@
+[init]
+	defaultBranch = main
+
 [user]
 	name = Pavel Smirnov
 
@@ -8,17 +11,27 @@
 [interactive]
 	diffFilter = delta --color-only
 
+[rerere]
+	enabled = true
+
 [merge]
-	conflictstyle = diff3
+	conflictstyle = zdiff3
 
 [diff]
+	algorithm = histogram
 	colorMoved = default
 
 [fetch]
 	prune = true
 
+[log]
+	date = iso
+
 [pull]
 	rebase = true
+
+[push]
+	default = current
 
 [delta]
 	navigate = true
@@ -45,3 +58,4 @@
 [rebase]
 	autoSquash = true
 	autoStash = true
+	updateRefs = true
