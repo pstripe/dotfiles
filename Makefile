@@ -4,7 +4,7 @@
 
 CONFIG_DIR = ${HOME}/.config
 
-EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,helix)
+EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,helix tmux)
 CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,alacritty bat git nvim nix fish zellij bottom wezterm)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,karabiner)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
