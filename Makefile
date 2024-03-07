@@ -5,11 +5,14 @@
 CONFIG_DIR = ${HOME}/.config
 
 CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,alacritty git nvim nix fish zellij bottom wezterm)
+CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,karabiner)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
 ENV_PACKAGES    := bat bottom delta exa fd fish fzf git git-stack neovim nushell ripgrep zellij
-GUI_PACKAGES    := alacritty monitorcontrol # Requires symlink to /Application on MacOS
+# TODO: Requires symlink to /Application on MacOS
+# Karabiner-elements: complex installation. Requires a lot of symlinks
+GUI_PACKAGES    := alacritty monitorcontrol karabiner-elements
 GUI_PACKAGES    += nerdfonts
 DEV_PACKAGES    := php phpactor
 # go-tools: staticcheck
