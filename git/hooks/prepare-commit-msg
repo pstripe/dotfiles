@@ -1,0 +1,25 @@
+#!/usr/bin/env nu
+#
+# An example hook script to prepare the commit log message.
+# Called by "git commit" with the name of the file that has the
+# commit message, followed by the description of the commit
+# message's source.  The hook's purpose is to edit the commit
+# message file.  If the hook fails with a non-zero status,
+# the commit is aborted.
+#
+# To enable this hook, rename this file to "prepare-commit-msg".
+
+def main [commit_msg_file: string, commit_source?: string, sha1?: string] {
+  if ($commit_source | is-empty) {
+    let ticket = (
+      git rev-parse --abbrev-ref HEAD
+        | parse --regex '^.*/(?P<ticket>(?:ME|PRDS)-\d+)'
+        | get --ignore-errors 0.ticket
+    )
+
+    if ($ticket | is-empty) == false {
+      let message = (open $commit_msg_file)
+      [$ticket ": "  $message] | str join | save --force $commit_msg_file
+    }
+  }
+}
