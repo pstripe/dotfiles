@@ -19,12 +19,17 @@ return {
   keys = {
     { key = 'h', mods = 'ALT', action = act.ActivateTabRelative(-1) },
     { key = 'l', mods = 'ALT', action = act.ActivateTabRelative(1) },
+    { key = 'h', mods = 'ALT|SHIFT', action = act.ActivatePaneDirection('Left') },
+    { key = 'j', mods = 'ALT|SHIFT', action = act.ActivatePaneDirection('Down') },
+    { key = 'k', mods = 'ALT|SHIFT', action = act.ActivatePaneDirection('Up') },
+    { key = 'l', mods = 'ALT|SHIFT', action = act.ActivatePaneDirection('Right') },
     { key = 'p', mods = 'ALT', action = act.ActivateKeyTable({ name = 'pane_spawn' }) },
   },
   key_tables = {
     pane_spawn = {
       { key = 'f', action = act.TogglePaneZoomState },
-      { key = 'n', action = act.SplitHorizontal({domain="CurrentPaneDomain"}) },
+      { key = 'v', action = act.SplitHorizontal({domain="CurrentPaneDomain"}) },
+      { key = 's', action = act.SplitVertical({domain="CurrentPaneDomain"}) },
     },
   },
 
