@@ -354,7 +354,12 @@ end)
 
 -- Treesitter
 now(function()
-  add('nvim-treesitter/nvim-treesitter')
+  add({
+    source = 'nvim-treesitter/nvim-treesitter',
+    hooks = {
+      post_checkout = function() vim.cmd('TSUpdate') end
+    }
+  })
 
   require('nvim-treesitter.configs').setup({
     ensure_installed = {
