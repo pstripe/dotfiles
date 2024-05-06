@@ -129,7 +129,6 @@ end)
 
 later(function()
   add('tpope/vim-fugitive')
-  vim.keymap.set('n', '<leader>gyb', "<cmd>call setreg('+', FugitiveHead())<CR><cmd>echo 'Git branch yanked!'<CR>", { noremap = true, silent = false })
 end)
 
 -- Tools
@@ -227,7 +226,12 @@ end)
 
 -- LSP
 now(function()
-  add('neovim/nvim-lspconfig')
+  add({
+    source = 'neovim/nvim-lspconfig',
+    depends = {
+      'hrsh7th/cmp-nvim-lsp',
+    }
+  })
 
   local opts = { noremap = true }
   vim.keymap.set('n', '<leader>d',  vim.diagnostic.setloclist, opts)
