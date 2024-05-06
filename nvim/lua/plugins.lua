@@ -34,7 +34,7 @@ now(function()
   vim.notify = require('mini.notify').make_notify()
 end)
 
-now(function()
+later(function()
   add({
     source = 'folke/todo-comments.nvim',
     depends = { 'nvim-lua/plenary.nvim' }
@@ -51,7 +51,7 @@ now(function()
 end)
 
 
-now(function()
+later(function()
   add('folke/which-key.nvim')
 
   vim.opt.timeout = true
@@ -120,20 +120,20 @@ now(function()
   })
 end)
 
-now(function()
+later(function()
   add({
     source = 'sindrets/diffview.nvim',
     depends = { 'nvim-lua/plenary.nvim' }
   })
 end)
 
-now(function()
+later(function()
   add('tpope/vim-fugitive')
   vim.keymap.set('n', '<leader>gyb', "<cmd>call setreg('+', FugitiveHead())<CR><cmd>echo 'Git branch yanked!'<CR>", { noremap = true, silent = false })
 end)
 
 -- Tools
-now(function()
+later(function()
   add('akinsho/toggleterm.nvim')
   require('toggleterm').setup({
     open_mapping = '<leader>t',
@@ -147,7 +147,7 @@ now(function()
   })
 end)
 
-now(function()
+later(function()
   add({
     source = 'iamcco/markdown-preview.nvim',
     hooks = {
@@ -155,7 +155,7 @@ now(function()
     }
   })
 end)
-now(function()
+later(function()
   add({
     source = 'luckasRanarison/nvim-devdocs',
     depends = {
@@ -180,7 +180,7 @@ now(function()
     }
   })
 end)
-now(function()
+later(function()
   add({
     source = 'nvim-telescope/telescope.nvim',
     depends = {
@@ -198,7 +198,7 @@ now(function()
   vim.keymap.set('n', '<leader>fs', builtin.treesitter)
   vim.keymap.set('n', '<leader>fl', builtin.current_buffer_fuzzy_find)
 end)
-now(function()
+later(function()
   add({
     source = 'nvim-telescope/telescope-file-browser.nvim',
     depends = {
@@ -274,7 +274,7 @@ now(function()
 end)
 
 -- Snippets
-now(function()
+later(function()
   add('L3MON4D3/LuaSnip')
 
   vim.keymap.set('i', '<C-s>', require('luasnip.extras.select_choice'))
@@ -460,7 +460,7 @@ now(function()
   })
 end)
 
-now(function()
+later(function()
   add({
     source = 'nvim-treesitter/nvim-treesitter-context',
     depends = {
@@ -469,7 +469,7 @@ now(function()
   })
 end)
 
-now(function()
+later(function()
   add({
     source = 'HiPhish/nvim-ts-rainbow2',
     depends = {
@@ -483,7 +483,7 @@ now(function()
   })
 end)
 
-now(function()
+later(function()
   add({
     source = 'nvim-treesitter/playground',
     depends = {
