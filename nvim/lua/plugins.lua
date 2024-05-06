@@ -284,47 +284,12 @@ now(function()
 end)
 
 -- Code
-now(function()
-  add('windwp/nvim-autopairs')
-
-  local npairs = require('nvim-autopairs')
-  local Rule   = require('nvim-autopairs.rule')
-
-  npairs.setup({
-    check_ts = true
-  })
-  npairs.add_rules({
-    Rule(' ', ' ')
-      :with_pair(function (opts)
-        local pair = opts.line:sub(opts.col - 1, opts.col)
-        return vim.tbl_contains({ '()', '[]', '{}' }, pair)
-      end),
-    Rule('( ', ' )')
-      :with_pair(function() return false end)
-      :with_move(function(opts)
-        return opts.prev_char:match('.%)') ~= nil
-      end)
-      :use_key(')'),
-    Rule('{ ', ' }')
-      :with_pair(function() return false end)
-      :with_move(function(opts)
-        return opts.prev_char:match('.%}') ~= nil
-      end)
-      :use_key('}'),
-    Rule('[ ', ' ]')
-      :with_pair(function() return false end)
-      :with_move(function(opts)
-        return opts.prev_char:match('.%]') ~= nil
-      end)
-      :use_key(']')
-  })
+later(function()
+  require('mini.pairs').setup()
 end)
 
-now(function()
-  add('kylechui/nvim-surround')
-  --tag = "*", -- Use for stability; omit to use `main` branch for the latest features
-
-  require("nvim-surround").setup()
+later(function()
+  require('mini.surround').setup()
 end)
 
 now(function()
