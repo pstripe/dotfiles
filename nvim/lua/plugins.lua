@@ -135,7 +135,16 @@ end)
 -- Tools
 now(function()
   add('akinsho/toggleterm.nvim')
-  require('toggleterm').setup()
+  require('toggleterm').setup({
+    open_mapping = '<leader>t',
+    insert_mappings = false,
+    direction = 'float',
+    persist_size = false,
+    float_opts = {
+      width = 150,
+      height = 50,
+    }
+  })
 end)
 
 now(function()
