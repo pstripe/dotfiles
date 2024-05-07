@@ -192,8 +192,8 @@ later(function()
   add({
     source = 'nvim-telescope/telescope.nvim',
     depends = {
-      {'nvim-lua/popup.nvim'},
-      {'nvim-lua/plenary.nvim'},
+      'nvim-lua/popup.nvim',
+      'nvim-lua/plenary.nvim',
     },
   })
 
