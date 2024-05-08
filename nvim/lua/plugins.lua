@@ -280,12 +280,6 @@ now(function()
   end
 end)
 
-now(function()
-  add('j-hui/fidget.nvim')
-
-  require('fidget').setup({})
-end)
-
 -- Snippets
 later(function()
   add('L3MON4D3/LuaSnip')
