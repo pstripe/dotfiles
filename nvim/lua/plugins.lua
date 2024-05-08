@@ -140,8 +140,8 @@ later(function()
     direction = 'float',
     persist_size = false,
     float_opts = {
-      width = 150,
-      height = 50,
+      width = 250,
+      height = 75,
     }
   })
 
