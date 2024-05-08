@@ -385,6 +385,7 @@ now(function()
       'query',
       'rust',
       'toml',
+      'vimdoc',
       'yaml',
     },
     sync_install = false,
