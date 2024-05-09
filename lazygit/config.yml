@@ -2,4 +2,5 @@ os:
   editPreset: 'nvim-remote'
 
 gui:
+  filterMode: 'fuzzy'
   nerdFontsVersion: '3'
