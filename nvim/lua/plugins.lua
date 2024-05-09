@@ -193,6 +193,16 @@ later(function()
   vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>lua _lazygit_toggle()<CR>', { noremap = true, silent = true })
 end)
 
+now(function()
+  add('willothy/flatten.nvim')
+
+  require('flatten').setup({
+    window = {
+      open = 'tab',
+    },
+  })
+end)
+
 later(function()
   add({
     source = 'iamcco/markdown-preview.nvim',
