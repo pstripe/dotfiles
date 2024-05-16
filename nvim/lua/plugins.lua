@@ -170,10 +170,15 @@ end)
 later(function()
   add('akinsho/toggleterm.nvim')
   require('toggleterm').setup({
-    open_mapping = '<leader>t',
+    size = function(term)
+      if term.direction == 'horizontal' then
+        return 20
+      elseif term.direction == "vertical" then
+        return vim.o.columns * 0.4
+      end
+    end,
+    open_mapping = '<c-enter>',
     insert_mappings = false,
-    direction = 'float',
-    persist_size = false,
     float_opts = {
       width = 250,
       height = 75,
@@ -181,7 +186,11 @@ later(function()
   })
 
   local Terminal  = require('toggleterm.terminal').Terminal
-  local lazygit = Terminal:new({ cmd = 'lazygit', hidden = true })
+  local lazygit = Terminal:new({
+    direction = 'float',
+    cmd = 'lazygit',
+    hidden = true,
+  })
 
   function _lazygit_toggle()
     lazygit:toggle()
@@ -424,6 +433,7 @@ now(function()
       'kdl',
       'lua',
       'markdown',
+      'nu',
       'php',
       'phpdoc',
       'python',
