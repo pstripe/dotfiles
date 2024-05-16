@@ -126,8 +126,10 @@ now(function()
       lualine_z = { 'tabs' },
     },
     extensions = {
+      'man',
       'nvim-tree',
       'quickfix',
+      'toggleterm'
     }
   })
 end)
