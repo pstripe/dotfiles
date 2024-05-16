@@ -23,7 +23,7 @@ return {
     { key = 'j', mods = 'ALT|SHIFT', action = act.ActivatePaneDirection('Down') },
     { key = 'k', mods = 'ALT|SHIFT', action = act.ActivatePaneDirection('Up') },
     { key = 'l', mods = 'ALT|SHIFT', action = act.ActivatePaneDirection('Right') },
-    { key = 'p', mods = 'ALT', action = act.ActivateKeyTable({ name = 'pane_spawn' }) },
+    { key = 'w', mods = 'ALT', action = act.ActivateKeyTable({ name = 'pane_spawn' }) },
   },
   key_tables = {
     pane_spawn = {
