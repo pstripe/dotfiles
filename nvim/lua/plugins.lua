@@ -126,7 +126,6 @@ now(function()
       lualine_z = { 'tabs' },
     },
     extensions = {
-      'fugitive',
       'nvim-tree',
       'quickfix',
     }
@@ -163,10 +162,6 @@ later(function()
     source = 'sindrets/diffview.nvim',
     depends = { 'nvim-lua/plenary.nvim' }
   })
-end)
-
-later(function()
-  add('tpope/vim-fugitive')
 end)
 
 -- Tools

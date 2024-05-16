@@ -74,7 +74,7 @@ function FnameRelToProjectRoot()
   local Path = require('plenary.path')
 
   local abs_fname = vim.fn.expand('%:p')
-  local work_tree = vim.fn.FugitiveWorkTree()
+  local work_tree = vim.b.gitsigns_status_dict.root
 
   local rel_fname = Path:new(abs_fname)
   if not isempty(work_tree) then
