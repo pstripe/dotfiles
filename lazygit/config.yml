@@ -4,3 +4,8 @@ os:
 gui:
   filterMode: 'fuzzy'
   nerdFontsVersion: '3'
+
+customCommands:
+  - key: '<c-f>'
+    context: 'localBranches'
+    command: 'git push --force'
