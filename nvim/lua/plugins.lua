@@ -81,6 +81,10 @@ now(function()
 end)
 
 later(function()
+  require('mini.comment').setup()
+end)
+
+later(function()
   add({
     source = 'folke/todo-comments.nvim',
     depends = { 'nvim-lua/plenary.nvim' }
