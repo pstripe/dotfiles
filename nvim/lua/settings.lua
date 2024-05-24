@@ -31,6 +31,7 @@ go.scrolloff = 3
 go.splitright = true
 go.splitbelow = true
 wo.number = true
+wo.relativenumber = true
 go.showcmd = true
 wo.foldmethod = 'marker'
 wo.colorcolumn = "-20,+0"
