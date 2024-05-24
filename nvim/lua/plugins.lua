@@ -459,6 +459,9 @@ now(function()
       enable = true,
     },
   })
+
+  vim.api.nvim_create_user_command('TSPlayground', 'lua vim.treesitter.dev.inspect_tree()', {})
+  vim.api.nvim_create_user_command('TSPlaygroundQuery', 'lua vim.treesitter.dev.edit_query()', {})
 end)
 
 now(function()
@@ -545,20 +548,6 @@ later(function()
   })
   require('nvim-treesitter.configs').setup({
     rainbow = {
-      enable = true
-    }
-  })
-end)
-
-later(function()
-  add({
-    source = 'nvim-treesitter/playground',
-    depends = {
-      'nvim-treesitter/nvim-treesitter'
-    },
-  })
-  require('nvim-treesitter.configs').setup({
-    playground = {
       enable = true
     }
   })
