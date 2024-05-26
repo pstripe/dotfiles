@@ -320,8 +320,11 @@ later(function()
 end)
 
 -- Code
-later(function()
-  require('mini.pairs').setup()
+now(function()
+  add('windwp/nvim-autopairs')
+  require('nvim-autopairs').setup({
+    check_ts = true
+  })
 end)
 
 later(function()
