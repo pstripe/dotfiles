@@ -322,6 +322,19 @@ end)
 
 now(function()
   add({
+    source = 'garymjr/nvim-snippets',
+    depends = {
+      'rafamadriz/friendly-snippets',
+      'hrsh7th/nvim-cmp',
+    }
+  })
+  require('snippets').setup({
+    friendly_snippets = true,
+  })
+end)
+
+now(function()
+  add({
     source = 'hrsh7th/nvim-cmp',
     depends = {
       'ray-x/cmp-treesitter',
