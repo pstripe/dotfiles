@@ -331,7 +331,7 @@ now(function()
     },
   })
 
-  vim.o.completeopt = 'menuone,noselect'
+  vim.opt.completeopt = 'menuone,noselect'
   local cmp = require('cmp')
   local lspkind = require('lspkind')
 

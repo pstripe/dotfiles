@@ -1,62 +1,52 @@
-local go = vim.o;
-local bo = vim.bo;
-local wo = vim.wo;
-
 vim.cmd('syntax on')
 
 
-go.compatible = false
-go.autoread = true
+vim.opt.lazyredraw = true
+vim.opt.encoding = 'utf-8'
+vim.opt.fileencodings = 'utf-8,cp1251,default'
 
-go.lazyredraw = true
-go.encoding = 'utf-8'
-go.fileencodings = 'utf-8,cp1251,default'
-
-go.title = true
-go.ttyfast = true
-go.redrawtime = 40000
+vim.opt.title = true
 
 -- Spaces & tabs
-wo.list = true
+vim.opt.list = true
 vim.opt.listchars = { tab = '► ', trail = '•' }
-go.expandtab = true
-go.softtabstop = 2
-go.shiftwidth = 2
-go.tabstop = 2
+vim.opt.expandtab = true
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
 
 -- UI
-go.termguicolors = true
-go.laststatus = 2
-go.scrolloff = 3
-go.splitright = true
-go.splitbelow = true
-wo.number = true
-wo.relativenumber = true
-go.showcmd = true
-wo.foldmethod = 'marker'
-wo.colorcolumn = "-20,+0"
-wo.cursorline = true
-bo.textwidth = 100
+vim.opt.termguicolors = true
+vim.opt.laststatus = 2
+vim.opt.scrolloff = 5
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.foldmethod = 'marker'
+vim.opt.colorcolumn = "-30,+0"
+vim.opt.cursorline = true
+vim.opt.textwidth = 130
 
 -- Backup
-go.backup = false
-go.writebackup = false
-bo.swapfile = false
-bo.undofile = true
-go.undodir = '/tmp/nvim/undo'
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.swapfile = false
+vim.opt.undofile = true
+vim.opt.undodir = '/tmp/nvim/undo'
 -- Search
-go.hlsearch = true
-go.incsearch = true
-go.inccommand = 'nosplit'
-go.ignorecase = true
-go.smartcase = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.inccommand = 'nosplit'
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
-go.history = 100
+vim.opt.history = 100
 
-go.hidden = true
+vim.opt.hidden = true
 
-wo.wrap = false
-go.sidescroll = 5
+vim.opt.wrap = false
+vim.opt.sidescroll = 5
 
 -- Key bindings
 vim.g.mapleader = ' '
