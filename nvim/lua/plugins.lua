@@ -307,16 +307,7 @@ now(function()
       capabilities = capabilities,
     })
   end
-end)
 
--- Snippets
-later(function()
-  add('L3MON4D3/LuaSnip')
-
-  vim.keymap.set('i', '<C-s>', require('luasnip.extras.select_choice'))
-
-  -- TODO: migrate
-  require('snippets')
 end)
 
 -- Code
@@ -338,15 +329,12 @@ now(function()
       'ray-x/cmp-treesitter',
       'hrsh7th/cmp-nvim-lsp',
       'neovim/nvim-lspconfig',
-      'saadparwaiz1/cmp_luasnip',
-      'L3MON4D3/LuaSnip',
       'onsails/lspkind.nvim',
     },
   })
 
   vim.o.completeopt = 'menuone,noselect'
   local cmp = require('cmp')
-  local luasnip = require('luasnip')
   local lspkind = require('lspkind')
 
   vim.keymap.set('i', '<C-x><C-o>', cmp.complete)
@@ -357,7 +345,7 @@ now(function()
     },
     snippet = {
       expand = function(args)
-        luasnip.lsp_expand(args.body)
+        vim.snippets.expand(args.body)
       end,
     },
     mapping = cmp.mapping.preset.insert({
@@ -380,7 +368,6 @@ now(function()
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'treesitter' },
-      { name = 'luasnip' },
     }),
     formatting = {
       format = lspkind.cmp_format({
