@@ -63,8 +63,8 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 --
 vim.keymap.set('', 'Q', '<nop>')
-vim.keymap.set({'n', 'v'}, '<leader>y', '"+y')
-vim.keymap.set({'n', 'v'}, '<leader>p', '"+p')
+vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', { desc = 'Copy to system clipboard' })
+vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', { desc = 'Paste from system clipboard' })
 
 -- Functions
 function isempty(s)

@@ -116,20 +116,20 @@ now(function()
   require('gitsigns').setup({
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
-      vim.keymap.set('n', '<leader>gp', gs.preview_hunk)
-      vim.keymap.set('n', '<leader>gb', function() gs.blame_line({full = true}) end, { buffer = bufnr })
+      vim.keymap.set('n', '<leader>gp', gs.preview_hunk, { desc = 'Git: last change'})
+      vim.keymap.set('n', '<leader>gb', function() gs.blame_line({full = true}) end, { buffer = bufnr, desc = 'Git: blame for line' })
 
       vim.keymap.set('n', ']c', function()
         if vim.wo.diff then return ']c' end
         vim.schedule(function() gs.next_hunk() end)
         return '<Ignore>'
-      end, { expr = true, buffer = bufnr })
+      end, { expr = true, buffer = bufnr, desc = 'Git: next changed hunk' })
 
       vim.keymap.set('n', '[c', function()
         if vim.wo.diff then return '[c' end
         vim.schedule(function() gs.prev_hunk() end)
         return '<Ignore>'
-      end, { expr = true, buffer = bufnr })
+      end, { expr = true, buffer = bufnr, desc = 'Git: previous changed hunk' })
     end
   })
 end)
@@ -171,7 +171,7 @@ later(function()
     lazygit:toggle()
   end
 
-  vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>lua _lazygit_toggle()<CR>', { noremap = true, silent = true })
+  vim.keymap.set('n', '<leader>gg', _lazygit_toggle, { noremap = true, silent = true, desc = 'Lazygit' })
 end)
 
 now(function()
@@ -202,7 +202,7 @@ later(function()
     },
   })
 
-  vim.keymap.set('n', '<leader>k', '<cmd>DevdocsOpenCurrentFloat')
+  vim.keymap.set('n', '<leader>k', '<cmd>DevdocsOpenCurrentFloat', { desc = 'DevDocs for current ft' })
 
   require('nvim-devdocs').setup({
     ensure_installed = {
@@ -227,13 +227,13 @@ later(function()
   })
 
   local builtin = require('telescope.builtin')
-  vim.keymap.set('n', '<leader>f',  builtin.find_files)
-  vim.keymap.set('n', '<leader>/',  builtin.live_grep)
-  vim.keymap.set('n', '<leader>b',  builtin.buffers)
-  vim.keymap.set('n', '<leader>o',  builtin.commands)
-  vim.keymap.set('n', '<leader>fw', builtin.grep_string)
-  vim.keymap.set('n', '<leader>fs', builtin.treesitter)
-  vim.keymap.set('n', '<leader>fl', builtin.current_buffer_fuzzy_find)
+  vim.keymap.set('n', '<leader>f',  builtin.find_files, { desc = 'Fuzzy Finder' })
+  vim.keymap.set('n', '<leader>/',  builtin.live_grep, { desc = 'Live Grep' })
+  vim.keymap.set('n', '<leader>b',  builtin.buffers, { desc = 'Opened buffers' })
+  vim.keymap.set('n', '<leader>o',  builtin.commands, { desc = 'Nvim commands' })
+  vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Grep for cword' })
+  vim.keymap.set('n', '<leader>fs', builtin.treesitter, { desc = 'Current buffer symbols' })
+  vim.keymap.set('n', '<leader>fl', builtin.current_buffer_fuzzy_find, { desc = 'Current buffer lines' })
 end)
 later(function()
   add({
@@ -247,7 +247,7 @@ later(function()
   local telescope = require('telescope')
   telescope.load_extension('file_browser')
 
-  vim.keymap.set('n', '<leader>n', function() telescope.extensions.file_browser.file_browser({ path = '%:p:h' }) end)
+  vim.keymap.set('n', '<leader>n', function() telescope.extensions.file_browser.file_browser({ path = '%:p:h' }) end, { desc = 'File Browser' })
 end)
 
 now(function() add('chrisgrieser/nvim-spider') end)
@@ -255,11 +255,12 @@ now(function() add('chrisgrieser/nvim-spider') end)
 now(function()
   add('folke/flash.nvim')
 
-  vim.keymap.set({ 'n', 'o', 'x' }, 's', require('flash').jump)
-  vim.keymap.set({ 'n', 'o', 'x' }, '<C-s>', require('flash').treesitter)
-  vim.keymap.set({ 'o' },           'r', require('flash').remote)
-  vim.keymap.set({ 'o', 'x' },      'R', require('flash').treesitter_search)
-  vim.keymap.set({ 'c' },       '<C-s>', require('flash').toggle)
+  local flash = require('flash')
+  vim.keymap.set({ 'n', 'o', 'x' }, 's',      flash.jump, { desc = 'Jump to symbol' })
+  vim.keymap.set({ 'n', 'o', 'x' }, '<C-s>',  flash.treesitter, { desc = 'Select by TS symbol' })
+  vim.keymap.set({ 'o' },           'r',      flash.remote)
+  vim.keymap.set({ 'o', 'x' },      'R',      flash.treesitter_search)
+  vim.keymap.set({ 'c' },           '<C-s>',  flash.toggle)
 end)
 
 -- LSP
@@ -271,30 +272,27 @@ now(function()
     }
   })
 
-  local opts = { noremap = true }
-  vim.keymap.set('n', '<leader>d',  vim.diagnostic.setloclist, opts)
-  vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, opts)
-  vim.keymap.set('n', '[d',         vim.diagnostic.goto_prev,  opts)
-  vim.keymap.set('n', ']d',         vim.diagnostic.goto_next,  opts)
+  vim.keymap.set('n', '<leader>d',  vim.diagnostic.setloclist, { noremap = true, desc = 'Diagnostics to loclist' })
+  vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { noremap = true, desc = 'Diagnostics to float' })
+  vim.keymap.set('n', '[d',         vim.diagnostic.goto_prev,  { noremap = true, desc = 'Prev diagnostics' })
+  vim.keymap.set('n', ']d',         vim.diagnostic.goto_next,  { noremap = true, desc = 'Next diagnostics' })
 
   local function on_attach(client, bufnr)
-    local opts = { noremap = true, buffer = bufnr }
-    -- Mappings.
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'gR', vim.lsp.buf.references,  opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', 'K',  vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { noremap = true, buffer = bufnr, desc = 'Go to declaration' })
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, buffer = bufnr, desc = 'Go to definition' })
+    vim.keymap.set('n', 'gR', vim.lsp.buf.references,  { noremap = true, buffer = bufnr, desc = 'Find references' })
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { noremap = true, buffer = bufnr, desc = 'Find implementations' })
+    vim.keymap.set('n', 'K',  vim.lsp.buf.hover, { noremap = true, buffer = bufnr, desc = 'Show info' })
 
-    vim.keymap.set('n', '<leader>D',  vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<leader>k',  vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<leader>D',  vim.lsp.buf.type_definition, { noremap = true, buffer = bufnr, desc = 'Go to type definition' })
+    vim.keymap.set('n', '<leader>k',  vim.lsp.buf.signature_help, { noremap = true, buffer = bufnr, desc = 'Show signature help' })
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { noremap = true, buffer = bufnr, desc = 'Code action' })
 
     -- Set some keybinds conditional on server capabilities
     if client.server_capabilities.document_formatting then
-      vim.keymap.set('n', '<leader>fmt', vim.lsp.buf.format({ async = true }), opts)
+      vim.keymap.set('n', '<leader>fmt', vim.lsp.buf.format({ async = true }), { noremap = true, buffer = bufnr, desc = 'Run formatter' })
     elseif client.server_capabilities.document_range_formatting then
-      vim.keymap.set('n', '<leader>fmt', vim.lsp.buf.range_formatting, opts)
+      vim.keymap.set('n', '<leader>fmt', vim.lsp.buf.range_formatting, { noremap = true, buffer = bufnr, desc = 'Run formatter for range' })
     end
   end
 
@@ -337,7 +335,7 @@ now(function()
   local cmp = require('cmp')
   local lspkind = require('lspkind')
 
-  vim.keymap.set('i', '<C-x><C-o>', cmp.complete)
+  vim.keymap.set('i', '<C-x><C-o>', cmp.complete, { desc = 'Open completion' })
 
   cmp.setup({
     completion = {
