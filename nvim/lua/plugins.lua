@@ -418,9 +418,6 @@ now(function()
       enable = true,
     },
   })
-
-  vim.api.nvim_create_user_command('TSPlayground', 'lua vim.treesitter.dev.inspect_tree()', {})
-  vim.api.nvim_create_user_command('TSPlaygroundQuery', 'lua vim.treesitter.dev.edit_query()', {})
 end)
 
 now(function()
