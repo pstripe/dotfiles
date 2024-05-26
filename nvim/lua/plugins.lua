@@ -382,6 +382,9 @@ now(function()
     source = 'nvim-treesitter/nvim-treesitter',
     hooks = {
       post_checkout = function() vim.cmd('TSUpdate') end
+    },
+    depends = {
+      'nushell/tree-sitter-nu'
     }
   })
 
@@ -508,5 +511,3 @@ later(function()
     }
   })
 end)
-
-now(function() add('nushell/tree-sitter-nu') end)
