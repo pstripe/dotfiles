@@ -328,6 +328,29 @@ now(function()
       'hrsh7th/nvim-cmp',
     }
   })
+
+  vim.keymap.set('i', '<c-l>', function()
+    if vim.snippet.active({ direction = 1 }) then
+      vim.schedule(function()
+        vim.snippet.jump(1)
+      end)
+    end
+  end, { silent = true, desc = 'Expand snippet'})
+
+  vim.keymap.set('s', '<c-l>', function()
+    vim.schedule(function()
+      vim.snippet.jump(1)
+    end)
+  end, { silent = true, desc = 'Go to next placeholder'})
+
+  vim.keymap.set({ 'i', 's' }, '<c-h>', function()
+    if vim.snippet.active({ direction = -1 }) then
+      vim.schedule(function()
+        vim.snippet.jump(-1)
+      end)
+    end
+  end, { silent = true, desc = 'Go to prev placeholder'})
+
   require('snippets').setup({
     friendly_snippets = true,
   })
@@ -356,7 +379,7 @@ now(function()
     },
     snippet = {
       expand = function(args)
-        vim.snippets.expand(args.body)
+        vim.snippet.expand(args.body)
       end,
     },
     mapping = cmp.mapping.preset.insert({
@@ -379,6 +402,7 @@ now(function()
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'treesitter' },
+      { name = 'snippets' },
     }),
     formatting = {
       format = lspkind.cmp_format({

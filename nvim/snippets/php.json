@@ -1,0 +1,41 @@
+{
+  "Error rethrow": {
+    "prefix": "err",
+    "body": [
+      "if ($error !== null) {",
+      "\treturn tuple(null, $error);",
+      "}",
+      "",
+      "$0"
+    ],
+    "description": ""
+  },
+  "PHP script head": {
+    "prefix": "head",
+    "body": [
+      "<?php",
+      "",
+      "/** @kphp-strict-types-enable */",
+      "declare(strict_types = 1)",
+      "",
+      "namespace $1;",
+      "",
+      "$0"
+    ],
+    "description": ""
+  },
+  "Namespace": {
+    "prefix": "ns",
+    "body": [
+      "namespace VK\\Messages\\v2\\${1:namespace};$0"
+    ],
+    "description": ""
+  },
+  "Use": {
+    "prefix": "use",
+    "body": [
+      "use VK\\Messages\\${1:symbol};"
+    ],
+    "description": ""
+  }
+}
