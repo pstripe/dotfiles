@@ -2,8 +2,8 @@
   "Error rethrow": {
     "prefix": "err",
     "body": [
-      "if ($error !== null) {",
-      "\treturn tuple(null, $error);",
+      "if ($${1:error} !== null) {",
+      "\treturn tuple(null, $${1:error});",
       "}",
       "",
       "$0"
