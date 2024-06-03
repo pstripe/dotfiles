@@ -1,3 +1,5 @@
+vim.opt.conceallevel = 2
+
 function toggle_layout()
   print(vim.bo.keymap)
   if vim.bo.keymap == 'russian-jcukenwin' then
