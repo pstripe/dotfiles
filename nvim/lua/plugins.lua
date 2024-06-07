@@ -255,9 +255,9 @@ require('lazy').setup({
     'chrisgrieser/nvim-spider',
     lazy = true,
     keys = {
-      { 'e', function() require('spider').motion('e') end, mode = { 'n', 'o', 'x' } },
-      { 'w', function() require('spider').motion('w') end, mode = { 'n', 'o', 'x' } },
-      { 'b', function() require('spider').motion('b') end, mode = { 'n', 'o', 'x' } },
+      { 'e', "<cmd>lua require('spider').motion('e')<cr>", mode = { 'n', 'o', 'x' } },
+      { 'w', "<cmd>lua require('spider').motion('w')<cr>", mode = { 'n', 'o', 'x' } },
+      { 'b', "<cmd>lua require('spider').motion('b')<cr>", mode = { 'n', 'o', 'x' } },
     },
   },
 
@@ -265,11 +265,11 @@ require('lazy').setup({
     'folke/flash.nvim',
     event = 'VeryLazy',
     keys = {
-      { 's', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
-      { 'S', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
-      { 'r', mode = 'o', function() require('flash').remote() end, desc = 'Remote Flash' },
-      { 'R', mode = { 'o', 'x' }, function() require('flash').treesitter_search() end, desc = 'Treesitter Search' },
-      { '<c-s>', mode = { 'c' }, function() require('flash').toggle() end, desc = 'Toggle Flash Search' },
+      { 's', mode = { 'n', 'x', 'o' }, "<cmd>lua require('flash').jump()<cr>",              desc = 'Flash' },
+      { 'S', mode = { 'n', 'x', 'o' }, "<cmd>lua require('flash').treesitter()<cr>",        desc = 'Flash Treesitter' },
+      { 'r', mode = 'o',               "<cmd>lua require('flash').remote()<cr>",            desc = 'Remote Flash' },
+      { 'R', mode = { 'o', 'x' },      "<cmd>lua require('flash').treesitter_search()<cr>", desc = 'Treesitter Search' },
+      { '<c-s>', mode = { 'c' },       "<cmd>lua require('flash').toggle()<cr>",            desc = 'Toggle Flash Search' },
     }
   },
 
