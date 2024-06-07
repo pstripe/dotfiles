@@ -16,7 +16,7 @@
       "<?php",
       "",
       "/** @kphp-strict-types-enable */",
-      "declare(strict_types = 1)",
+      "declare(strict_types = 1);",
       "",
       "namespace $1;",
       "",
