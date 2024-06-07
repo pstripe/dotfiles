@@ -245,8 +245,7 @@ require('lazy').setup({
       { '<leader>n', mode = 'n', function() require('telescope').extensions.file_browser.file_browser({ path = '%:p:h' }) end, desc = 'File Browser' }
     },
     config = function()
-      local telescope = require('telescope')
-      telescope.load_extension('file_browser')
+      require('telescope').load_extension('file_browser')
     end
   },
 
@@ -479,9 +478,7 @@ require('lazy').setup({
       },
     },
 
-    config = function(_, opts)
-      require('nvim-treesitter.configs').setup(opts)
-    end
+    main = 'nvim-treesitter.configs',
   },
 
   {
@@ -513,9 +510,7 @@ require('lazy').setup({
         },
       },
     },
-    config = function(_, opts)
-      require('nvim-treesitter.configs').setup(opts)
-    end
+    main = 'nvim-treesitter.configs',
   },
 
   {
@@ -548,9 +543,7 @@ require('lazy').setup({
       },
     },
 
-    config = function(_, opts)
-      require('nvim-treesitter.configs').setup(opts)
-    end
+    main = 'nvim-treesitter.configs',
   },
 
   {
@@ -570,8 +563,6 @@ require('lazy').setup({
         enable = true
       }
     },
-    config = function(_,opts)
-      require('nvim-treesitter.configs').setup(opts)
-    end
+    main = 'nvim-treesitter.configs',
   },
 })
