@@ -52,7 +52,6 @@ require('lazy').setup({
   {
     'folke/todo-comments.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    cmd = { 'TodoLocList', 'TodoQuickFix', 'TodoTelescope' },
     config = true,
   },
 
