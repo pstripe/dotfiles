@@ -1,9 +1,14 @@
 {
+  "Result": {
+    "prefix": "res",
+    "body": [ "return tuple(${1:result}, ${2:error});" ],
+    "description": ""
+  },
   "Error rethrow": {
     "prefix": "err",
     "body": [
-      "if ($${1:error} !== null) {",
-      "\treturn tuple(null, $${1:error});",
+      "if (\\$${1:error} !== null) {",
+      "\treturn tuple(null, \\$${1:error});",
       "}",
       "",
       "$0"
@@ -27,14 +32,14 @@
   "Namespace": {
     "prefix": "ns",
     "body": [
-      "namespace VK\\Messages\\v2\\${1:namespace};$0"
+      "namespace VK\\\\Messages\\\\v2\\\\${1:namespace};"
     ],
     "description": ""
   },
   "Use": {
     "prefix": "use",
     "body": [
-      "use VK\\Messages\\${1:symbol};"
+      "use VK\\\\Messages\\\\${1:symbol};"
     ],
     "description": ""
   }
