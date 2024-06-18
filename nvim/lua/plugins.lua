@@ -49,10 +49,6 @@ require('lazy').setup({
         lsp_doc_border = false, -- add a border to hover docs and signature help
       },
     },
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'rcarriga/nvim-notify',
-    }
   },
 
   {
@@ -126,14 +122,6 @@ require('lazy').setup({
       }
     },
   },
-
-  -- now(function()
-  --   require('mini.notify').setup()
-  --   vim.notify = require('mini.notify').make_notify()
-  -- end)
-
-
-
 
   -- Git
   {
@@ -360,8 +348,8 @@ require('lazy').setup({
     },
 
     opts = {
-        friendly_snippets = true,
-      },
+      friendly_snippets = true,
+    },
 
     keys = {
       {
