@@ -3,7 +3,7 @@ theme = "sonokai"
 [editor]
 auto-format = false
 cursorline = true
-line-number = "absolute"
+line-number = "relative"
 mouse = false
 
 [editor.cursor-shape]
