@@ -1,0 +1,18 @@
+{
+  "Modulite": {
+    "prefix": "modulite",
+    "body": [
+      "name: '@messages/$1'",
+      "description: '$2'",
+      "namespace: \\\\VK\\\\Messages\\\\$3",
+      "export:",
+      "- $4",
+      "require:",
+      "- '#vk/rpc-client'",
+      "- '#vk/tl'",
+      "- '@messages/$5'",
+      "$0"
+    ],
+    "description": "Modulite config template"
+  }
+}
