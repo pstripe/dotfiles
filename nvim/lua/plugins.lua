@@ -29,29 +29,6 @@ require('lazy').setup({
 
   -- UI/UX
   {
-    'folke/noice.nvim',
-    event = 'VeryLazy',
-    opts = {
-      lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-        },
-      },
-      -- you can enable a preset for easier configuration
-      presets = {
-        bottom_search = true, -- use a classic bottom cmdline for search
-        command_palette = true, -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false, -- add a border to hover docs and signature help
-      },
-    },
-  },
-
-  {
     'm4xshen/hardtime.nvim',
     dependencies = {
       'MunifTanjim/nui.nvim',
@@ -154,81 +131,10 @@ require('lazy').setup({
 
   -- Tools
   {
-    'akinsho/toggleterm.nvim',
-    version = '*',
-    opts = {
-      size = function(term)
-        if term.direction == 'horizontal' then
-          return 20
-        elseif term.direction == "vertical" then
-          return vim.o.columns * 0.4
-        end
-      end,
-      open_mapping = '<c-enter>',
-      insert_mappings = false,
-      float_opts = {
-        width = 250,
-        height = 75,
-      }
-    },
-    config = function(_, opts)
-      require('toggleterm').setup(opts)
-
-      local Terminal  = require('toggleterm.terminal').Terminal
-      local lazygit = Terminal:new({
-        direction = 'float',
-        cmd = 'lazygit',
-        hidden = true,
-      })
-
-      function _lazygit_toggle()
-        lazygit:toggle()
-      end
-
-      vim.keymap.set('n', '<leader>gg', _lazygit_toggle, { noremap = true, silent = true, desc = 'Lazygit' })
-    end
-  },
-
-  {
-    'willothy/flatten.nvim',
-    opts = {
-      window = {
-        open = 'tab',
-      },
-    },
-  },
-
-  {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
     ft = { 'markdown' },
     build = function() vim.fn['mkdp#util#install']() end,
-  },
-
-  {
-    'luckasRanarison/nvim-devdocs',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-treesitter/nvim-treesitter',
-    },
-
-    opts = {
-      ensure_installed = {
-        'fish-3.7',
-        'go',
-        'lua-5.4',
-        'nushell',
-        'php',
-        'phpunit-9',
-        'python-3.12',
-        'rust',
-      }
-    },
-
-    keys = {
-      { '<leader>k', mode = 'n', '<cmd>DevdocsOpenCurrentFloat', desc = 'DevDocs for current ft' },
-    }
   },
 
   {
@@ -237,7 +143,6 @@ require('lazy').setup({
       'nvim-lua/popup.nvim',
       'nvim-lua/plenary.nvim',
     },
-
     keys = {
       { '<leader>f',  mode = 'n', function() require('telescope.builtin').find_files() end, desc = 'Fuzzy Finder' },
       { '<leader>/',  mode = 'n', function() require('telescope.builtin').live_grep() end, desc = 'Live Grep' },
@@ -567,18 +472,5 @@ require('lazy').setup({
     dependencies = {
       'nvim-treesitter/nvim-treesitter'
     }
-  },
-
-  {
-    'HiPhish/nvim-ts-rainbow2',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter'
-    },
-    opts ={
-      rainbow = {
-        enable = true
-      }
-    },
-    main = 'nvim-treesitter.configs',
   },
 })
