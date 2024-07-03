@@ -12,15 +12,12 @@ HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
 ENV_PACKAGES    := bat bottom delta eza fd sd fish jq git neovim nushell nnn ripgrep zstd lazygit
 ENV_PACKAGES    += nix # Manage itself
-# TODO: Requires symlink to /Application on MacOS
-# Karabiner-elements: complex installation. Requires a lot of symlinks
-GUI_PACKAGES    := monitorcontrol karabiner-elements
-GUI_PACKAGES    += nerdfonts
+BREW_PACKAGES   := alfred monitorcontrol karabiner-elements wezterm zoom firefox
+CASK_PACKAGES   := docker
 DEV_PACKAGES    := php phpactor
 # go-tools: staticcheck
 DEV_PACKAGES    += go gopls go-tools delve
 DEV_PACKAGES    += cargo rustc rustfmt rust-analyzer
-UNFREE_PACKAGES := zoom-us
 
 .PHONY: configs
 configs: ${CONFIG_TARGETS} ${HOME_TARGETS}
@@ -30,6 +27,16 @@ configs: ${CONFIG_TARGETS} ${HOME_TARGETS}
 nix:
 	curl -L https://nixos.org/nix/install | sh
 
+.PHONY: update
+update:
+	nix profile upgrade '.*'
+	nix profile wipe-history --older-than 30d
+	nix store gc
+	brew update
+	brew upgrade
+	brew autoremove
+	brew cleanup
+
 .PHONY: env-packages
 env-packages: configs # TODO: depends on nix
 	nix profile install $(addprefix nixpkgs#,${ENV_PACKAGES})
@@ -38,13 +45,10 @@ env-packages: configs # TODO: depends on nix
 dev-packages: configs
 	nix profile install $(addprefix nixpkgs#,${DEV_PACKAGES})
 
-.PHONY: gui-packages
-gui-packages: configs
-	nix profile install $(addprefix nixpkgs#,${GUI_PACKAGES})
-
-.PHONY: unfree-packages
-unfree-packages: configs
-	NIXPKGS_ALLOW_UNFREE=1 nix profile install --impure $(addprefix nixpkgs#,${UNFREE_PACKAGES})
+.PHONY: brew-packages
+brew-packages: configs
+	brew install ${BREW_PACKAGES}
+	brew install --cask ${CASK_PACKAGES}
 
 .PHONY: packages
 packages: env-packages gui-packages dev-packages unfree-packages
