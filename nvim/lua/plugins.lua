@@ -143,6 +143,7 @@ require('lazy').setup({
       'nvim-lua/popup.nvim',
       'nvim-lua/plenary.nvim',
     },
+    cmd = { 'Telescope' },
     keys = {
       { '<leader>f',  mode = 'n', function() require('telescope.builtin').find_files() end, desc = 'Fuzzy Finder' },
       { '<leader>/',  mode = 'n', function() require('telescope.builtin').live_grep() end, desc = 'Live Grep' },
@@ -177,11 +178,23 @@ require('lazy').setup({
       { 'w', "<cmd>lua require('spider').motion('w')<cr>", mode = { 'n', 'o', 'x' } },
       { 'b', "<cmd>lua require('spider').motion('b')<cr>", mode = { 'n', 'o', 'x' } },
     },
+    opts = {
+      skipInsignificantPunctuation = false,
+      consistentOperatorPending = true,
+    },
   },
 
   {
     'folke/flash.nvim',
     event = 'VeryLazy',
+    opts = {
+      mode = 'fuzzy',
+      modes = {
+        search = {
+          enabled = true,
+        },
+      },
+    },
     keys = {
       { 's', mode = { 'n', 'x', 'o' }, "<cmd>lua require('flash').jump()<cr>",              desc = 'Flash' },
       { 'S', mode = { 'n', 'x', 'o' }, "<cmd>lua require('flash').treesitter()<cr>",        desc = 'Flash Treesitter' },
@@ -252,6 +265,7 @@ require('lazy').setup({
       'hrsh7th/nvim-cmp',
     },
 
+    lazy = false,
     opts = {
       friendly_snippets = true,
     },
