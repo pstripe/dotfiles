@@ -4,7 +4,6 @@ theme = "sonokai"
 auto-format = false
 cursorline = true
 line-number = "relative"
-mouse = false
 
 [editor.cursor-shape]
 insert = "bar"
@@ -13,5 +12,13 @@ insert = "bar"
 hidden = false
 
 [editor.whitespace.render]
-space = "all"
 tab = "all"
+
+[editor.indent-guides]
+render = true
+skip-levels = 1
+
+[editor.statusline.mode]
+normal = "N"
+insert = "I"
+select = "S"
