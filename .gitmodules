@@ -1,0 +1,6 @@
+[submodule "yazi/flavors/tokyo-night.yazi"]
+	path = yazi/flavors/tokyo-night.yazi
+	url = https://github.com/BennyOe/tokyo-night.yazi.git
+[submodule "yazi/plugins/glow.yazi"]
+	path = yazi/plugins/glow.yazi
+	url = https://github.com/Reledia/glow.yazi.git

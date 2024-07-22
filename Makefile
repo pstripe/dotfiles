@@ -5,12 +5,12 @@
 CONFIG_DIR = ${HOME}/.config
 
 EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,helix tmux zellij alacritty)
-CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,bat git nvim nix fish bottom wezterm lazygit)
+CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,bat git nvim nix fish bottom wezterm lazygit yazi)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,karabiner)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
-ENV_PACKAGES    := bat bottom delta eza fd sd fish jq git neovim nushell nnn ripgrep zstd lazygit
+ENV_PACKAGES    := bat bottom delta eza fd sd fish jq git neovim nushell nnn ripgrep zstd lazygit yazi
 ENV_PACKAGES    += nix # Manage itself
 BREW_PACKAGES   := alfred monitorcontrol karabiner-elements wezterm zoom firefox
 CASK_PACKAGES   := docker
