@@ -18,6 +18,7 @@ DEV_PACKAGES    := php phpactor
 # go-tools: staticcheck
 DEV_PACKAGES    += go gopls go-tools delve
 DEV_PACKAGES    += cargo rustc rustfmt rust-analyzer
+DEV_PACKAGES    += cmake clang
 
 .PHONY: configs
 configs: ${CONFIG_TARGETS} ${HOME_TARGETS}
