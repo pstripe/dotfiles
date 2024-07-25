@@ -138,6 +138,16 @@ require('lazy').setup({
   },
 
   {
+    'ibhagwan/fzf-lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = true,
+    keys = {
+      { '<leader>f',  mode = 'n', function() require('fzf-lua').files() end, desc = 'Fuzzy Finder' },
+      { '<leader>/',  mode = 'n', function() require('fzf-lua').live_grep() end, desc = 'Live Grep' },
+    }
+  },
+
+  {
     'nvim-telescope/telescope.nvim',
     dependencies = {
       'nvim-lua/popup.nvim',
@@ -145,8 +155,6 @@ require('lazy').setup({
     },
     cmd = { 'Telescope' },
     keys = {
-      { '<leader>f',  mode = 'n', function() require('telescope.builtin').find_files() end, desc = 'Fuzzy Finder' },
-      { '<leader>/',  mode = 'n', function() require('telescope.builtin').live_grep() end, desc = 'Live Grep' },
       { '<leader>b',  mode = 'n', function() require('telescope.builtin').buffers() end, desc = 'Opened buffers' },
       { '<leader>o',  mode = 'n', function() require('telescope.builtin').commands() end, desc = 'Nvim commands' },
       { '<leader>fw', mode = 'n', function() require('telescope.builtin').grep_string() end, desc = 'Grep for cword' },
