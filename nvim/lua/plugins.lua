@@ -143,6 +143,8 @@ require('lazy').setup({
     keys = {
       { '<leader>f',  mode = 'n', function() require('fzf-lua').files() end, desc = 'Fuzzy Finder' },
       { '<leader>/',  mode = 'n', function() require('fzf-lua').live_grep() end, desc = 'Live Grep' },
+      { '<leader>fw', mode = 'n', function() require('fzf-lua').grep_cword() end, desc = 'Grep for cword' },
+      { '<leader>\'', mode = 'n', function() require('fzf-lua').resume() end, desc = 'Open pervious FzfLua search' },
     }
   },
 
@@ -156,7 +158,6 @@ require('lazy').setup({
     keys = {
       { '<leader>b',  mode = 'n', function() require('telescope.builtin').buffers() end, desc = 'Opened buffers' },
       { '<leader>o',  mode = 'n', function() require('telescope.builtin').commands() end, desc = 'Nvim commands' },
-      { '<leader>fw', mode = 'n', function() require('telescope.builtin').grep_string() end, desc = 'Grep for cword' },
       { '<leader>fs', mode = 'n', function() require('telescope.builtin').treesitter() end, desc = 'Current buffer symbols' },
       { '<leader>fl', mode = 'n', function() require('telescope.builtin').current_buffer_fuzzy_find() end, desc = 'Current buffer lines' },
     },
