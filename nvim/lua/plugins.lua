@@ -29,6 +29,20 @@ require('lazy').setup({
 
   -- UI/UX
   {
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    opts = {
+      indent = {
+        char = '┆',
+        smart_indent_cap = true,
+      },
+      scope = {
+        show_start = false,
+      }
+    }
+  },
+
+  {
     'm4xshen/hardtime.nvim',
     dependencies = {
       'MunifTanjim/nui.nvim',
@@ -124,6 +138,11 @@ require('lazy').setup({
   },
 
   {
+    'FabijanZulj/blame.nvim',
+    cmd = { 'BlameToggle' },
+  },
+
+  {
     'sindrets/diffview.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
   },
@@ -135,6 +154,8 @@ require('lazy').setup({
     ft = { 'markdown' },
     build = function() vim.fn['mkdp#util#install']() end,
   },
+
+  { 'echasnovski/mini.align', version = false, config = true, },
 
   {
     'ibhagwan/fzf-lua',
