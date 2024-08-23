@@ -93,9 +93,8 @@ require('lazy').setup({
       },
       extensions = {
         'man',
-        'nvim-tree',
         'quickfix',
-        'toggleterm'
+        'lazy'
       }
     },
   },
@@ -140,7 +139,7 @@ require('lazy').setup({
   {
     'ibhagwan/fzf-lua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = true,
+    cmd = { 'FzfLua' },
     keys = {
       { '<leader>f',  mode = 'n', function() require('fzf-lua').files() end, desc = 'Fuzzy Finder' },
       { '<leader>/',  mode = 'n', function() require('fzf-lua').live_grep() end, desc = 'Live Grep' },
@@ -206,8 +205,8 @@ require('lazy').setup({
     keys = {
       { 's', mode = { 'n', 'x', 'o' }, "<cmd>lua require('flash').jump()<cr>",              desc = 'Flash' },
       { 'S', mode = { 'n', 'x', 'o' }, "<cmd>lua require('flash').treesitter()<cr>",        desc = 'Flash Treesitter' },
-      { 'r', mode = 'o',               "<cmd>lua require('flash').remote()<cr>",            desc = 'Remote Flash' },
-      { 'R', mode = { 'o', 'x' },      "<cmd>lua require('flash').treesitter_search()<cr>", desc = 'Treesitter Search' },
+      { 'r', mode = 'o',               "<cmd>lua require('flash').remote()<cr>",            desc = 'Remote Flash', noremap = true },
+      { 'R', mode = { 'o', 'x' },      "<cmd>lua require('flash').treesitter_search()<cr>", desc = 'Treesitter Search', noremap = true },
       { '<c-s>', mode = { 'c' },       "<cmd>lua require('flash').toggle()<cr>",            desc = 'Toggle Flash Search' },
     }
   },
