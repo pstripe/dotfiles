@@ -37,6 +37,9 @@ require('lazy').setup({
         smart_indent_cap = true,
       },
       scope = {
+        exclude = {
+          language = { 'php' }
+        },
         show_start = false,
       }
     }
