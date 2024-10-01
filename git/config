@@ -35,7 +35,7 @@
 
 [delta]
 	navigate = true
-	features = side-by-side line-numbers decorations
+	features = line-numbers decorations
 	syntax-theme = Dracula
 	plus-style = syntax "#003800"
 	minus-style = syntax "#3f0001"
