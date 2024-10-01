@@ -1,7 +1,7 @@
 local wezterm = require('wezterm')
 local act     = wezterm.action
 
-return {
+local config = {
   -- Appearance
   window_padding = {
     left = 0,
@@ -9,8 +9,6 @@ return {
     top = 0,
     bottom = 0,
   },
-
-  native_macos_fullscreen_mode = true,
 
   -- Theme
   color_scheme = 'Afterglow',
@@ -40,3 +38,5 @@ return {
   tab_max_width = 64,
   use_fancy_tab_bar = false,
 }
+
+return config
