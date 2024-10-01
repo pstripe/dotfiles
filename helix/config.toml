@@ -2,8 +2,9 @@ theme = "sonokai"
 
 [editor]
 auto-format = false
-cursorline = true
+cursorline  = true
 line-number = "relative"
+true-color  = true
 
 [editor.cursor-shape]
 insert = "bar"
