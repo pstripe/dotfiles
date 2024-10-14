@@ -20,10 +20,19 @@ require('lazy').setup({
   -- Theme
   {
     'sainnhe/sonokai',
+    enabled = false,
     lazy = false,
     priority = 1000,
     config = function()
       vim.cmd.colorscheme('sonokai')
+    end,
+  },
+
+  {
+    'rose-pine/neovim',
+    name = "rose-pine",
+    config = function()
+      vim.cmd.colorscheme('rose-pine-moon')
     end,
   },
 
@@ -91,7 +100,7 @@ require('lazy').setup({
 
     opts = {
       options = {
-        theme = 'palenight',
+        theme = 'rose-pine',
       },
       sections = {
         lualine_a = { {

@@ -11,7 +11,7 @@ local config = {
   },
 
   -- Theme
-  color_scheme = 'Afterglow',
+  color_scheme = 'Rosé Pine Moon (base16)',
 
   -- Key Bindings
   keys = {
