@@ -63,6 +63,7 @@ require('lazy').setup({
     opts = {
       disable_mouse = false,
     },
+    enabled = false,
   },
 
   {
@@ -82,6 +83,7 @@ require('lazy').setup({
   },
 
   {
+    enabled = false,
     'goolord/alpha-nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = function()
