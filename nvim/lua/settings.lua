@@ -54,8 +54,11 @@ vim.g.maplocalleader = ' '
 vim.keymap.set('', 'Q', '<nop>')
 vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', { desc = 'Copy to system clipboard' })
 vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', { desc = 'Paste from system clipboard' })
+
+-- Helix-like bindings
 vim.keymap.set('n', 'gh', '^')
 vim.keymap.set('n', 'gl', '$')
+vim.keymap.set('n', 'mm', '%')
 
 -- Functions
 function isempty(s)
