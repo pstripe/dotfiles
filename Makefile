@@ -12,8 +12,7 @@ HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
 ENV_PACKAGES    := bat bottom delta eza fd sd fish jq git neovim nushell nnn ripgrep zstd lazygit yazi
 ENV_PACKAGES    += nix # Manage itself
-BREW_PACKAGES   := alfred monitorcontrol karabiner-elements wezterm zoom firefox
-CASK_PACKAGES   := docker
+CASK_PACKAGES   := aerospace alfred monitorcontrol karabiner-elements wezterm zoom docker
 DEV_PACKAGES    := php phpactor
 # go-tools: staticcheck
 DEV_PACKAGES    += go gopls go-tools delve
@@ -34,7 +33,8 @@ update:
 	nix profile wipe-history --older-than 30d
 	nix store gc
 	brew update
-	brew upgrade
+	# INFO: by some reason `brew upgrade` doesn't work for casks
+	brew install --cask ${CASK_PACKAGES}
 	brew autoremove
 	brew cleanup
 
@@ -48,7 +48,6 @@ dev-packages: configs
 
 .PHONY: brew-packages
 brew-packages: configs
-	brew install ${BREW_PACKAGES}
 	brew install --cask ${CASK_PACKAGES}
 
 .PHONY: packages
