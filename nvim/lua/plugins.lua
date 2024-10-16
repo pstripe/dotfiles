@@ -123,6 +123,12 @@ require('lazy').setup({
         } },
         lualine_c = {},
       },
+      inactive_sections = {
+        lualine_c = { {
+          'filename',
+          path = 1,
+        } },
+      },
       tabline = {
         lualine_a = { 'branch', 'diff' },
         lualine_z = { 'tabs' },
