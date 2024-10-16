@@ -59,8 +59,12 @@ local config = {
     },
   },
 
+  font = wezterm.font('Cascadia Code NF', {
+    weight = 'DemiLight'
+  }),
+
   -- Fonts
-  font_size = 12,
+  font_size = 13,
 
   -- Tabs
   tab_max_width = 64,
