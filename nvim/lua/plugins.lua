@@ -38,6 +38,14 @@ require('lazy').setup({
 
   -- UI/UX
   {
+    'nvim-zh/colorful-winsep.nvim',
+    opts = {
+      smooth = false,
+    },
+    event = { 'WinLeave' },
+  },
+
+  {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
     opts = {
