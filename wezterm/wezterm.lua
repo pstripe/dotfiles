@@ -13,6 +13,34 @@ local config = {
   -- Theme
   color_scheme = 'Rosé Pine Moon (base16)',
 
+  colors = {
+    tab_bar = {
+      background = '#232136',
+      active_tab = {
+        bg_color = '#393552',
+        fg_color = '#e0def4',
+      },
+      inactive_tab = {
+        bg_color = '#232136',
+        fg_color = '#8f8ba9',
+      },
+      inactive_tab_hover = {
+        bg_color = '#393552',
+        fg_color = '#8f8ba9',
+        italic = true,
+      },
+      new_tab = {
+        bg_color = '#232136',
+        fg_color = '#8f8ba9',
+      },
+      new_tab_hover = {
+        bg_color = '#393552',
+        fg_color = '#8f8ba9',
+        italic = true,
+      },
+    },
+  },
+
   -- Key Bindings
   keys = {
     { key = 'h', mods = 'ALT', action = act.ActivateTabRelative(-1) },
