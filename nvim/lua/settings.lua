@@ -58,6 +58,7 @@ vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', { desc = 'Paste from system clipb
 -- Helix-like bindings
 vim.keymap.set('n', 'gh', '^')
 vim.keymap.set('n', 'gl', '$')
+vim.keymap.set('n', 'ge', 'G')
 vim.keymap.set('n', 'mm', '%')
 
 -- Functions
