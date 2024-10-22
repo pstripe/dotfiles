@@ -10,14 +10,14 @@ CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,karabiner)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
-ENV_PACKAGES    := bat bottom delta eza fd sd fish jq git neovim nushell nnn ripgrep zstd lazygit yazi
+ENV_PACKAGES    := bat bottom delta eza fd sd fish jq git neovim nushell ripgrep zstd lazygit yazi
 ENV_PACKAGES    += nix # Manage itself
-CASK_PACKAGES   := aerospace alfred monitorcontrol karabiner-elements wezterm zoom docker
+CASK_PACKAGES   := aerospace alfred font-cascadia-code-nf monitorcontrol pika karabiner-elements wezterm zoom docker
 DEV_PACKAGES    := php phpactor
 # go-tools: staticcheck
 DEV_PACKAGES    += go gopls go-tools delve
 DEV_PACKAGES    += cargo rustc rustfmt rust-analyzer
-DEV_PACKAGES    += cmake clang
+DEV_PACKAGES    += cmake
 
 .PHONY: configs
 configs: ${CONFIG_TARGETS} ${HOME_TARGETS}
@@ -33,6 +33,7 @@ update:
 	nix profile wipe-history --older-than 30d
 	nix store gc
 	brew update
+	brew outdated
 	# INFO: by some reason `brew upgrade` doesn't work for casks
 	brew install --cask ${CASK_PACKAGES}
 	brew autoremove
@@ -51,7 +52,7 @@ brew-packages: configs
 	brew install --cask ${CASK_PACKAGES}
 
 .PHONY: packages
-packages: env-packages gui-packages dev-packages unfree-packages
+packages: env-packages dev-packages
 
 ${CONFIG_DIR}:
 	mkdir ${CONFIG_DIR}
