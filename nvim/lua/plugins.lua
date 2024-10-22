@@ -111,6 +111,7 @@ require('lazy').setup({
     opts = {
       options = {
         theme = 'rose-pine',
+        globalstatus = true,
       },
       sections = {
         lualine_a = { {
