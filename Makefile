@@ -29,7 +29,7 @@ nix:
 
 .PHONY: update
 update:
-	nix profile upgrade '.*'
+	nix profile upgrade --all
 	nix profile wipe-history --older-than 30d
 	nix store gc
 	brew update
