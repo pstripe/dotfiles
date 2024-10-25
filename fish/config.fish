@@ -7,4 +7,6 @@ if status is-interactive
 
   # Force Vi cursor, because it not changes in WezTerm
   set fish_vi_force_cursor
+
+  set __fish_ls_command eza
 end
