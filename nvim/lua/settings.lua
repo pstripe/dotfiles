@@ -83,7 +83,7 @@ end
 function Upload()
   local rel_fname = FnameRelToProjectRoot()
   local esc_fname = vim.fn.fnameescape(rel_fname)
-  vim.api.nvim_command('Nwrite rsync://adm512:data/' .. esc_fname)
+  vim.api.nvim_command('Nwrite rsync://minivk:data/' .. esc_fname)
 end
 
 function Confdata()
