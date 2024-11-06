@@ -447,9 +447,6 @@ require('lazy').setup({
   {
     'nvim-treesitter/nvim-treesitter',
     build = function() vim.cmd('TSUpdate') end,
-    dependencies = {
-      'nushell/tree-sitter-nu'
-    },
 
     opts = {
       ensure_installed = {
