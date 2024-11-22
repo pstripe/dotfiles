@@ -1,5 +1,3 @@
-# TODO: Install fonts. By some reason alacritty doesn't search it in default paths (.fonts, .local/share/fonts)
-# TODO: auto configure MacOS Applications: Alacritty, Zoom
 # TODO: add `clean` target
 
 CONFIG_DIR = ${HOME}/.config
@@ -10,14 +8,29 @@ CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,karabiner)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
-ENV_PACKAGES    := bat bottom delta eza fd sd fish jq git neovim nushell ripgrep zstd lazygit yazi
-ENV_PACKAGES    += nix # Manage itself
-CASK_PACKAGES   := aerospace alfred font-cascadia-code-nf monitorcontrol pika karabiner-elements wezterm zoom docker
-DEV_PACKAGES    := php phpactor
+ENV_PACKAGES := bat bottom broot eza fd fzf jq pup ripgrep sd yazi zstd
+ENV_PACKAGES += nix # Manage itself
+# shell
+ENV_PACKAGES += fish nushell
+# editor
+ENV_PACKAGES += helix neovim
+# markdown
+ENV_PACKAGES += glow marksman
+
+# brew deps
+CASK_PACKAGES := aerospace alfred font-cascadia-code-nf monitorcontrol pika karabiner-elements wezterm zoom docker
+
+# php
+DEV_PACKAGES := php phpactor
+# git
+DEV_PACKAGES += git lazygit delta
+# go
 # go-tools: staticcheck
-DEV_PACKAGES    += go gopls go-tools delve
-DEV_PACKAGES    += cargo rustc rustfmt rust-analyzer
-DEV_PACKAGES    += cmake
+DEV_PACKAGES += go gopls go-tools delve
+# rust
+DEV_PACKAGES += cargo rustc rustfmt rust-analyzer
+# c/c++
+DEV_PACKAGES += cmake
 
 .PHONY: configs
 configs: ${CONFIG_TARGETS} ${HOME_TARGETS}
