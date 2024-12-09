@@ -7,3 +7,5 @@ name = "php"
 file-types = ["php"]
 indent = { tab-width = 2, unit = " " }
 language-servers = [ "phpactor" ]
+formatter = { command = "sd", args = ["[\\ \\t]*$", ""] }
+auto-format = true
