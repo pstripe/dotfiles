@@ -1,5 +1,5 @@
 [language-server.phpactor]
-command = "/Users/pn.smirnov/.nix-profile/bin/phpactor"
+command = "phpactor"
 args = [ "language-server" ]
 
 [[language]]
