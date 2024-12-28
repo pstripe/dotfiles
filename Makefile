@@ -3,7 +3,7 @@
 CONFIG_DIR = ${HOME}/.config
 
 EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,helix tmux zellij alacritty)
-CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat git nvim nix fish bottom wezterm lazygit yazi)
+CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat git ghostty nvim nix fish bottom wezterm lazygit yazi)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,karabiner)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
@@ -18,7 +18,7 @@ ENV_PACKAGES += helix neovim
 ENV_PACKAGES += glow marksman
 
 # brew deps
-CASK_PACKAGES := aerospace alfred font-cascadia-code-nf monitorcontrol pika karabiner-elements wezterm zoom docker
+CASK_PACKAGES := aerospace alfred font-cascadia-code-nf ghostty monitorcontrol pika karabiner-elements wezterm zoom docker
 
 # php
 DEV_PACKAGES := php phpactor

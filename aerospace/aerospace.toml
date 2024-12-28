@@ -151,3 +151,7 @@ ctrl-alt-shift-h = ['join-with left', 'mode main']
 ctrl-alt-shift-j = ['join-with down', 'mode main']
 ctrl-alt-shift-k = ['join-with up', 'mode main']
 ctrl-alt-shift-l = ['join-with right', 'mode main']
+
+[[on-window-detected]]
+if.app-id = "com.mitchellh.ghostty"
+run = ["layout floating"]
