@@ -9,3 +9,13 @@ indent = { tab-width = 2, unit = " " }
 language-servers = [ "phpactor" ]
 formatter = { command = "sd", args = ["[\\ \\t]*$", ""] }
 auto-format = true
+
+[[language]]
+name = "tl"
+file-types = ["tl"]
+scope = "source.tl"
+comment-tokens = "//"
+
+[[grammar]]
+name = "tl"
+source = { git = "https://github.com/pstripe/tree-sitter-tl", rev = "main" }
