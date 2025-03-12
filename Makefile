@@ -17,7 +17,7 @@ ENV_PACKAGES += helix neovim
 ENV_PACKAGES += glow marksman
 
 # brew deps
-CASK_PACKAGES := aerospace alfred font-cascadia-code-nf ghostty monitorcontrol pika wezterm docker
+CASK_PACKAGES := aerospace alfred font-cascadia-code-nf firefox ghostty monitorcontrol pika wezterm docker
 
 # php
 DEV_PACKAGES := php phpactor
