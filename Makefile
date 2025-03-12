@@ -46,8 +46,7 @@ update:
 	nix store gc
 	brew update
 	brew outdated
-	# INFO: by some reason `brew upgrade` doesn't work for casks
-	brew install --cask ${CASK_PACKAGES}
+	brew upgrade --cask ${CASK_PACKAGES}
 	brew autoremove
 	brew cleanup
 
