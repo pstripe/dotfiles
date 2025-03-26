@@ -17,7 +17,10 @@ ENV_PACKAGES += helix neovim
 ENV_PACKAGES += glow marksman
 
 # brew deps
-CASK_PACKAGES := aerospace alfred font-cascadia-code-nf firefox ghostty monitorcontrol pika wezterm docker
+# Self updatable casks
+INSTALLABLE_CASKS := firefox zoom
+# Updated by Brew
+UPDATABLE_CASKS := aerospace alfred docker font-cascadia-code-nf ghostty pika wezterm
 
 # php
 DEV_PACKAGES := php phpactor
@@ -46,7 +49,7 @@ update:
 	nix store gc
 	brew update
 	brew outdated
-	brew upgrade --cask ${CASK_PACKAGES}
+	brew upgrade --cask ${UPDATABLE_CASKS}
 	brew autoremove
 	brew cleanup
 
@@ -60,10 +63,10 @@ dev-packages: configs
 
 .PHONY: brew-packages
 brew-packages: configs
-	brew install --cask ${CASK_PACKAGES}
+	brew install --cask ${INSTALLABLE_CASKS} ${UPDATABLE_CASKS}
 
 .PHONY: packages
-packages: env-packages dev-packages
+packages: env-packages dev-packages brew-packages
 
 ${CONFIG_DIR}:
 	mkdir ${CONFIG_DIR}
