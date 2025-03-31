@@ -7,7 +7,7 @@ CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat git ghostty nvim nix 
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
-ENV_PACKAGES := bat bottom broot choose eza fd fzf jq pup ripgrep sd yazi zstd
+ENV_PACKAGES := bat bottom broot choose eza fd fzf just jq pup ripgrep sd yazi zstd
 ENV_PACKAGES += nix # Manage itself
 # shell
 ENV_PACKAGES += fish nushell
