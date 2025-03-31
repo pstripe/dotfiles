@@ -2,8 +2,8 @@
 
 CONFIG_DIR = ${HOME}/.config
 
-EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,helix tmux zellij alacritty)
-CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat git ghostty nvim nix fish bottom wezterm lazygit yazi)
+EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,nvim tmux wezterm zellij alacritty)
+CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat git ghostty helix nix fish bottom lazygit yazi)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
