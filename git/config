@@ -5,7 +5,7 @@
 	name = Pavel Smirnov
 
 [core]
-	editor = nvim
+	editor = hx
 	pager = delta
 
 [interactive]
@@ -36,7 +36,7 @@
 [delta]
 	navigate = true
 	features = line-numbers decorations
-	syntax-theme = base16
+	syntax-theme = Monokai Extended Origin
 	plus-style = syntax "#003800"
 	minus-style = syntax "#3f0001"
 
