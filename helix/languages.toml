@@ -2,6 +2,14 @@
 command = "phpactor"
 args = [ "language-server" ]
 
+[language-server.codebook]
+command = "codebook-lsp"
+args = ["serve"]
+
+[[language]]
+name = "markdown"
+language-servers = ["codebook", "marksman"]
+
 [[language]]
 name = "php"
 file-types = ["php"]

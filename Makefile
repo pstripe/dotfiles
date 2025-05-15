@@ -3,11 +3,11 @@
 CONFIG_DIR = ${HOME}/.config
 
 EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,nvim tmux wezterm zellij alacritty)
-CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat git ghostty helix nix fish bottom lazygit yazi)
+CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat codebook git ghostty helix nix fish bottom lazygit yazi)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
 
-ENV_PACKAGES := bat bottom broot choose eza fd fzf just jq pup ripgrep sd yazi zstd
+ENV_PACKAGES := bat bottom broot choose codebook eza fd fzf just jq pup ripgrep sd yazi zstd
 ENV_PACKAGES += nix # Manage itself
 # shell
 ENV_PACKAGES += fish nushell
