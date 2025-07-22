@@ -2,7 +2,28 @@
 show_hidden = true
 ratio = [1, 2, 5]
 
-[plugin]
-prepend_previewers = [
-  { name = "*.md", run = "glow" },
-]
+[[plugin.prepend_previewers]]
+name = "*.csv"
+run  = 'piper -- bat -p --color=always "$1"'
+
+[[plugin.prepend_previewers]]
+name = "*.md"
+run  = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"'
+
+[[plugin.prepend_previewers]]
+name = "*.tar*"
+run  = 'piper --format=url -- tar tf "$1"'
+
+[[plugin.prepend_previewers]]
+name = "*/"
+run  = 'piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"'
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*"
+run  = "git"
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*/"
+run  = "git"
