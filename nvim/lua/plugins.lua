@@ -19,16 +19,6 @@ bootstrap_package_manager()
 require('lazy').setup({
   -- Theme
   {
-    'sainnhe/sonokai',
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme('sonokai')
-    end,
-  },
-
-  {
     'rose-pine/neovim',
     name = "rose-pine",
     config = function()
@@ -63,18 +53,6 @@ require('lazy').setup({
   },
 
   {
-    'm4xshen/hardtime.nvim',
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'nvim-lua/plenary.nvim'
-    },
-    opts = {
-      disable_mouse = false,
-    },
-    enabled = false,
-  },
-
-  {
     'folke/which-key.nvim',
     event = "VeryLazy",
     init = function()
@@ -88,15 +66,13 @@ require('lazy').setup({
     'folke/todo-comments.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = true,
-  },
-
-  {
-    enabled = false,
-    'goolord/alpha-nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    opts = function()
-      return require('alpha.themes.startify').config
-    end,
+    cmd = {
+      'TodoFzfLua',
+      'TodoLocList',
+      'TodoQuickFix',
+      'TodoTelescope',
+      'TodoTrouble',
+    },
   },
 
   {
@@ -171,19 +147,7 @@ require('lazy').setup({
     cmd = { 'BlameToggle' },
   },
 
-  {
-    'sindrets/diffview.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-  },
-
   -- Tools
-  {
-    'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    ft = { 'markdown' },
-    build = function() vim.fn['mkdp#util#install']() end,
-  },
-
   { 'echasnovski/mini.align', version = false, config = true, },
   {
     'echasnovski/mini.surround',
