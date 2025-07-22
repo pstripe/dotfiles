@@ -33,6 +33,8 @@ DEV_PACKAGES += go gopls go-tools delve
 DEV_PACKAGES += cargo rustc rustfmt rust-analyzer
 # c/c++
 DEV_PACKAGES += cmake
+# misc
+DEV_PACKAGES += vscode-json-language-server yaml-language-server
 
 .PHONY: configs
 configs: ${CONFIG_TARGETS} ${HOME_TARGETS}
