@@ -23,3 +23,6 @@ skip-levels = 1
 normal = "N"
 insert = "I"
 select = "S"
+
+[keys.normal."space".i]
+"+" = ":sh echo %{buffer_name}:%{cursor_line} | pbcopy"
