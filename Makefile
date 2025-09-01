@@ -29,8 +29,7 @@ DEV_PACKAGES := php phpactor
 # git
 DEV_PACKAGES += git lazygit delta
 # go
-# go-tools: staticcheck
-DEV_PACKAGES += go gopls go-tools delve
+DEV_PACKAGES += go gopls delve
 # rust
 DEV_PACKAGES += cargo rustc rustfmt rust-analyzer
 # c/c++
