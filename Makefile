@@ -83,4 +83,4 @@ ${EXTRA_CONFIGS}: ${CONFIG_DIR}
 
 ${HOME_TARGETS}:
 	@echo "Installing config $@"
-	ln -s ${CURDIR}/$(subst .,,$(notdir $@)) $@
+	ln -s ${CURDIR}/home/$(subst .,,$(notdir $@)) $@
