@@ -34,7 +34,9 @@ DEV_PACKAGES += go gopls delve
 DEV_PACKAGES += cargo rustc rustfmt rust-analyzer
 # c/c++
 DEV_PACKAGES += cmake
-# misc
+# java
+DEV_PACKAGES += jdk17 gradle jdt-language-server
+# lsp
 DEV_PACKAGES += vscode-json-language-server yaml-language-server
 
 .PHONY: configs
