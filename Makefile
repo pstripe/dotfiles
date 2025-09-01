@@ -5,7 +5,7 @@ CONFIG_DIR = ${HOME}/.config
 EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,nvim tmux wezterm zellij alacritty)
 CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat codebook git ghostty helix nix fish bottom lazygit yazi)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
-HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc)
+HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc .zshenv)
 
 ENV_PACKAGES := bat bottom broot choose codebook eza fd fzf just jq pup ripgrep sd yazi zstd
 ENV_PACKAGES += nix # Manage itself
@@ -15,6 +15,8 @@ ENV_PACKAGES += fish nushell
 ENV_PACKAGES += helix neovim
 # markdown
 ENV_PACKAGES += glow marksman
+# pass
+ENV_PACKAGES += pass passExtensions.pass-otp gnupg pinentiry_mac passff-host
 
 # brew deps
 # Self updatable casks
