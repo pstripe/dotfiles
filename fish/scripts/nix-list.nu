@@ -22,5 +22,5 @@ if ($version.major >= '2') and ($version.minor >= '24') {
 $table
   | rename app version
   | update app { |x| $x.app | split row '.' | last }
-  | update version { |x| $x.version | parse -r ($x.app + '-(.*)') | get -i capture0.0 }
+  | update version { |x| $x.version | parse -r ($x.app + '-(.*)') | get --optional capture0.0 }
   | print
