@@ -75,6 +75,10 @@ brew-packages: configs
 .PHONY: packages
 packages: env-packages dev-packages brew-packages
 
+.PHONY: rust-packages
+rust-packages:
+	cargo install choose rustic-rs
+
 ${CONFIG_DIR}:
 	mkdir ${CONFIG_DIR}
 
