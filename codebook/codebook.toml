@@ -5,6 +5,7 @@ dictionaries = [
 ]
 words = [
     "chmod",
+    "customisations",
     "gitlab",
     "traefik",
     "акторы",
