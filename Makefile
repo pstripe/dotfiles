@@ -19,6 +19,7 @@ ENV_PACKAGES += glow marksman codebook
 ENV_PACKAGES += pass passExtensions.pass-otp gnupg pinentiry_mac passff-host
 
 # brew deps
+# BREW_PKGS := vault
 # Updated by Brew
 UPDATABLE_CASKS := aerospace alfred docker-desktop font-cascadia-code-nf ghostty pika
 # Self updatable casks
@@ -39,7 +40,7 @@ DEV_PACKAGES += jdk17 gradle jdt-language-server
 # ai
 DEV_PACKAGES += opencode
 # various lsp
-DEV_PACKAGES += vscode-json-language-server yaml-language-server
+DEV_PACKAGES += just-lsp vscode-json-language-server yaml-language-server
 
 .PHONY: configs
 configs: ${CONFIG_TARGETS} ${HOME_TARGETS}
@@ -56,6 +57,7 @@ update:
 	nix store gc
 	brew update
 	brew outdated
+	brew upgrade
 	brew upgrade --cask ${UPDATABLE_CASKS}
 	brew autoremove
 	brew cleanup
