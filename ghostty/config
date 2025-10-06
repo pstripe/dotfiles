@@ -896,7 +896,7 @@ abnormal-command-exit-runtime = 250
 # This is a future planned feature.
 #
 # This can be changed at runtime but will only affect new terminal surfaces.
-scrollback-limit = 20000000
+scrollback-limit = 0
 
 # Match a regular expression against the terminal text and associate clicking
 # it with an action. This can be used to match URLs, file paths, etc. Actions
@@ -1181,7 +1181,7 @@ keybind = shift+page_down=adjust_selection:page_down
 # keybind = alt+l=next_tab
 keybind = super+a=select_all
 keybind = alt+right=esc:f
-keybind = alt+f=toggle_quick_terminal
+# keybind = alt+f=toggle_quick_terminal
 # keybind = alt+w>f=toggle_split_zoom
 # keybind = alt+shift+j=goto_split:bottom
 keybind = super+ctrl+f=toggle_fullscreen
