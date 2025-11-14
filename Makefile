@@ -21,9 +21,9 @@ ENV_PACKAGES += pass passExtensions.pass-otp gnupg pinentiry_mac passff-host
 # brew deps
 # BREW_PKGS := vault
 # Updated by Brew
-UPDATABLE_CASKS := aerospace alfred docker-desktop font-cascadia-code-nf ghostty pika
+UPDATABLE_CASKS := aerospace docker-desktop font-cascadia-code-nf ghostty pika
 # Self updatable casks
-INSTALLABLE_CASKS := firefox zoom ${UPDATABLE_CASKS}
+INSTALLABLE_CASKS := alfred firefox zoom ${UPDATABLE_CASKS}
 
 # php
 DEV_PACKAGES := php phpactor
