@@ -1,7 +1,7 @@
 gui:
-    filterMode: 'fuzzy'
-    nerdFontsVersion: '3'
+  filterMode: 'fuzzy'
+  nerdFontsVersion: '3'
 git:
-    paging:
-        colorArg: always
-        pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+  pagers:
+    - colorArg: always
+      pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
