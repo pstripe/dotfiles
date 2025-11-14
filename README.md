@@ -40,11 +40,17 @@ To declare packages, we will use TOML file format as more simple than YAML and m
 
 We want packages to be declared only, and not have any complex scripts near it. So, we do not consider using any scripting languages for package declarations.
 
+> **note** Post-Install for Nix
+> By default, apps on macOS aren't copied to the `/Applications` directory.
+> Therefore, the package declaration may include some post-installation rules to perform this action.
+
 ### Package
 The base idea is similar to any other package manager. We have separate files describing specific packages, their dependencies, optional build rules, and underlying source customisations (specific prefixes, suffixes, custom tags, etc.).
 
 Required features:
 * Disable upgrades for source. Some packages upgrade themselves, so we do not need to do it on our own.
+* Declare config directory
+* Ship configs with packages (install automatically with package)
 
 ### Environment
 Environment is a list of tracked packages I want to be managed by my _package manager_. Just for bootstrap and auto upgrades.
@@ -58,14 +64,19 @@ It is possible to wrap these scripts with Justfile to have a more convenient int
 * `bootstrap` itself and core requirements: install Nix, Brew, Rust with Cargo, etc.
 * `install <package>`. _Should it add package to `environment.toml`?_
 * `upgrade` everything from `environment.toml`,
-* `uninstall <package>`. _Should it add package to `environment.toml`?_
+* `uninstall <package>`. _Should it remove package from `environment.toml`?_
 * `list` installed packages. Simply show the contents of `environment.toml`.
 * _optional_ `add` a new package command which starts the editor with package template
 
 ### Sources list
 * brew bottles (macOS)
 * brew casks (macOS)
+* Go Install
 * Nixpkgs (macOS)
 * portage (Gentoo Linux)
 * Cargo (macOS/Gentoo)
 * GitHub Releases
+* Docker Hub (merge https://github.com/pstripe/self-hosting into package manager)
+
+We also have an additional layer of package managers. Some apps come with their own "ecosystem" package manager. For example, (Neo)vim has its own package manager. Below is a list of the package managers that we must support.
+* yazi: ya pkg
