@@ -40,7 +40,7 @@ DEV_PACKAGES += jdk17 gradle jdt-language-server
 # ai
 DEV_PACKAGES += opencode
 # various lsp
-DEV_PACKAGES += just-lsp vscode-json-language-server yaml-language-server
+DEV_PACKAGES += deno just-lsp vscode-json-language-server yaml-language-server
 
 .PHONY: configs
 configs: ${CONFIG_TARGETS} ${HOME_TARGETS}

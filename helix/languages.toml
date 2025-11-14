@@ -9,6 +9,7 @@ args = ["serve"]
 [[language]]
 name = "markdown"
 language-servers = ["codebook", "marksman"]
+formatter = { command = 'deno', args = ["fmt", "-", "--ext", "md" ] }
 
 [[language]]
 name = "go"
