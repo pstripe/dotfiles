@@ -3061,7 +3061,7 @@ macos-dock-drop-behavior = new-tab
 #
 # The values `left` or `right` enable this for the left or right *Option*
 # key, respectively.
-macos-option-as-alt =
+macos-option-as-alt = left
 
 # Whether to enable the macOS window shadow. The default value is true.
 # With some window managers and window transparency settings, you may
