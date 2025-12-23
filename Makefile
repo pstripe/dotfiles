@@ -33,7 +33,7 @@ DEV_PACKAGES += jdk17 gradle jdt-language-server
 # ai
 DEV_PACKAGES += opencode
 # various lsp
-DEV_PACKAGES += deno just-lsp vscode-json-language-server yaml-language-server
+DEV_PACKAGES += deno just-lsp vscode-json-languageserver yaml-language-server
 # protobuf
 DEV_PACKAGES += protobuf protoc-gen-go protoc-gen-go-grpc
 
