@@ -24,5 +24,7 @@ normal = "N"
 insert = "I"
 select = "S"
 
+[editor.soft-wrap]
+enable = true
 [keys.normal."space".i]
 "+" = ":sh echo %{buffer_name}:%{cursor_line} | pbcopy"
