@@ -23,7 +23,7 @@ DEV_PACKAGES := php phpactor
 # git
 DEV_PACKAGES += git lazygit delta
 # go
-DEV_PACKAGES += go gopls delve
+DEV_PACKAGES += go gopls delve golangci-lint-langserver
 # rust
 DEV_PACKAGES += cargo rustc rustfmt rust-analyzer
 # c/c++
