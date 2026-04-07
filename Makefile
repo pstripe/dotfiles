@@ -8,42 +8,6 @@ CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat codebook git ghostty 
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc .zshenv)
 
-# Nix packages deps
-ENV_PACKAGES := bat bottom choose eza fd fzf just jq pup ripgrep sd yazi zoxide
-ENV_PACKAGES += nix # Manage itself
-# shell
-ENV_PACKAGES += fish nushell
-# editor
-ENV_PACKAGES += helix neovim
-# markdown
-ENV_PACKAGES += glow marksman codebook
-
-# php
-DEV_PACKAGES := php phpactor
-# git
-DEV_PACKAGES += git lazygit delta
-# go
-DEV_PACKAGES += go gopls delve golangci-lint-langserver
-# rust
-DEV_PACKAGES += cargo rustc rustfmt rust-analyzer
-# c/c++
-DEV_PACKAGES += cmake
-# java
-DEV_PACKAGES += jdk17 gradle jdt-language-server
-# ai
-DEV_PACKAGES += opencode
-# various lsp
-DEV_PACKAGES += deno just-lsp vscode-json-languageserver yaml-language-server
-# protobuf
-DEV_PACKAGES += protobuf protoc-gen-go protoc-gen-go-grpc
-
-# brew deps
-# BREW_PKGS := vault
-# Updated by Brew
-UPDATABLE_CASKS := aerospace docker-desktop font-cascadia-code-nf ghostty pika
-# Self updatable casks
-INSTALLABLE_CASKS := alfred firefox zoom ${UPDATABLE_CASKS}
-
 .PHONY: configs
 configs: ${CONFIG_TARGETS} ${HOME_TARGETS}
 
@@ -52,36 +16,10 @@ configs: ${CONFIG_TARGETS} ${HOME_TARGETS}
 nix:
 	curl -L https://nixos.org/nix/install | sh
 
-.PHONY: update
-update:
-	nix profile upgrade ${ENV_PACKGES} ${DEV_PACKAGES}
-	nix profile wipe-history --older-than 30d
-	nix store gc
-	brew update
-	brew outdated
-	brew upgrade
-	brew upgrade --cask ${UPDATABLE_CASKS}
-	brew autoremove
-	brew cleanup
-
-.PHONY: env-packages
-env-packages: configs # TODO: depends on nix
-	nix profile add $(addprefix nixpkgs#,${ENV_PACKAGES})
-
-.PHONY: dev-packages
-dev-packages: configs
-	nix profile add $(addprefix nixpkgs#,${DEV_PACKAGES})
-
-.PHONY: brew-packages
-brew-packages: configs
-	brew install --cask ${INSTALLABLE_CASKS}
-
-.PHONY: packages
-packages: env-packages dev-packages brew-packages
-
-.PHONY: rust-packages
-rust-packages:
-	cargo install choose rustic-rs
+.PHONY: brew
+brew:
+	# TODO
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 ${CONFIG_DIR}:
 	mkdir ${CONFIG_DIR}
