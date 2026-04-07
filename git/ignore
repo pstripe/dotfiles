@@ -1,3 +1,4 @@
 .helix/
 
 .phpactor.json
+gopls.mod
