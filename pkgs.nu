@@ -16,77 +16,70 @@ const USES = {
   rust:         [cargo rustc rustfmt rust-analyzer]
   shells:       [fish nushell]
   ui:           [aerospace ghostty pika orbstack font-cascadia-code-nf alfred firefox]
+  disk-utils:   [mole]
   work:         [vault]
 }
 
-const PACKAGES_META = {
-  bat:                        nix
-  deno:                       nix
-  just-lsp:                   nix
-  vscode-json-languageserver: nix
-  yaml-language-server:       nix
-  nix:                        nix # Manage itself
-  bottom:                     nix
-  choose:                     nix
-  eza:                        nix
-  fd:                         nix
-  fzf:                        nix
-  just:                       nix
-  pup:                        nix
-  ripgrep:                    nix
-  sd:                         nix
-  yazi:                       nix
-  zoxide:                     nix
-  protobuf:                   nix
-  fish:                       nix
-  nushell:                    nix
-  helix:                      nix
-  php:                        nix
-  phpactor:                   nix
-  jdk17:                      nix
-  gradle:                     nix
-  jdt-language-server:        nix
-  protoc-gen-go:              nix
-  protoc-gen-go-grpc:         nix
-  git:                        nix
-  cargo:                      nix
-  rustc:                      nix
-  rustfmt:                    nix
-  rust-analyzer:              nix
-  go:                         nix
-  gopls:                      nix
-  delve:                      nix
-  golangci-lint-langserver:   nix
-  opencode:                   nix
-  lazygit:                    nix
-  delta:                      nix
-  codebook:                   nix
-  glow:                       nix
-  marksman:                   nix
-  alfred: cask
-  # alfred: {
-  #   manager: brew
-  #   options: [--case]
-  #   updatable: false
-  # }
-  firefox: cask
-  # firefox: {
-  #   manager: brew
-  #   options: [--case]
-  #   updatable: false
-  # }
-  mdterm:                cargo
-  aerospace:             cask
-  ghostty:               cask
-  pika:                  cask
-  orbstack:              cask
-  docker-client:         nix
-  docker-compose:        nix
-  qemu:                  nix
-  vault:                 brew
-  colima:                nix
-  font-cascadia-code-nf: cask
-}
+const PACKAGES_META: table<package:string, config:record<manager:string>> = [
+  [package, config];
+  [bat, {manager: nix}]
+  [deno, { manager: nix }]
+  [just-lsp, { manager: nix }]
+  [vscode-json-languageserver, { manager: nix }]
+  [yaml-language-server, { manager: nix }]
+  [nix, { manager: nix }]
+  [bottom, { manager: nix }]
+  [choose, { manager: nix }]
+  [eza, { manager: nix }]
+  [fd, { manager: nix }]
+  [fzf, { manager: nix }]
+  [just, { manager: nix }]
+  [pup, { manager: nix }]
+  [mole, { manager: brew }]
+  [ripgrep, { manager: nix }]
+  [sd, { manager: nix }]
+  [yazi, { manager: nix }]
+  [zoxide, { manager: nix }]
+  [protobuf, { manager: nix }]
+  [fish, { manager: nix }]
+  [nushell, { manager: nix }]
+  [helix, { manager: nix }]
+  [php, { manager: nix }]
+  [phpactor, { manager: nix }]
+  [jdk17, { manager: nix }]
+  [gradle, { manager: nix }]
+  [jdt-language-server, { manager: nix }]
+  [protoc-gen-go, { manager: nix }]
+  [protoc-gen-go-grpc, { manager: nix }]
+  [git, { manager: nix }]
+  [cargo, { manager: nix }]
+  [rustc, { manager: nix }]
+  [rustfmt, { manager: nix }]
+  [rust-analyzer, { manager: nix }]
+  [go, { manager: nix }]
+  [gopls, { manager: nix }]
+  [delve, { manager: nix }]
+  [golangci-lint-langserver, { manager: nix }]
+  [opencode, { manager: nix }]
+  [lazygit, { manager: nix }]
+  [delta, { manager: nix }]
+  [codebook, { manager: nix }]
+  [glow, { manager: nix }]
+  [marksman, { manager: nix }]
+  [alfred, { manager: cask, updatable: false}]
+  [firefox, { manager: cask, updatable: false}]
+  [mdterm, { manager: cargo }]
+  [aerospace, { manager: cask }]
+  [ghostty, { manager: cask }]
+  [pika, { manager: cask }]
+  [orbstack, { manager: cask }]
+  [docker-client, { manager: nix }]
+  [docker-compose, { manager: nix }]
+  [qemu, { manager: nix }]
+  [vault, { manager: brew }]
+  [colima, { manager: nix }]
+  [font-cascadia-code-nf, { manager: cask }]
+]
 
 def main [] { }
 
@@ -108,11 +101,15 @@ def "main update-all" [] {
   update_pkgs $all
 }
 
+def pkg_config [pkg: string] {
+  $PACKAGES_META | where package == $pkg | get 0.config
+}
+
 def split_by_manager [pkgs: list<string>] {
   mut pkgs_by_manager = {}
 
   for pkg in $pkgs {
-    let manager = $PACKAGES_META | get $pkg
+    let manager = pkg_config $pkg | get manager
 
     let row = $pkgs_by_manager | get --optional $manager | default [] | append $pkg
 
@@ -193,9 +190,11 @@ def update_brew_casks [casks: list<string>] {
     return
   }
 
+  let $updatable_casks = $casks | where {|cask| pkg_config $cask | get --optional updatable | default true}
+
   ^brew update
   ^brew outdated --cask
-  ^brew upgrade --cask ...$casks
+  ^brew upgrade --cask ...$updatable_casks
 }
 
 def update_cargo [pkgs: list<string>] {
