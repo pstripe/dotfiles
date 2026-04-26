@@ -1,8 +1,14 @@
 [init]
 	defaultBranch = main
 
-[user]
-	name = Pavel Smirnov
+[branch]
+	sort = -commiterdate
+
+[column]
+	ui = auto
+
+[commit]
+	verbose = true
 
 [core]
 	editor = hx
@@ -10,31 +16,6 @@
 	fsmonitor = true
 	untrackedCache = true
 	excludesFile = ~/.config/git/ignore
-
-[interactive]
-	diffFilter = delta --color-only
-
-[rerere]
-	enabled = true
-
-[merge]
-	conflictstyle = zdiff3
-
-[diff]
-	algorithm = histogram
-	colorMoved = default
-
-[fetch]
-	prune = true
-
-[log]
-	date = iso
-
-[pull]
-	rebase = true
-
-[push]
-	default = current
 
 [delta]
 	navigate = true
@@ -55,7 +36,48 @@
 	line-numbers-minus-style = 124
 	line-numbers-plus-style = 28
 
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+
+[help]
+	autocorrect = true
+
+[interactive]
+	diffFilter = delta --color-only
+
+[log]
+	date = iso
+
+[merge]
+	conflictstyle = zdiff3
+
+[pull]
+	rebase = true
+
+[push]
+	default = simple # default since 2.0
+	autoSetupRemote = true
+	followTags = true
+
 [rebase]
 	autoSquash = true
 	autoStash = true
 	updateRefs = true
+
+[rerere]
+	enabled = true
+	autoupdate = true
+
+[tag]
+	sort = version:refname
+
+[user]
+	name = Pavel Smirnov
