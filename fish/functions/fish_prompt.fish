@@ -33,6 +33,12 @@ function fish_prompt --description 'Write out the prompt'
         set prompt_status $status_color "[" $last_status "]" $normal
     end
 
+    if contains -- --final-rendering $argv
+        # Компактный вариант для истории
+        echo -n -s '• ' $status_color $suffix_second ' ' $cwd_color (prompt_pwd) ' ' $normal
+        return
+    end
+
     echo -s    '┌ ' $hostname_color $suffix_first $normal ' ' (fish_default_mode_prompt) $hostname_color '(' (prompt_hostname) ')' $vcs_color (fish_git_prompt) $normal ' ' $prompt_status
     echo -n -s '└ ' $status_color   $suffix_second ' ' $cwd_color (prompt_pwd) ' ' $normal
 end

@@ -1,3 +1,4 @@
 if status is-interactive
-    set -g fish_term_cwd 1 # enable OSC 7
+    set --global fish_key_bindings fish_vi_key_bindings
+    set --global fish_transient_prompt 1
 end
