@@ -94,8 +94,14 @@ def "main update" [use: string] {
   update_pkgs ($BUNDLES | get $use)
 }
 
-def "main update-all" [] {
+def "main update-all" [
+  --skip: string
+] {
   mut all = $BUNDLES | values | flatten
+
+  if $skip != null {
+    $all = $all | where $it != $skip
+  }
 
   update_pkgs $all
 }
