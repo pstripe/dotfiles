@@ -1,8 +1,9 @@
 #!/usr/bin/env nu
 
-const USES = {
+const BUNDLES = {
   ai:           [opencode]
   base:         [bat bottom choose eza fd fzf just pup ripgrep sd yazi zoxide]
+  cargo:        [cargo-binstall]
   docker:       [colima docker-client docker-compose qemu]
   editors:      [helix]
   git:          [git lazygit delta]
@@ -13,7 +14,6 @@ const USES = {
   php:          [php phpactor]
   pkg-managers: [nix]
   protobuf:     [protobuf protoc-gen-go protoc-gen-go-grpc]
-  rust:         [cargo rustc rustfmt rust-analyzer]
   shells:       [fish nushell]
   ui:           [aerospace ghostty pika orbstack font-cascadia-code-nf alfred firefox]
   disk-utils:   [mole]
@@ -52,7 +52,7 @@ const PACKAGES_META: table<package:string, config:record<manager:string>> = [
   [protoc-gen-go, { manager: nix }]
   [protoc-gen-go-grpc, { manager: nix }]
   [git, { manager: nix }]
-  [cargo, { manager: nix }]
+  [cargo-binstall, { manager: nix }]
   [rustc, { manager: nix }]
   [rustfmt, { manager: nix }]
   [rust-analyzer, { manager: nix }]
@@ -83,19 +83,19 @@ const PACKAGES_META: table<package:string, config:record<manager:string>> = [
 def main [] { }
 
 def "main list-uses" [] {
-  $USES | columns
+  $BUNDLES | columns
 }
 
 def "main install" [use: string] {
-  install_pkgs ($USES | get $use)
+  install_pkgs ($BUNDLES | get $use)
 }
 
 def "main update" [use: string] {
-  update_pkgs ($USES | get $use)
+  update_pkgs ($BUNDLES | get $use)
 }
 
 def "main update-all" [] {
-  let all = $USES | values | flatten
+  mut all = $BUNDLES | values | flatten
 
   update_pkgs $all
 }
@@ -160,7 +160,7 @@ def install_cargo [pkgs: list<string>] {
     return
   }
 
-  cargo install ...$pkgs
+  ^cargo-binstall ...$pkgs
 }
 
 def install_nix [pkgs: list<string>] {
@@ -201,7 +201,7 @@ def update_cargo [pkgs: list<string>] {
     return
   }
 
-  cargo install ...$pkgs
+  ^cargo-binstall ...$pkgs
 }
 
 def update_nix [pkgs: list<string>] {
