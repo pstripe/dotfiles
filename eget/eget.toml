@@ -1,2 +1,6 @@
 [global]
 target = "~/.local/bin"
+upgrade_only = true
+
+["anomalyco/opencode"]
+asset_filters = ["linux-x64", "baseline", "^musl"]
