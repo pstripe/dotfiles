@@ -4,3 +4,6 @@ upgrade_only = true
 
 ["anomalyco/opencode"]
 asset_filters = ["linux-x64", "baseline", "^musl"]
+
+["oven-sh/bun"]
+asset_filters = ["linux-x64", "baseline", "^musl"]

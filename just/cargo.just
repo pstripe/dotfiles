@@ -1,6 +1,6 @@
 # gentoo packages list
 _self  := 'cargo-binstall'
-crates := 'choose mdterm rustic-rs sqlx-cli viu'
+crates := 'choose mdterm rustic-rs sqlx-cli viu uv'
 
 bootstrap:
     cargo install {{_self}}

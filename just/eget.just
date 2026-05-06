@@ -1,5 +1,5 @@
 _self    := 'zyedidia/eget'
-packages := 'simonmichael/hledger anomalyco/opencode'
+packages := 'simonmichael/hledger anomalyco/opencode oven-sh/bun'
 
 bootstrap:
     curl -o eget.sh https://zyedidia.github.io/eget.sh
