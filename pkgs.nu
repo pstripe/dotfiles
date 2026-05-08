@@ -3,7 +3,6 @@
 const BUNDLES = {
   ai:           [opencode]
   base:         [bat bottom choose eza fd fzf just pup ripgrep sd yazi zoxide]
-  cargo:        [cargo-binstall]
   docker:       [colima docker-client docker-compose qemu]
   editors:      [helix]
   git:          [git lazygit delta]
@@ -20,64 +19,60 @@ const BUNDLES = {
   work:         [vault]
 }
 
-const PACKAGES_META: table<package:string, config:record<manager:string>> = [
-  [package, config];
-  [bat, {manager: nix}]
-  [deno, { manager: nix }]
-  [just-lsp, { manager: nix }]
-  [vscode-json-languageserver, { manager: nix }]
-  [yaml-language-server, { manager: nix }]
-  [nix, { manager: nix }]
-  [bottom, { manager: nix }]
-  [choose, { manager: nix }]
-  [eza, { manager: nix }]
-  [fd, { manager: nix }]
-  [fzf, { manager: nix }]
-  [just, { manager: nix }]
-  [pup, { manager: nix }]
-  [mole, { manager: brew }]
-  [ripgrep, { manager: nix }]
-  [sd, { manager: nix }]
-  [yazi, { manager: nix }]
-  [zoxide, { manager: nix }]
-  [protobuf, { manager: nix }]
-  [fish, { manager: nix }]
-  [nushell, { manager: nix }]
-  [helix, { manager: nix }]
-  [php, { manager: nix }]
-  [phpactor, { manager: nix }]
-  [jdk17, { manager: nix }]
-  [gradle, { manager: nix }]
-  [jdt-language-server, { manager: nix }]
-  [protoc-gen-go, { manager: nix }]
-  [protoc-gen-go-grpc, { manager: nix }]
-  [git, { manager: nix }]
-  [cargo-binstall, { manager: nix }]
-  [rustc, { manager: nix }]
-  [rustfmt, { manager: nix }]
-  [rust-analyzer, { manager: nix }]
-  [go, { manager: nix }]
-  [gopls, { manager: nix }]
-  [delve, { manager: nix }]
-  [golangci-lint-langserver, { manager: nix }]
-  [opencode, { manager: nix }]
-  [lazygit, { manager: nix }]
-  [delta, { manager: nix }]
-  [codebook, { manager: nix }]
-  [marksman, { manager: nix }]
-  [alfred, { manager: cask, updatable: false}]
-  [firefox, { manager: cask, updatable: false}]
-  [mdterm, { manager: cargo }]
-  [aerospace, { manager: cask }]
-  [ghostty, { manager: cask }]
-  [pika, { manager: cask }]
-  [orbstack, { manager: cask }]
-  [docker-client, { manager: nix }]
-  [docker-compose, { manager: nix }]
-  [qemu, { manager: nix }]
-  [vault, { manager: brew }]
-  [colima, { manager: nix }]
-  [font-cascadia-code-nf, { manager: cask }]
+const ENVIRONMENT_PLUS_PKG_CONFIG: table<package:string, manager:string, config:record> = [
+  [package, manager, config];
+  [bat, nix, {}]
+  [deno, nix, {}]
+  [just-lsp, nix, {}]
+  [vscode-json-languageserver, nix, {}]
+  [yaml-language-server, nix, {}]
+  [nix, nix, {}]
+  [bottom, nix, {}]
+  [choose, nix, {}]
+  [eza, nix, {}]
+  [fd, nix, {}]
+  [fzf, nix, {}]
+  [just, nix, {}]
+  [pup, nix, {}]
+  [mole, brew, {}]
+  [ripgrep, nix, {}]
+  [sd, nix, {}]
+  [yazi, nix, {}]
+  [zoxide, nix, {}]
+  [protobuf, nix, {}]
+  [fish, nix, {}]
+  [nushell, nix, {}]
+  [helix, nix, {}]
+  [php, nix, {}]
+  [phpactor, nix, {}]
+  [jdk17, nix, {}]
+  [gradle, nix, {}]
+  [jdt-language-server, nix, {}]
+  [protoc-gen-go, nix, {}]
+  [protoc-gen-go-grpc, nix, {}]
+  [git, nix, {}]
+  [go, nix, {}]
+  [gopls, nix, {}]
+  [delve, nix, {}]
+  [golangci-lint-langserver, nix, {}]
+  [opencode, nix, {}]
+  [lazygit, nix, {}]
+  [delta, nix, {}]
+  [codebook, nix, {}]
+  [marksman, nix, {}]
+  [alfred, cask, { updatable: false}]
+  [firefox, cask, { updatable: false}]
+  [mdterm, github, {}]
+  [aerospace, cask, {}]
+  [ghostty, cask, {}]
+  [pika, cask, {}]
+  [orbstack, cask, {}]
+  [docker-client, nix, {}]
+  [docker-compose, nix, {}]
+  [qemu, nix, {}]
+  [vault, brew, {}]
+  [colima, nix, {}]
+  [font-cascadia-code-nf, cask, {}]
 ]
 
 def main [] { }
@@ -106,15 +101,19 @@ def "main update-all" [
   update_pkgs $all
 }
 
-def pkg_config [pkg: string] {
-  $PACKAGES_META | where package == $pkg | get 0.config
+def manager []: string -> string {
+  $ENVIRONMENT_PLUS_PKG_CONFIG | where package == $in | get 0.manager
+}
+
+def config [field:string]: string -> any {
+  $ENVIRONMENT_PLUS_PKG_CONFIG | where package == $in | get 0.config | get --optional $field
 }
 
 def split_by_manager [pkgs: list<string>] {
   mut pkgs_by_manager = {}
 
   for pkg in $pkgs {
-    let manager = pkg_config $pkg | get manager
+    let manager = $pkg | manager
 
     let row = $pkgs_by_manager | get --optional $manager | default [] | append $pkg
 
@@ -129,7 +128,7 @@ def install_pkgs [pkgs: list<string>] {
 
   install_brew ($pkgs_by_manager | get --optional brew | default [])
   install_brew_casks ($pkgs_by_manager | get --optional cask | default [])
-  install_cargo ($pkgs_by_manager | get --optional cargo | default [])
+  install_github_releases ($pkgs_by_manager | get --optional github | default [])
   install_nix ($pkgs_by_manager | get --optional nix | default [])
 }
 
@@ -138,11 +137,12 @@ def update_pkgs [pkgs: list<string>] {
 
   update_brew ($pkgs_by_manager | get --optional brew | default [])
   update_brew_casks ($pkgs_by_manager | get --optional cask | default [])
-  update_cargo ($pkgs_by_manager | get --optional cargo | default [])
+  update_github_releases ($pkgs_by_manager | get --optional github | default [])
   update_nix ($pkgs_by_manager | get --optional nix | default [])
 }
 
 # install section
+# Depends on `brew`
 def install_brew [pkgs: list<string>] {
   if ($pkgs | is-empty) {
     return
@@ -152,6 +152,7 @@ def install_brew [pkgs: list<string>] {
   ^brew install ...$pkgs
 }
 
+# Depends on `brew`
 def install_brew_casks [casks: list<string>] {
   if ($casks | is-empty) {
     return
@@ -161,14 +162,7 @@ def install_brew_casks [casks: list<string>] {
   ^brew install --cask ...$casks
 }
 
-def install_cargo [pkgs: list<string>] {
-  if ($pkgs | is-empty) {
-    return
-  }
-
-  ^cargo-binstall ...$pkgs
-}
-
+# Depends on `nix`
 def install_nix [pkgs: list<string>] {
   if ($pkgs | is-empty) {
     return
@@ -177,6 +171,60 @@ def install_nix [pkgs: list<string>] {
   let pkg_names = $pkgs | each {|pkg| 'nixpkgs#' + $pkg }
 
   ^nix profile add ...$pkg_names
+}
+
+# Depends on `ouch`
+def install_github_releases [pkgs: list<string>] {
+  if ($pkgs | is-empty) {
+    return
+  }
+
+  $pkgs | each {|pkg| _install_github_release $pkg}
+}
+
+def _install_github_release [pkg: string] {
+    let packages: table<package:string, repo:string, archive:record<archive:string, filename_contains:string, install:list<record<source:string, dest:string>>>> = [
+      [package, repo, version, archive];
+      [mdterm, 'bahdotsh/mdterm', 'v2.0.0', {
+        archive: tar.gz
+        filename_contains: aarch64-darwin
+        install: [
+          {
+            source: mdterm
+            dest: $"($env.HOME)/.local/bin/mdterm"
+          }
+        ]
+      }]
+    ]
+    let pkg_meta = $packages | where package == $pkg | get 0
+
+    # download
+    # TODO: auth
+    let assets = http get https://api.github.com/repos/($pkg_meta.repo)/releases/tags/($pkg_meta.version)
+      | get assets
+      | where name has $pkg_meta.archive.filename_contains and name not-has "sha"
+      | get browser_download_url
+      | get 0
+
+    let dir = mktemp -d
+    let arch_file = $assets | path basename
+    let arch_path = $"($dir)/($arch_file)"
+
+    http get --headers {Authorization: '{{_auth}}'} $assets | save --progress $arch_path
+
+    # unpack
+    ^ouch decompress --quiet --yes --dir $dir $arch_path
+
+    # install
+    let decomp_root = $"($dir)/($arch_file | path parse --extension $pkg_meta.install.archive | get stem)"
+
+    for file in ($pkg_meta.archive.install) {
+        print $"Copying ($decomp_root)/($file.source) to ($file.dest)..."
+        cp $"($decomp_root)/($file.source)" ($file.dest)
+    }
+
+    # cleanup
+    rm --recursive $dir
 }
 
 # update section
@@ -195,19 +243,15 @@ def update_brew_casks [casks: list<string>] {
     return
   }
 
-  let $updatable_casks = $casks | where {|cask| pkg_config $cask | get --optional updatable | default true}
+  let $updatable_casks = $casks | where {|cask| $cask | config updatable | default true}
 
   ^brew update
   ^brew outdated --cask
   ^brew upgrade --cask ...$updatable_casks
 }
 
-def update_cargo [pkgs: list<string>] {
-  if ($pkgs | is-empty) {
-    return
-  }
-
-  ^cargo-binstall ...$pkgs
+def update_github_releases [pkgs: list<string>] {
+  print "Update from Github Releases is not implemented"
 }
 
 def update_nix [pkgs: list<string>] {
