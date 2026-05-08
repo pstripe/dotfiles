@@ -62,7 +62,7 @@ const ENVIRONMENT_PLUS_PKG_CONFIG: table<package:string, manager:string, config:
   [marksman, nix, {}]
   [alfred, cask, { updatable: false}]
   [firefox, cask, { updatable: false}]
-  [mdterm, github, {}]
+  [mdterm, nix, {}]
   [aerospace, cask, {}]
   [ghostty, cask, {}]
   [pika, cask, {}]
