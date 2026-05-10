@@ -1,112 +1,35 @@
 #!/usr/bin/env nu
 
-const BUNDLES = {
-  ai:           [opencode]
-  base:         [bat bottom choose eza fd fzf just pup ripgrep sd yazi zoxide]
-  docker:       [colima docker-client docker-compose qemu]
-  editors:      [helix]
-  git:          [git lazygit delta]
-  go:           [go gopls delve golangci-lint-langserver]
-  java:         [jdk17 gradle jdt-language-server]
-  lsp:          [gopls golangci-lint-langserver jdt-language-server marksman codebook phpactor deno just-lsp vscode-json-languageserver yaml-language-server]
-  markdown:     [mdterm marksman codebook]
-  php:          [php phpactor]
-  pkg-managers: [nix]
-  protobuf:     [protobuf protoc-gen-go protoc-gen-go-grpc]
-  shells:       [fish nushell]
-  ui:           [aerospace ghostty pika orbstack font-cascadia-code-nf alfred firefox]
-  disk-utils:   [mole]
-  work:         [vault]
-}
-
-const ENVIRONMENT_PLUS_PKG_CONFIG: table<package:string, manager:string, config:record> = [
-  [package, manager, config];
-  [aerospace, cask, {}]
-  [alfred, cask, { updatable: false}]
-  [bat, nix, {}]
-  [bottom, nix, {}]
-  [choose, nix, {}]
-  [codebook, nix, {}]
-  [colima, nix, {}]
-  [delta, nix, {}]
-  [delve, nix, {}]
-  [deno, nix, {}]
-  [docker-client, nix, {}]
-  [docker-compose, nix, {}]
-  [eza, nix, {}]
-  [fd, nix, {}]
-  [firefox, cask, { updatable: false}]
-  [fish, nix, {}]
-  [font-cascadia-code-nf, cask, {}]
-  [fzf, nix, {}]
-  [ghostty, cask, {}]
-  [git, nix, {}]
-  [go, nix, {}]
-  [golangci-lint-langserver, nix, {}]
-  [gopls, nix, {}]
-  [gradle, nix, {}]
-  [helix, nix, {}]
-  [jdk17, nix, {}]
-  [jdt-language-server, nix, {}]
-  [just, nix, {}]
-  [just-lsp, nix, {}]
-  [lazygit, nix, {}]
-  [marksman, nix, {}]
-  [mdterm, nix, {}]
-  [mole, brew, {}]
-  [nix, nix, {}]
-  [nushell, nix, {}]
-  [opencode, nix, {}]
-  [orbstack, cask, {}]
-  [php, nix, {}]
-  [phpactor, nix, {}]
-  [pika, cask, {}]
-  [protobuf, nix, {}]
-  [protoc-gen-go, nix, {}]
-  [protoc-gen-go-grpc, nix, {}]
-  [pup, nix, {}]
-  [qemu, nix, {}]
-  [ripgrep, nix, {}]
-  [sd, nix, {}]
-  [vault, brew, {}]
-  [vscode-json-languageserver, nix, {}]
-  [yaml-language-server, nix, {}]
-  [yazi, nix, {}]
-  [zoxide, nix, {}]
-]
+# WARN: globals
+let env_data = open pkgs/environment.toml
+let pkgs_meta = open pkgs/meta/*.toml
 
 def main [] { }
 
 def "main list-uses" [] {
-  $BUNDLES | columns
-}
-
-def "main install" [use: string] {
-  install_pkgs ($BUNDLES | get $use)
-}
-
-def "main update" [use: string] {
-  update_pkgs ($BUNDLES | get $use)
+  $pkgs_meta | select name tags | flatten tags | group-by tags --prune
 }
 
 def "main update-all" [
   --skip: string
 ] {
-  mut all = $BUNDLES | values | flatten
+  update_pkgs $env_data.packages | where $it != $skip
+}
 
-  if $skip != null {
-    $all = $all | where $it != $skip
-  }
-
-  update_pkgs $all
+def env []: any -> table<name:string, priority:int> {
+  $env_data.packages
+    | wrap name
+    | join ($pkgs_meta) name
+    | update managers {|r| $r | join $env_data.managers name | sort-by --reverse priority }
 }
 
 def manager []: string -> string {
-  $ENVIRONMENT_PLUS_PKG_CONFIG | where package == $in | get 0.manager
+  let pkg = $in
+  env | where name == $pkg | get 0.managers.0
 }
 
 def config [field:string]: string -> any {
-  $ENVIRONMENT_PLUS_PKG_CONFIG | where package == $in | get 0.config | get --optional $field
+  $in | manager | get --optional $field
 }
 
 def split_by_manager [pkgs: list<string>] {
