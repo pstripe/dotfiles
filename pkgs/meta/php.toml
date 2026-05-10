@@ -1,0 +1,5 @@
+name = "php"
+tags = ["php"]
+
+[[managers]]
+name = 'nix'

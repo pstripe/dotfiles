@@ -1,0 +1,5 @@
+name = "yaml-language-server"
+tags = ["yaml", "lsp"]
+
+[[managers]]
+name = 'nix'

@@ -1,0 +1,5 @@
+name = "nushell"
+tags = ["shell", "base"]
+
+[[managers]]
+name = 'nix'

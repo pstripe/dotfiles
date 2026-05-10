@@ -1,0 +1,5 @@
+name = "ghostty"
+tags = ["ui"]
+
+[[managers]]
+name = 'brew-cask'

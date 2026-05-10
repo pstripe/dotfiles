@@ -1,0 +1,5 @@
+name = "aerospace"
+tags = ["ui"]
+
+[[managers]]
+name = 'brew-cask'

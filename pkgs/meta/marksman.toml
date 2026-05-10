@@ -1,0 +1,5 @@
+name = "marksman"
+tags = ["markdown", "lsp"]
+
+[[managers]]
+name = 'nix'

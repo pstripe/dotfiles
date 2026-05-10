@@ -1,0 +1,5 @@
+name = "lazygit"
+tags = ["git", "tui"]
+
+[[managers]]
+name = 'nix'

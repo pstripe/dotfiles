@@ -1,0 +1,5 @@
+name = "yazi"
+tags = ["base", "tui"]
+
+[[managers]]
+name = 'nix'

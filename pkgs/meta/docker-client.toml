@@ -1,0 +1,5 @@
+name = "docker-client"
+tags = ["docker"]
+
+[[managers]]
+name = 'nix'

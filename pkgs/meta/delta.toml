@@ -1,0 +1,5 @@
+name = "delta"
+tags = ["git", "tui"]
+
+[[managers]]
+name = 'nix'

@@ -1,0 +1,5 @@
+name = "pika"
+tags = ["ui"]
+
+[[managers]]
+name = 'brew-cask'

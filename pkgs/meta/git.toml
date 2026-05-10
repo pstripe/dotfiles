@@ -1,0 +1,5 @@
+name = "git"
+tags = ["base", "git"]
+
+[[managers]]
+name = 'nix'

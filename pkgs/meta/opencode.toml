@@ -1,0 +1,5 @@
+name = "opencode"
+tags = ["ai", "tui"]
+
+[[managers]]
+name = 'nix'

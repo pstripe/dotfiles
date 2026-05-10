@@ -1,0 +1,6 @@
+name = "orbstack"
+tags = ["docker", "ui"]
+
+[[managers]]
+name = 'brew-cask'
+updatable = false

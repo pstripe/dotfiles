@@ -1,0 +1,5 @@
+name = "jdk17"
+tags = ["java"]
+
+[[managers]]
+name = 'nix'

@@ -1,0 +1,5 @@
+name = "mdterm"
+tags = ["markdown", "tui"]
+
+[[managers]]
+name = 'nix'

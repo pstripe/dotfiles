@@ -1,0 +1,5 @@
+name = "protobuf"
+tags = ["protobuf"]
+
+[[managers]]
+name = 'nix'

@@ -1,0 +1,5 @@
+name = "go"
+tags = ["go"]
+
+[[managers]]
+name = 'nix'

@@ -1,0 +1,5 @@
+name = "fish"
+tags = ["base", "shell"]
+
+[[managers]]
+name = 'nix'

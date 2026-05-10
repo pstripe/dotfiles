@@ -1,0 +1,5 @@
+name = "vscode-json-languageserver"
+tags = ["json", "lsp"]
+
+[[managers]]
+name = 'nix'

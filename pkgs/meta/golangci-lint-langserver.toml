@@ -1,0 +1,5 @@
+name = "golangci-lint-langserver"
+tags = ["go"]
+
+[[managers]]
+name = 'nix'

@@ -1,0 +1,5 @@
+name = "sd"
+tags = ["base"]
+
+[[managers]]
+name = 'nix'

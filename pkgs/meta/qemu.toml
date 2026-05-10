@@ -1,0 +1,5 @@
+name = "qemu"
+tags = ["docker"]
+
+[[managers]]
+name = 'nix'

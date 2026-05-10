@@ -1,0 +1,6 @@
+name = "firefox"
+tags = ["ui"]
+
+[[managers]]
+name = 'brew-cask'
+updatable = false

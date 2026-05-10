@@ -1,0 +1,5 @@
+name = "gradle"
+tags = ["java"]
+
+[[managers]]
+name = 'nix'

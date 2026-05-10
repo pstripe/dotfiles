@@ -1,0 +1,5 @@
+name = "protoc-gen-go-grpc"
+tags = ["protobuf", "go"]
+
+[[managers]]
+name = 'nix'

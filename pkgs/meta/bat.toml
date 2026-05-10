@@ -1,0 +1,5 @@
+name = "bat"
+tags = ["base"]
+
+[[managers]]
+name = 'nix'

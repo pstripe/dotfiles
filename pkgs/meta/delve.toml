@@ -1,0 +1,5 @@
+name = "delve"
+tags = ["go"]
+
+[[managers]]
+name = 'nix'

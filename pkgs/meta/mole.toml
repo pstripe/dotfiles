@@ -1,0 +1,5 @@
+name = "mole"
+tags = ["disk", "tui"]
+
+[[managers]]
+name = 'brew'

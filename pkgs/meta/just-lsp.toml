@@ -1,0 +1,5 @@
+name = "just-lsp"
+tags = ["lsp"]
+
+[[managers]]
+name = 'nix'

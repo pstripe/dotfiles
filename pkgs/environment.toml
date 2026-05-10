@@ -1,0 +1,73 @@
+name = "macos-work"
+
+packages = [
+  "aerospace",
+  "alfred",
+  "bat",
+  "bottom",
+  "choose",
+  "codebook",
+  "colima",
+  "delta",
+  "delve",
+  "deno",
+  "docker-client",
+  "docker-compose",
+  "eza",
+  "fd",
+  "firefox",
+  "fish",
+  "font-cascadia-code-nf",
+  "fzf",
+  "ghostty",
+  "git",
+  "go",
+  "golangci-lint-langserver",
+  "gopls",
+  "gradle",
+  "helix",
+  "jdk17",
+  "jdt-language-server",
+  "just",
+  "just-lsp",
+  "lazygit",
+  "marksman",
+  "mdterm",
+  "mole",
+  "nix",
+  "nushell",
+  "opencode",
+  "orbstack",
+  "package",
+  "php",
+  "phpactor",
+  "pika",
+  "protobuf",
+  "protoc-gen-go",
+  "protoc-gen-go-grpc",
+  "pup",
+  "qemu",
+  "ripgrep",
+  "sd",
+  "vault",
+  "vscode-json-languageserver",
+  "yaml-language-server",
+  "yazi",
+  "zoxide",
+]
+
+[[managers]]
+name = "nix"
+priority = 100
+
+[[managers]]
+name = "brew"
+priority = 20
+
+[[managers]]
+name = "brew-cask"
+priority = 20
+
+[[managers]]
+name = "github"
+priority = 10

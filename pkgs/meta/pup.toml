@@ -1,0 +1,5 @@
+name = "pup"
+tags = ["base", "html"]
+
+[[managers]]
+name = 'nix'

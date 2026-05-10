@@ -1,0 +1,5 @@
+name = "codebook"
+tags = ["markdown", "lsp"]
+
+[[managers]]
+name = 'nix'

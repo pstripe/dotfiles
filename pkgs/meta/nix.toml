@@ -1,0 +1,5 @@
+name = "nix"
+tags = ["pkg-manager"]
+
+[[managers]]
+name = 'nix'

@@ -1,0 +1,5 @@
+name = "choose"
+tags = ["base"]
+
+[[managers]]
+name = 'nix'
