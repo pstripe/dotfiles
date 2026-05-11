@@ -3,3 +3,15 @@ tags = ["ai", "tui"]
 
 [[managers]]
 name = 'nix'
+
+[[managers]]
+name = 'github'
+repo = 'anomalyco/opencode'
+version = 'v1.14.48'
+
+[managers.dist]
+filename_contains = 'linux-x64-baseline.tar'
+
+[[managers.dist.files]]
+source = 'opencode'
+dest = 'bin/'

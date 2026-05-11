@@ -1,0 +1,22 @@
+name = 'hledger'
+tags = ['finance']
+
+[[managers]]
+name = 'github'
+repo = 'simonmichael/hledger'
+version = '1.52.1'
+
+[managers.dist]
+filename_contains = 'linux-x64'
+
+[[managers.dist.files]]
+source = 'hledger'
+dest = 'bin/'
+
+[[managers.dist.files]]
+source = 'hledger-ui'
+dest = 'bin/'
+
+[[managers.dist.files]]
+source = 'hledger-web'
+dest = 'bin/'
