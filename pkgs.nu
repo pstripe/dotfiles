@@ -96,6 +96,27 @@ def install_nix [pkgs: list<string>] {
   ^nix profile add ...$pkg_names
 }
 
+# Depends on `docker-client`
+def install_docker_images [pkgs: list<string>] {
+  if ($pkgs | is-empty) {
+    return
+  }
+
+  $pkgs | each {|pkg| _install_docker_image $pkg}
+}
+
+def _install_docker_image [pkg: string] {
+  print $"Installing ($pkg)..."
+
+  let pkg_meta = $env_data | where name == $pkg | get 0.managers
+
+  let image = [$pkg_meta.image $pkg_meta.version] | str join ':'
+
+  # download
+  ^docker pull $image
+  ^docker tag $image $"pkg-manager/($pkg_meta.image):current"
+}
+
 # Depends on `ouch`
 def install_github_releases [pkgs: list<string>] {
   if ($pkgs | is-empty) {
@@ -106,36 +127,36 @@ def install_github_releases [pkgs: list<string>] {
 }
 
 def _install_github_release [pkg: string] {
-    print $"Installing ($pkg)..."
+  print $"Installing ($pkg)..."
 
-    let pkg_meta = $env_data | where name == $pkg | get 0.managers
+  let pkg_meta = $env_data | where name == $pkg | get 0.managers
 
-    # download
-    # TODO: auth
-    let asset = http get https://api.github.com/repos/($pkg_meta.repo)/releases/tags/($pkg_meta.version)
-      | get assets
-      | where name has $pkg_meta.dist.filename_contains and name not-has "sha"
-      | get browser_download_url
-      | get 0
+  # download
+  # TODO: auth
+  let asset = http get https://api.github.com/repos/($pkg_meta.repo)/releases/tags/($pkg_meta.version)
+    | get assets
+    | where name has $pkg_meta.dist.filename_contains and name not-has "sha"
+    | get browser_download_url
+    | get 0
 
-    let dist_dir = ["/tmp/pkg-dist/", $pkg_meta.repo, $pkg_meta.version] | path join
-    let dist_path = [$dist_dir, ($asset | path basename)] | path join
-    let dist_unpack_dir = [$dist_dir, "dist"] | path join
+  let dist_dir = ["/tmp/pkg-dist/", $pkg_meta.repo, $pkg_meta.version] | path join
+  let dist_path = [$dist_dir, ($asset | path basename)] | path join
+  let dist_unpack_dir = [$dist_dir, "dist"] | path join
 
-    if not ($dist_path | path exists) {
-      mkdir $dist_dir
+  if not ($dist_path | path exists) {
+    mkdir $dist_dir
 
-      http get $asset | save --progress $dist_path
-    }
+    http get $asset | save --progress $dist_path
+  }
 
-    # unpack
-    ^ouch decompress --quiet --yes --dir $dist_unpack_dir $dist_path
+  # unpack
+  ^ouch decompress --quiet --yes --dir $dist_unpack_dir $dist_path
 
-    # install
-    for file in ($pkg_meta.dist.files) {
-        print $"Copying ($dist_unpack_dir)/($file.source) to ($env.HOME)/.local/($file.dest)..."
-        cp $"($dist_unpack_dir)/($file.source)" $"($env.HOME)/.local/($file.dest)"
-    }
+  # install
+  for file in ($pkg_meta.dist.files) {
+      print $"Copying ($dist_unpack_dir)/($file.source) to ($env.HOME)/.local/($file.dest)..."
+      cp $"($dist_unpack_dir)/($file.source)" $"($env.HOME)/.local/($file.dest)"
+  }
 }
 
 # update section
