@@ -1,0 +1,7 @@
+name = "uptime-kuma"
+tags = ["docker-image", "monitoring"]
+
+[[managers]]
+name = "docker"
+image = "elestio/uptime-kuma"
+version = "2.3.2"

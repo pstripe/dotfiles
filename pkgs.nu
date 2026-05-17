@@ -11,6 +11,10 @@ def "main list-uses" [] {
   $pkgs_meta | select name tags | flatten tags | group-by tags #--prune
 }
 
+def "main install" [pkgs: list<string>] {
+  install_pkgs $pkgs
+}
+
 def "main update-all" [
   --skip: string
 ] {
@@ -25,7 +29,13 @@ def env [] {
 }
 
 def manager [pkg: string] {
-  $env_data | where name == $pkg | get 0.managers.name
+  try {
+    $env_data | where name == $pkg | get 0.managers.name
+  } catch {
+    error make {
+      msg: $"($pkg) could not be found"
+    }
+  }
 }
 
 def config [field:string]: string -> any {
@@ -51,6 +61,7 @@ def install_pkgs [pkgs: list<string>] {
 
   install_brew ($pkgs_by_manager | get --optional brew | default [])
   install_brew_casks ($pkgs_by_manager | get --optional cask | default [])
+  install_docker_images ($pkgs_by_manager | get --optional docker | default [])
   install_github_releases ($pkgs_by_manager | get --optional github | default [])
   install_nix ($pkgs_by_manager | get --optional nix | default [])
 }
@@ -60,6 +71,7 @@ def update_pkgs [pkgs: list<string>] {
 
   update_brew ($pkgs_by_manager | get --optional brew | default [])
   update_brew_casks ($pkgs_by_manager | get --optional cask | default [])
+  install_docker_images ($pkgs_by_manager | get --optional docker | default [])
   install_github_releases ($pkgs_by_manager | get --optional github | default [])
   update_nix ($pkgs_by_manager | get --optional nix | default [])
 }
@@ -114,7 +126,7 @@ def _install_docker_image [pkg: string] {
 
   # download
   ^docker pull $image
-  ^docker tag $image $"pkg-manager/($pkg_meta.image):current"
+  ^docker tag $image $"pkg-manager/($pkg):current"
 }
 
 # Depends on `ouch`

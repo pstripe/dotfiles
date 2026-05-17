@@ -1,0 +1,7 @@
+name = "silverbullet"
+tags = ["docker-image", "markdown", "knowledge-base"]
+
+[[managers]]
+name = "docker"
+image = "zefhemel/silverbullet"
+version = "2.8.0"

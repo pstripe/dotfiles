@@ -1,0 +1,7 @@
+name = "miniflux"
+tags = ["docker-image", "rss"]
+
+[[managers]]
+name = "docker"
+image = "miniflux/miniflux"
+version = "2.3.0"

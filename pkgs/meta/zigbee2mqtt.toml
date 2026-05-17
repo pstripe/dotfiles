@@ -1,0 +1,7 @@
+name = "zigbee2mqtt"
+tags = ["docker-image", "mqtt", "zigbee"]
+
+[[managers]]
+name = "docker"
+image = "koenkk/zigbee2mqtt"
+version = "2.10.1"

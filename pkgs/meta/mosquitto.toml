@@ -1,0 +1,7 @@
+name = "mosquitto"
+tags = ["docker-image", "mqtt"]
+
+[[managers]]
+name = "docker"
+image = "eclipse-mosquitto"
+version = "2.1.2-alpine"

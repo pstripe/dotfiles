@@ -1,0 +1,7 @@
+name = "caddy"
+tags = ["docker-image", "server"]
+
+[[managers]]
+name = "docker"
+image = "caddy"
+version = "2.11.3"
