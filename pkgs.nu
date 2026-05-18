@@ -1,8 +1,8 @@
 #!/usr/bin/env nu
 
 # WARN: globals
-let env_file = open pkgs/environment.toml
-let pkgs_meta = open pkgs/meta/*.toml
+let env_file: record<name:string, packages:list<string>, managers:table> = open pkgs/environment.toml
+let pkgs_meta: table<name:string, tags:list<string>, managers:table> = open pkgs/meta/*.toml
 let env_data = env
 
 def main [] { }
@@ -12,20 +12,25 @@ def "main list-uses" [] {
 }
 
 def "main install" [pkgs: list<string>] {
-  install_pkgs $pkgs
+  $pkgs | install
 }
 
 def "main update-all" [
   --skip: string
 ] {
-  update_pkgs ($env_data | where name != $skip | get name)
+  $env_data | where name != $skip | get name | update
 }
 
 def env [] {
   $env_file.packages
     | wrap name
     | join ($pkgs_meta) name
-    | update managers {|r| $r.managers | join $env_file.managers name | sort-by --reverse priority | get 0}
+    | update managers {|r|
+        $r.managers
+        | join $env_file.managers name
+        | sort-by --reverse priority
+        | get 0
+      }
 }
 
 def manager [pkg: string] {
@@ -42,38 +47,28 @@ def config [field:string]: string -> any {
   manager $in | get --optional $field
 }
 
-def split_by_manager [pkgs: list<string>] {
-  mut pkgs_by_manager = {}
-
-  for pkg in $pkgs {
-    let manager = manager $pkg
-
-    let row = $pkgs_by_manager | get --optional $manager | default [] | append $pkg
-
-    $pkgs_by_manager = $pkgs_by_manager | upsert $manager $row
-  }
-
-  $pkgs_by_manager
+def split_by_manager [pkgs: list<string>]: nothing -> table<pkg:string, manager:string> {
+  $pkgs | each { {pkg: $in manager: (manager $in)} }
 }
 
-def install_pkgs [pkgs: list<string>] {
-  let $pkgs_by_manager = split_by_manager $pkgs
+def install []: list<string> -> nothing {
+  let $pkgs_by_manager = split_by_manager $in
 
-  install_brew ($pkgs_by_manager | get --optional brew | default [])
-  install_brew_casks ($pkgs_by_manager | get --optional cask | default [])
-  install_docker_images ($pkgs_by_manager | get --optional docker | default [])
-  install_github_releases ($pkgs_by_manager | get --optional github | default [])
-  install_nix ($pkgs_by_manager | get --optional nix | default [])
+  install_brew ($pkgs_by_manager | where manager == brew)
+  install_brew_casks ($pkgs_by_manager | where manager == cask)
+  install_docker_images ($pkgs_by_manager | where manager == docker)
+  install_github_releases ($pkgs_by_manager | where manager == github)
+  install_nix ($pkgs_by_manager | where manager == nix)
 }
 
-def update_pkgs [pkgs: list<string>] {
-  let pkgs_by_manager = split_by_manager $pkgs
+def update []: list<string> -> nothing {
+  let pkgs_by_manager = split_by_manager $in
 
-  update_brew ($pkgs_by_manager | get --optional brew | default [])
-  update_brew_casks ($pkgs_by_manager | get --optional cask | default [])
-  install_docker_images ($pkgs_by_manager | get --optional docker | default [])
-  install_github_releases ($pkgs_by_manager | get --optional github | default [])
-  update_nix ($pkgs_by_manager | get --optional nix | default [])
+  update_brew ($pkgs_by_manager | where manager == brew)
+  update_brew_casks ($pkgs_by_manager | where manager == cask)
+  # TODO: update for github relases
+  # TODO: update for docker
+  update_nix ($pkgs_by_manager | where manager == nix)
 }
 
 # install section
@@ -103,7 +98,7 @@ def install_nix [pkgs: list<string>] {
     return
   }
 
-  let pkg_names = $pkgs | each {|pkg| 'nixpkgs#' + $pkg }
+  let pkg_names = $pkgs | each {'nixpkgs#' + $in}
 
   ^nix profile add ...$pkg_names
 }
@@ -114,7 +109,7 @@ def install_docker_images [pkgs: list<string>] {
     return
   }
 
-  $pkgs | each {|pkg| _install_docker_image $pkg}
+  $pkgs | each {_install_docker_image $in}
 }
 
 def _install_docker_image [pkg: string] {
@@ -135,7 +130,7 @@ def install_github_releases [pkgs: list<string>] {
     return
   }
 
-  $pkgs | each {|pkg| _install_github_release $pkg}
+  $pkgs | each {_install_github_release $in}
 }
 
 def _install_github_release [pkg: string] {
@@ -192,10 +187,6 @@ def update_brew_casks [casks: list<string>] {
   ^brew update
   ^brew outdated --cask
   ^brew upgrade --cask ...$updatable_casks
-}
-
-def update_github_releases [pkgs: list<string>] {
-  print "Update from Github Releases is not implemented"
 }
 
 def update_nix [pkgs: list<string>] {
