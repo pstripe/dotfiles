@@ -15,10 +15,20 @@ def "main install" [pkgs: list<string>] {
   $pkgs | install
 }
 
+def "main check-updates" [] {
+  $env_data | get name | check_updates
+}
+
 def "main update-all" [
   --skip: string
 ] {
-  $env_data | where name != $skip | get name | update
+  let $pkgs = $env_data | where name != $skip | get name
+
+  $pkgs | check_updates
+
+  input "Procceed?"
+
+  $pkgs | update_pkgs
 }
 
 def env [] {
@@ -54,21 +64,31 @@ def split_by_manager [pkgs: list<string>]: nothing -> table<pkg:string, manager:
 def install []: list<string> -> nothing {
   let $pkgs_by_manager = split_by_manager $in
 
-  install_brew ($pkgs_by_manager | where manager == brew)
-  install_brew_casks ($pkgs_by_manager | where manager == cask)
-  install_docker_images ($pkgs_by_manager | where manager == docker)
-  install_github_releases ($pkgs_by_manager | where manager == github)
-  install_nix ($pkgs_by_manager | where manager == nix)
+  install_brew ($pkgs_by_manager | where manager == brew | get pkg)
+  install_brew_casks ($pkgs_by_manager | where manager == cask | get pkg)
+  install_docker_images ($pkgs_by_manager | where manager == docker | get pkg)
+  install_github_releases ($pkgs_by_manager | where manager == github | get pkg)
+  install_nix ($pkgs_by_manager | where manager == nix | get pkg)
 }
 
-def update []: list<string> -> nothing {
+def update_pkgs []: list<string> -> nothing {
   let pkgs_by_manager = split_by_manager $in
 
-  update_brew ($pkgs_by_manager | where manager == brew)
-  update_brew_casks ($pkgs_by_manager | where manager == cask)
+  update_brew ($pkgs_by_manager | where manager == brew | get pkg)
+  update_brew_casks ($pkgs_by_manager | where manager == cask | get pkg)
   # TODO: update for github relases
   # TODO: update for docker
-  update_nix ($pkgs_by_manager | where manager == nix)
+  update_nix ($pkgs_by_manager | where manager == nix | get pkg)
+}
+
+def check_updates []: list<string> -> nothing {
+  let pkgs_by_manager = split_by_manager $in
+
+  check_updates_brew ($pkgs_by_manager | where manager == brew | get pkg)
+  check_updates_brew_casks ($pkgs_by_manager | where manager == cask | get pkg)
+  check_updates_github_releases ($pkgs_by_manager | where manager == github | get pkg)
+  # TODO: check updates for docker
+  # TODO: check updates for nix
 }
 
 # install section
@@ -171,8 +191,6 @@ def update_brew [pkgs: list<string>] {
     return
   }
 
-  ^brew update
-  ^brew outdated
   ^brew upgrade ...$pkgs
 }
 
@@ -183,8 +201,6 @@ def update_brew_casks [casks: list<string>] {
 
   let $updatable_casks = $casks | where {|cask| $cask | config updatable | default true}
 
-  ^brew update
-  ^brew outdated --cask
   ^brew upgrade --cask ...$updatable_casks
 }
 
@@ -196,4 +212,44 @@ def update_nix [pkgs: list<string>] {
   ^nix profile upgrade ...$pkgs
   ^nix profile wipe-history --older-than 30d
   ^nix store gc
+}
+
+# check_updates section
+def check_updates_brew [pkgs: list<string>] {
+  if ($pkgs | is-empty) {
+    return
+  }
+
+  ^brew update
+  ^brew outdated
+}
+
+def check_updates_brew_casks [casks: list<string>] {
+  if ($casks | is-empty) {
+    return
+  }
+
+  ^brew update
+  ^brew outdated --cask
+}
+
+def check_updates_github_releases [pkgs: list<string>] {
+  if ($pkgs | is-empty) {
+    return
+  }
+
+  $pkgs | each {_check_updates_github_release $in}
+}
+
+def _check_updates_github_release [pkg: string] {
+  let pkg_meta = $env_data | where name == $pkg | get 0.managers
+
+  let newer_versions = http get --headers {Authorization: $pkg_meta.token} https://api.github.com/repos/($pkg_meta.repo)/releases
+    | where tag_name > $pkg_meta.version
+    | get tag_name
+
+  if ($newer_versions | is-not-empty) {
+    print $"($pkg) has newer versions:"
+    print $newer_versions
+  }
 }
