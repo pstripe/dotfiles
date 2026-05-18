@@ -1,0 +1,14 @@
+name = 'rclone'
+tags = ['backup']
+
+[[managers]]
+name = 'github'
+repo = 'rclone/rclone'
+version = 'v1.74.1'
+
+[managers.dist]
+filename_contains = 'linux-amd64.zip'
+
+[[managers.dist.files]]
+source = 'rclone'
+dest = 'bin/'

@@ -180,8 +180,10 @@ def _install_github_release [pkg: string] {
 
   # install
   for file in ($pkg_meta.dist.files) {
-      print $"Copying ($dist_unpack_dir)/($file.source) to ($env.HOME)/.local/($file.dest)..."
-      cp $"($dist_unpack_dir)/($file.source)" $"($env.HOME)/.local/($file.dest)"
+    let src = glob ($dist_unpack_dir)/**/($file.source) | get 0
+
+    print $"Copying ($src) to ($env.HOME)/.local/($file.dest)..."
+    cp --update $src $"($env.HOME)/.local/($file.dest)"
   }
 }
 
