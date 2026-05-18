@@ -139,8 +139,7 @@ def _install_github_release [pkg: string] {
   let pkg_meta = $env_data | where name == $pkg | get 0.managers
 
   # download
-  # TODO: auth
-  let asset = http get https://api.github.com/repos/($pkg_meta.repo)/releases/tags/($pkg_meta.version)
+  let asset = http get --headers {Authorization: $pkg_meta.token} https://api.github.com/repos/($pkg_meta.repo)/releases/tags/($pkg_meta.version)
     | get assets
     | where name has $pkg_meta.dist.filename_contains and name not-has "sha"
     | get browser_download_url
