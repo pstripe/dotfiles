@@ -70,11 +70,12 @@ def main [
 
     loop {
         let t = (now_fields)
-        let ts = date now | format date "%s" | into int
+        let now = date now
+        let ts = $now | format date "%s" | into int
 
         # избегаем повторного запуска в ту же минуту при частом цикле
         if (cron_match $spec $t) and $ts - $last_run_ts > 55 {
-            print $"[runner] run at ($ts) -> ($cmd)"
+            print $"[runner] run at ($now) -> ($cmd)"
 
             let r = do { ^bash -c $"($cmd)" } | complete | inspect 
           
