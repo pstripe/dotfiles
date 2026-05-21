@@ -1,0 +1,14 @@
+name = "bun"
+tags = ["js"]
+
+[[managers]]
+name = 'github'
+repo = 'oven-sh/bun'
+version = 'bun-v1.3.14'
+
+[managers.dist]
+filename_contains = 'linux-x64-baseline.zip'
+
+[[managers.dist.files]]
+source = 'bun'
+dest = 'bin/'
