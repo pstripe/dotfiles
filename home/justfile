@@ -1,3 +1,2 @@
 mod backup '~/.local/lib/just/backup.just'
 mod cargo '~/.local/lib/just/cargo.just'
-mod eget '~/.local/lib/just/eget.just'
