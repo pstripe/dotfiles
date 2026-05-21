@@ -7,7 +7,7 @@ name = 'nix'
 [[managers]]
 name = 'github'
 repo = 'anomalyco/opencode'
-version = 'v1.14.48'
+version = 'v1.15.6'
 
 [managers.dist]
 filename_contains = 'linux-x64-baseline.tar'
