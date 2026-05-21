@@ -5,7 +5,7 @@ LOCAL_DIR  = ${HOME}/.local
 LOCAL_LIB_DIR  = ${LOCAL_DIR}/lib
 
 # Configs
-EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,nvim tmux wezterm zellij alacritty)
+EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,nvim tmux)
 CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat codebook git ghostty helix nix fish bottom lazygit yazi)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc .zshenv justfile)
