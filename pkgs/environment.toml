@@ -30,6 +30,7 @@ packages = [
   "jdt-language-server",
   "just",
   "just-lsp",
+  "lazydocker",
   "lazygit",
   "marksman",
   "mdterm",

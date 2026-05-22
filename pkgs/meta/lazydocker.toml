@@ -1,0 +1,5 @@
+name = "lazydocker"
+tags = ["docker", "tui"]
+
+[[managers]]
+name = 'nix'
