@@ -5,6 +5,7 @@ auto-format = false
 cursorline  = true
 line-number = "relative"
 true-color  = true
+end-of-line-diagnostics = "hint"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -23,6 +24,10 @@ skip-levels = 1
 normal = "N"
 insert = "I"
 select = "S"
+
+[editor.inline-diagnostics]
+cursor-line = "error"
+other-lines = "warning"
 
 [editor.soft-wrap]
 enable = true
