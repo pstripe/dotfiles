@@ -2,6 +2,11 @@
 command = "phpactor"
 args = [ "language-server" ]
 
+[language-server.marksman]
+command = "marksman"
+args = ["server"]
+environment = { DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = "1" }
+
 [language-server.codebook]
 command = "codebook-lsp"
 args = ["serve"]
