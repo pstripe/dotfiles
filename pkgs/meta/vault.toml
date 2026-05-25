@@ -2,4 +2,6 @@ name = "vault"
 tags = ["secret"]
 
 [[managers]]
-name = 'nix'
+name = 'brew'
+# TODO: add support
+tap = 'hashicorp/tap'

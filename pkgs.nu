@@ -26,7 +26,7 @@ def "main update-all" [
 
   $pkgs | check_updates
 
-  input "Procceed?"
+  input "Proceed? (press enter) > "
 
   $pkgs | update_pkgs
 }
@@ -48,7 +48,7 @@ def manager [pkg: string] {
     $env_data | where name == $pkg | get 0.managers.name
   } catch {
     error make {
-      msg: $"($pkg) could not be found"
+      msg: $"($pkg) could not be found in environment.toml"
     }
   }
 }
@@ -97,6 +97,8 @@ def install_brew [pkgs: list<string>] {
   if ($pkgs | is-empty) {
     return
   }
+
+  # TODO: add taps
 
   ^brew update
   ^brew install ...$pkgs
