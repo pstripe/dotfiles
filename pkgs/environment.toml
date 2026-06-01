@@ -38,8 +38,9 @@ packages = [
   "nix",
   "nushell",
   "opencode",
+  "uv",
+  "semble",
   "orbstack",
-  "package",
   "php",
   "phpactor",
   "pika",
@@ -71,4 +72,8 @@ priority = 20
 
 [[managers]]
 name = "github"
+priority = 10
+
+[[managers]]
+name = "uv"
 priority = 10
