@@ -1,0 +1,21 @@
+name = "uv"
+tags = ["manager", "python", "runner"]
+
+[[managers]]
+name = "nix"
+
+[[managers]]
+name = "github"
+repo = "astral-sh/uv"
+version = "0.11.17"
+
+[managers.dist]
+filename_contains = "x86_64-unknown-linux-gnu"
+
+[[managers.dist.files]]
+source = 'uv'
+dest = 'bin/'
+
+[[managers.dist.files]]
+source = 'uvx'
+dest = 'bin/'

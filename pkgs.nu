@@ -69,6 +69,7 @@ def install []: list<string> -> nothing {
   install_docker_images ($pkgs_by_manager | where manager == docker | get pkg)
   install_github_releases ($pkgs_by_manager | where manager == github | get pkg)
   install_nix ($pkgs_by_manager | where manager == nix | get pkg)
+  install_uv ($pkgs_by_manager | where manager == uv | get pkg)
 }
 
 def update_pkgs []: list<string> -> nothing {
@@ -79,6 +80,7 @@ def update_pkgs []: list<string> -> nothing {
   # TODO: update for github relases
   # TODO: update for docker
   update_nix ($pkgs_by_manager | where manager == nix | get pkg)
+  update_uv ($pkgs_by_manager | where manager == uv | get pkg)
 }
 
 def check_updates []: list<string> -> nothing {
@@ -189,6 +191,15 @@ def _install_github_release [pkg: string] {
   }
 }
 
+# Depends on uv
+def install_uv [pkgs: list<string>] {
+  if ($pkgs | is-empty) {
+    return
+  }
+
+  $pkgs | each { ^uv tool install $in }
+}
+
 # update section
 def update_brew [pkgs: list<string>] {
   if ($pkgs | is-empty) {
@@ -216,6 +227,14 @@ def update_nix [pkgs: list<string>] {
   ^nix profile upgrade ...$pkgs
   ^nix profile wipe-history --older-than 30d
   ^nix store gc
+}
+
+def update_uv [pkgs: list<string>] {
+  if ($pkgs | is-empty) {
+    return
+  }
+
+  $pkgs | each { ^uv tool upgrade $in }
 }
 
 # check_updates section
