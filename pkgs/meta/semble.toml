@@ -1,0 +1,5 @@
+name = "semble"
+tags = ["ai", "search"]
+
+[[managers]]
+name = "uv"
