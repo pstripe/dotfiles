@@ -1,14 +1,24 @@
 #!/usr/bin/env nu
 
 # WARN: globals
-let env_file: record<name:string, packages:list<string>, managers:table> = open pkgs/environment.toml
-let pkgs_meta: table<name:string, tags:list<string>, managers:table> = open pkgs/meta/*.toml
-let env_data = env
+let env_data = do {
+  let env_file: record<name:string, packages:list<string>, managers:table> = open pkgs/environment.toml
+
+  $env_file.packages
+    | each { open $"pkgs/meta/($in).toml" }
+    | update managers {|r|
+        $r.managers
+        | join $env_file.managers name
+        | sort-by --reverse priority
+        | get 0
+      }
+    | inspect
+}
 
 def main [] { }
 
 def "main list-uses" [] {
-  $pkgs_meta | select name tags | flatten tags | group-by tags #--prune
+  open pkgs/meta/*.toml | select name tags | flatten tags | group-by tags #--prune
 }
 
 def "main install" [pkgs: list<string>] {
@@ -29,18 +39,6 @@ def "main update-all" [
   input "Proceed? (press enter) > "
 
   $pkgs | update_pkgs
-}
-
-def env [] {
-  $env_file.packages
-    | wrap name
-    | join ($pkgs_meta) name
-    | update managers {|r|
-        $r.managers
-        | join $env_file.managers name
-        | sort-by --reverse priority
-        | get 0
-      }
 }
 
 def manager [pkg: string] {
