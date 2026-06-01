@@ -1,0 +1,7 @@
+name = "home-assistant"
+tags = ["docker-image", "iot"]
+
+[[managers]]
+name = "docker"
+image = "homeassistant/home-assistant"
+version = "2026.5.4"
