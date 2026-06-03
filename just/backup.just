@@ -10,19 +10,9 @@ start-cron:
 			cmd: "just backup::service-data"
 		}
 		{
-			name: "clear tmps"
-			schedule: "58 0 * * *"
-			cmd: "just backup::cleanup"
-		}
-		{
-			name: "dropbox backup"
-			schedule: "25 0 * * *"
-			cmd: "just backup::run dropbox"
-		}
-		{
-			name: "icloud backup"
-			schedule: "33 0 * * *"
-			cmd: "just backup::run icloud"
+			name: "run"
+			schedule: "14 0 * * *"
+			cmd: "just backup::default"
 		}
 	]
 
@@ -39,14 +29,35 @@ start-cron:
 
 	^tmux select-window -t ($session):0
 
+bkp_dir := '/tmp/backup'
+
+default:
+	just backup::pack
+	just backup::run Dropbox
+	just backup::run iCloud
+	just backup::cleanup
+
 [no-cd]
 service-data:
-    just miniflux/backup
-    just silverbullet/backup
+    just miniflux/backup      {{bkp_dir}}/docker
+    just silverbullet/backup  {{bkp_dir}}/docker
+
+pack:
+	mkdir -p /tmp/backup/docker
+
+	ouch compress --gitignore ~/services    {{bkp_dir}}/services.tar.zst
+	ouch compress --gitignore ~/ledger      {{bkp_dir}}/ledger.tar.zst
+	ouch compress --gitignore ~/dotfiles    {{bkp_dir}}/dotfiles.tar.zst
+	ouch compress --gitignore ~/projects    {{bkp_dir}}/projects.tar.zst
+	ouch compress             ~/ledger.old  {{bkp_dir}}/ledger-old.tar.zst
+	ouch compress             ~/Documents   {{bkp_dir}}/documents.tar.zst
+	ouch compress             ~/org         {{bkp_dir}}/org.tar.zst
+
+	ouch compress   ~/zigbee2mqtt               {{bkp_dir}}/docker/zigbee2mqtt.tar.zst
+	cp              ~/ha_config/backups/*.tar   {{bkp_dir}}/docker/hass.tar
 
 run storage:
-    rustic -P {{storage}} backup
-    rustic -P {{storage}} forget --prune
+	rclone sync {{bkp_dir}}  {{storage}}:backup  --progress --transfers 4 --checksum --delete-during
 
 cleanup:
-    rm -r /tmp/backup
+    rm -r {{bkp_dir}}/*
