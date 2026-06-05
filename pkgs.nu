@@ -195,7 +195,11 @@ def install_uv [pkgs: list<string>] {
     return
   }
 
-  $pkgs | each { ^uv tool install $in }
+  $pkgs | each {|pkg|
+    let pkg_meta = $env_data | where name == $pkg | get 0.managers
+
+    ^uv tool install $"($pkg)==($pkg_meta.version)"
+  }
 }
 
 # update section
