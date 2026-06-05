@@ -1,7 +1,15 @@
 {
+  "mcp": {
+    "semble": {
+      "command": [ "semble" ],
+      "type": "local",
+      "enabled": true
+    }
+  },
   "$schema": "https://opencode.ai/config.json",
+  "lsp": true,
   "instructions": [
     "rules/cli_tools.md", // rg, fd
-    "rules/semble.md",    // semantic search
+    "rules/semble.md", // semantic search
   ],
 }
