@@ -21,7 +21,7 @@ def "main list-uses" [] {
   open pkgs/meta/*.toml | select name tags | flatten tags | group-by tags #--prune
 }
 
-def "main install" [pkgs: list<string>] {
+def "main install" [...pkgs: string] {
   $pkgs | install
 }
 
