@@ -1,26 +1,20 @@
 #!/usr/bin/env nu
 
-let version = (nix --version | parse -r '(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)' | into record)
+let version = ^nix --version | parse -r '(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)' | into record
 
-mut table = {};
-
-if ($version.major >= '2') and ($version.minor >= '24') {
-  $table = (
-    nix profile list --json
-      | from json
-      | get elements
-      | transpose
-      | select column0 column1.storePaths
-  )
-} else {
+if ($version.major < '2') or ($version.minor < '24') {
   [
     "Minimum supported version of Nix is 2.24\n"
-    "Actual version is " (nix --version)
+    "Actual version is "
+    ($version | format pattern "{major}.{minor}.{patch}")
   ] | str join | print -e
 }
 
-$table
+^nix profile list --json
+  | from json
+  | get elements
+  | transpose
+  | select column0 column1.storePaths
   | rename app version
   | update app { |x| $x.app | split row '.' | last }
   | update version { |x| $x.version | parse -r ($x.app + '-(.*)') | get --optional capture0.0 }
-  | print
