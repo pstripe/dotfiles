@@ -41,6 +41,14 @@ def "main update-all" [
   $pkgs | update_pkgs
 }
 
+def "main update" [...pkgs: string] {
+  $pkgs | check_updates
+
+  input "Proceed? (press enter) > "
+
+  $pkgs | update_pkgs
+}
+
 def manager [pkg: string] {
   try {
     $env_data | where name == $pkg | get 0.managers.name
