@@ -1,6 +1,7 @@
 name = "semble"
-tags = ["ai", "search"]
+tags = ["ai", "search", "mcp"]
 
 [[managers]]
 name = "uv"
-version = "0.3.3"
+package = "semble[mcp]"
+version = "0.3.4"

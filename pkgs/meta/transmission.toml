@@ -1,0 +1,7 @@
+name = "transmission"
+tags = ["docker-image", "torrent"]
+
+[[managers]]
+name = "docker"
+image = "linuxserver/transmission"
+version = "4.1.2"

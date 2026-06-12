@@ -205,8 +205,9 @@ def install_uv [pkgs: list<string>] {
 
   $pkgs | each {|pkg|
     let pkg_meta = $env_data | where name == $pkg | get 0.managers
+    let name = $pkg_meta.package | default $pkg
 
-    ^uv tool install $"($pkg)==($pkg_meta.version)"
+    ^uv tool install $"($name)==($pkg_meta.version)"
   }
 }
 
@@ -244,7 +245,12 @@ def update_uv [pkgs: list<string>] {
     return
   }
 
-  $pkgs | each { ^uv tool upgrade $in }
+  $pkgs | each {|pkg|
+    let pkg_meta = $env_data | where name == $pkg | get 0.managers
+    let name = $pkg_meta.package | default $pkg
+
+    ^uv tool upgrade $"($name)==($pkg_meta.version)"
+  }
 }
 
 # check_updates section

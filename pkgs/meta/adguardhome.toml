@@ -4,4 +4,4 @@ tags = ["docker-image", "dns"]
 [[managers]]
 name = "docker"
 image = "adguard/adguardhome"
-version = "v0.107.76"
+version = "v0.107.77"
