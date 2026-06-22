@@ -86,7 +86,8 @@ def update_pkgs []: list<string> -> nothing {
   # TODO: update for github relases
   # TODO: update for docker
   update_nix ($pkgs_by_manager | where manager == nix | get pkg)
-  update_uv ($pkgs_by_manager | where manager == uv | get pkg)
+  # uv has a bug: it cannot `upgrade` packages with extras (`semble[mcp]`), using `install` instead
+  install_uv ($pkgs_by_manager | where manager == uv | get pkg)
 }
 
 def check_updates []: list<string> -> nothing {
@@ -238,19 +239,6 @@ def update_nix [pkgs: list<string>] {
   ^nix profile upgrade ...$pkgs
   ^nix profile wipe-history --older-than 30d
   ^nix store gc
-}
-
-def update_uv [pkgs: list<string>] {
-  if ($pkgs | is-empty) {
-    return
-  }
-
-  $pkgs | each {|pkg|
-    let pkg_meta = $env_data | where name == $pkg | get 0.managers
-    let name = $pkg_meta.package | default $pkg
-
-    ^uv tool upgrade $"($name)==($pkg_meta.version)"
-  }
 }
 
 # check_updates section
