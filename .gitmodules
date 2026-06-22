@@ -4,3 +4,6 @@
 [submodule "yazi/plugins/glow.yazi"]
 	path = yazi/plugins/glow.yazi
 	url = https://github.com/Reledia/glow.yazi.git
+[submodule "opencode/tools/ponytail"]
+	path = opencode/tools/ponytail
+	url = git@github.com:DietrichGebert/ponytail.git

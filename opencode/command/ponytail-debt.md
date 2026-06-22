@@ -1,0 +1,1 @@
+../tools/ponytail/.opencode/command/ponytail-debt.md
