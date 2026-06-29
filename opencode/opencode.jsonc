@@ -14,6 +14,18 @@
       "disabled": false,
     }
   },
+  "formatter": {
+    "md": {
+      "command": [
+        "deno",
+        "fmt",
+        "$FILE"
+      ],
+      "extensions": [
+        ".md"
+      ]
+    }
+  },
   "instructions": [
     "rules/cli_tools.md", // rg, fd
     "rules/semble.md", // semantic search
