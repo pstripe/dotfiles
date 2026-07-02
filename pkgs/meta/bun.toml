@@ -2,6 +2,9 @@ name = "bun"
 tags = ["js"]
 
 [[managers]]
+name = 'nix'
+
+[[managers]]
 name = 'github'
 repo = 'oven-sh/bun'
 version = 'bun-v1.3.14'

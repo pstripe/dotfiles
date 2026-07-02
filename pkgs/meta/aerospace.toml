@@ -3,3 +3,4 @@ tags = ["ui"]
 
 [[managers]]
 name = 'brew-cask'
+tap = 'nikitabobko/tap/aerospace'

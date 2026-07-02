@@ -1,0 +1,5 @@
+name = "ouch"
+tags = ["base", "archive"]
+
+[[managers]]
+name = 'nix'
