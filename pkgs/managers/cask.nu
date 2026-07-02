@@ -1,21 +1,23 @@
 export const MANAGER = "cask"
 export const DEPS = ["brew"]
 
-export def install [casks: list<string>] {
+export def install [casks: table] {
   if ($casks | is-empty) {
     return
   }
+
+  let names = $casks | %update managers {|row| $row.managers | default $row.name tap} | get managers.tap
 
   ^brew update
-  ^brew install --cask ...$casks
+  ^brew install --cask ...$names
 }
 
-export def update [casks: list<string>, env_data: any] {
+export def update [casks: table] {
   if ($casks | is-empty) {
     return
   }
 
-  let $updatable_casks = $casks | where {|cask| $env_data | where name == $cask | get --optional 0.managers.name.updatable | default true}
+  let $updatable_casks = $casks | %update managers {|row| $row.managers | default true updatable} | where managers.updatable == true | get name
 
   ^brew upgrade --casks ...$updatable_casks
 }

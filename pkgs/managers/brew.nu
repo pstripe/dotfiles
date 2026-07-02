@@ -1,7 +1,7 @@
 export const MANAGER = "brew"
 export const DEPS = ["brew"]
 
-export def install [pkgs: list<string>] {
+export def install [pkgs: table] {
   if ($pkgs | is-empty) {
     return
   }
@@ -9,15 +9,15 @@ export def install [pkgs: list<string>] {
   # TODO: add taps
 
   ^brew update
-  ^brew install ...$pkgs
+  ^brew install ...($pkgs | get name)
 }
 
-export def update [pkgs: list<string>] {
+export def update [pkgs: table] {
   if ($pkgs | is-empty) {
     return
   }
 
-  ^brew upgrade --formulae ...$pkgs
+  ^brew upgrade --formulae ...($pkgs | get name)
 }
 
 export def check_updates [] {

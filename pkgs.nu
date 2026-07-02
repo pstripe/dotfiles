@@ -27,8 +27,12 @@ def "main list-uses" [] {
   open pkgs/meta/*.toml | select name tags | flatten tags | group-by tags
 }
 
-def "main install" [...pkgs: string] {
-  $pkgs | install
+def "main install-all" [] {
+  $env_data | install
+}
+
+def "main install" [...names: string] {
+  $env_data | where name in [...$names] | install
 }
 
 def "main check-updates" [] {
@@ -38,13 +42,15 @@ def "main check-updates" [] {
 def "main update-all" [
   --skip: string
 ] {
-  let $pkgs = $env_data | where name != $skip | get name
+  let $pkgs = $env_data | where name != $skip
 
   $pkgs | check_updates
   $pkgs | update_pkgs
 }
 
-def "main update" [...pkgs: string] {
+def "main update" [...names: string] {
+  let pkgs = $env_data | where name in [...$names]
+
   $pkgs | check_updates
   $pkgs | update_pkgs
 }
@@ -63,42 +69,29 @@ def config [field:string]: string -> any {
   manager $in | get --optional $field
 }
 
-def split_by_manager [pkgs: list<string>]: nothing -> table<pkg:string, manager:string> {
-  $pkgs | each { {pkg: $in manager: (manager $in)} }
+def install []: table -> nothing {
+  brew   install ($in | where managers.name == brew)
+  cask   install ($in | where managers.name == brew-cask)
+  docker install ($in | where managers.name == docker)
+  nix    install ($in | where managers.name == nix)
+  uv     install ($in | where managers.name == uv)
+  github install ($in | where managers.name == github)
 }
 
-def install []: list<string> -> nothing {
-  let $pkgs_by_manager = split_by_manager $in
-
-# TODO: path rich packages instead of separate pkgs list string and whole data
-  brew   install ($pkgs_by_manager | where manager == brew   | get pkg)
-  cask   install ($pkgs_by_manager | where manager == cask   | get pkg)
-  docker install ($pkgs_by_manager | where manager == docker | get pkg) $env_data
-  nix    install ($pkgs_by_manager | where manager == nix    | get pkg)
-  uv     install ($pkgs_by_manager | where manager == uv     | get pkg) $env_data
-  github install ($pkgs_by_manager | where manager == github | get pkg) $env_data
-}
-
-def update_pkgs []: list<string> -> nothing {
-  let pkgs_by_manager = split_by_manager $in
-
-  # TODO: path rich packages instead of separate pkgs list string and data
-  brew update ($pkgs_by_manager | where manager == brew | get pkg)
-  cask update ($pkgs_by_manager | where manager == cask | get pkg) $env_data
-  nix  update ($pkgs_by_manager | where manager == nix  | get pkg)
-  uv   update ($pkgs_by_manager | where manager == uv   | get pkg) $env_data
+def update_pkgs []: table -> nothing {
+  brew update ($in | where managers.name == brew)
+  cask update ($in | where managers.name == brew-cask)
+  nix  update ($in | where managers.name == nix)
+  uv   update ($in | where managers.name == uv)
 
   # TODO: update for github relases
   # TODO: update for docker
 }
 
-def check_updates []: list<string> -> nothing {
-  let pkgs_by_manager = split_by_manager $in
-
-  # TODO: path rich packages instead of separate pkgs list string and data
+def check_updates []: table -> nothing {
   brew   check_updates
   cask   check_updates
-  github check_updates ($pkgs_by_manager | where manager == github | get pkg) $env_data
+  github check_updates ($in | where managers.name == github)
 
   # TODO: check updates for docker
   # TODO: check updates for nix
