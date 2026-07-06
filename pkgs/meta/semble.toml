@@ -4,4 +4,4 @@ tags = ["ai", "search", "mcp"]
 [[managers]]
 name = "uv"
 package = "semble[mcp]"
-version = "0.4.1"
+version = "0.4.2"
