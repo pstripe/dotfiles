@@ -18,6 +18,7 @@ packages = [
   "git",
   "go",
   "gopls",
+  "glow", # for yazi preview
   "helix",
   "just",
   "just-lsp",

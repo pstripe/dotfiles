@@ -1,0 +1,5 @@
+name = "glow"
+tags = ["markdown", "cli"]
+
+[[managers]]
+name = 'nix'
