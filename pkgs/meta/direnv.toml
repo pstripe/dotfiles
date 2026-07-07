@@ -1,0 +1,5 @@
+name = "direnv"
+tags = ["dev", "env"]
+
+[[managers]]
+name = 'nix'

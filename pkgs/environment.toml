@@ -9,6 +9,7 @@ packages = [
   "codebook",
   "delta",
   "deno",
+  "direnv",
   "eza",
   "fd",
   "fish",
