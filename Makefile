@@ -21,14 +21,28 @@ nix:
 
 .PHONY: brew
 brew:
-	# TODO
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	# TODO: it checks for root inside script which is not allowed inside make
+	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+.PHONY: nushell
+nushell:
+	nix profile add nixpkgs#nushell
+
+.PHONY: uv
+uv:
+	nix profile add nixpkgs#uv
+
+.PHONY: bootstrap
+bootstrap: nix brew nushell uv configs
 
 ${CONFIG_DIR}:
 	mkdir ${CONFIG_DIR}
 
 ${LOCAL_DIR}:
 	mkdir ${LOCAL_DIR}
+
+${LOCAL_LIB_DIR}:
+	mkdir ${LOCAL_LIB_DIR}
 
 ${CONFIG_TARGETS}: ${CONFIG_DIR}
 	@echo "Installing config $@"
