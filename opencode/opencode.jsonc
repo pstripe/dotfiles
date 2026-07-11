@@ -30,7 +30,7 @@
     "rules/cli_tools.md", // rg, fd
     "rules/semble.md", // semantic search
   ],
-  "plugin": [
+  "plugins": [
     "tools/ponytail/.opencode/plugins/ponytail.mjs",
   ],
 }

@@ -4,4 +4,4 @@ tags = ["docker-image", "iot"]
 [[managers]]
 name = "docker"
 image = "homeassistant/home-assistant"
-version = "2026.5.4"
+version = "2026.6.4"

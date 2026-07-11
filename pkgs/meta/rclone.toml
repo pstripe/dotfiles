@@ -4,7 +4,7 @@ tags = ['backup']
 [[managers]]
 name = 'github'
 repo = 'rclone/rclone'
-version = 'v1.74.3'
+version = 'v1.74.4'
 
 [managers.dist]
 filename_contains = 'linux-amd64.zip'

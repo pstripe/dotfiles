@@ -5,7 +5,7 @@ export def install [pkgs: table] {
   install_impl $pkgs
 }
 
-export def update [pkgs: table] {
+export def upd [pkgs: table] {
   # BUG: uv has a bug: it cannot `upgrade` packages with extras (`semble[mcp]`), using `install` instead
   install_impl $pkgs
 }
@@ -15,7 +15,7 @@ def install_impl [pkgs: table] {
     return
   }
 
-  $pkgs | %update managers {|row| $row.managers | default $row.name package } | each {
+  $pkgs | update managers {|row| $row.managers | default $row.name package } | each {
     ^uv tool install $"($in.managers.package)==($in.managers.version)"
   }
 }

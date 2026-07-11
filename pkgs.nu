@@ -82,7 +82,7 @@ def update_pkgs []: table -> nothing {
   brew update ($in | where managers.name == brew)
   cask update ($in | where managers.name == brew-cask)
   nix  update ($in | where managers.name == nix)
-  uv   update ($in | where managers.name == uv)
+  uv   upd    ($in | where managers.name == uv)
 
   # TODO: update for github relases
   # TODO: update for docker
