@@ -1,4 +1,8 @@
 {
+  "experimental": {
+    // semble may spend a lot of time on first index
+    "mcp_timeout": 600000
+  },
   "mcp": {
     "semble": {
       "command": [ "semble" ],
@@ -30,7 +34,7 @@
     "rules/cli_tools.md", // rg, fd
     "rules/semble.md", // semantic search
   ],
-  "plugins": [
+  "plugin": [
     "tools/ponytail/.opencode/plugins/ponytail.mjs",
   ],
 }
