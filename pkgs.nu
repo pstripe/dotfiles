@@ -32,7 +32,10 @@ def "main install-all" [] {
 }
 
 def "main install" [...names: string] {
-  $env_data | where name in [...$names] | install
+  let pkgs = $env_data | where name in [...$names]
+
+  $pkgs | install
+  $pkgs | post_install
 }
 
 def "main check-updates" [] {
@@ -76,6 +79,10 @@ def install []: table -> nothing {
   nix    install ($in | where managers.name == nix)
   uv     install ($in | where managers.name == uv)
   github install ($in | where managers.name == github)
+}
+
+def post_install []: table -> nothing {
+  docker post_install ($in | where managers.name == docker)
 }
 
 def update_pkgs []: table -> nothing {
