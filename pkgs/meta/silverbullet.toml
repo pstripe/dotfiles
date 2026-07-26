@@ -5,3 +5,4 @@ tags = ["docker-image", "markdown", "knowledge-base"]
 name = "docker"
 image = "zefhemel/silverbullet"
 version = "2.9.0"
+version_re = '^(\d+)\.(\d+)\.(\d+)$'

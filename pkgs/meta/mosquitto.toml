@@ -5,3 +5,4 @@ tags = ["docker-image", "mqtt"]
 name = "docker"
 image = "eclipse-mosquitto"
 version = "2.1.2-alpine"
+version_re = '^(\d+)\.(\d+)\.(\d+)-alpine$'

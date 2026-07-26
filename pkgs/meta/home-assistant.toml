@@ -5,3 +5,4 @@ tags = ["docker-image", "iot"]
 name = "docker"
 image = "homeassistant/home-assistant"
 version = "2026.6.4"
+version_re = '^(\d+)\.(\d+)\.(\d+)$'

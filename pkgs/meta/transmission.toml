@@ -5,3 +5,4 @@ tags = ["docker-image", "torrent"]
 name = "docker"
 image = "linuxserver/transmission"
 version = "4.1.3"
+version_re = '^(\d+)\.(\d+)\.(\d+)$'

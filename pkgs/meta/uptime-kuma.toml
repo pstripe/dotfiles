@@ -5,3 +5,4 @@ tags = ["docker-image", "monitoring"]
 name = "docker"
 image = "elestio/uptime-kuma"
 version = "2.3.2"
+version_re = '^(\d+)\.(\d+)\.(\d+)$'

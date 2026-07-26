@@ -36,7 +36,7 @@ def "main install" [...names: string] {
 }
 
 def "main check-updates" [] {
-  $env_data | get name | check_updates
+  $env_data | check_updates
 }
 
 def "main update-all" [
@@ -92,6 +92,7 @@ def check_updates []: table -> nothing {
   brew   check_updates
   cask   check_updates
   github check_updates ($in | where managers.name == github)
+  docker check_updates ($in | where managers.name == docker)
 
   # TODO: check updates for docker
   # TODO: check updates for nix

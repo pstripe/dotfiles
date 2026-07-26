@@ -5,3 +5,4 @@ tags = ["docker-image", "dns"]
 name = "docker"
 image = "adguard/adguardhome"
 version = "v0.107.77"
+version_re = '^v(\d+)\.(\d+)\.(\d+)$'
