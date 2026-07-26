@@ -4,5 +4,5 @@ tags = ["docker-image", "monitoring"]
 [[managers]]
 name = "docker"
 image = "elestio/uptime-kuma"
-version = "2.3.2"
+version = "2.4.0"
 version_re = '^(\d+)\.(\d+)\.(\d+)$'

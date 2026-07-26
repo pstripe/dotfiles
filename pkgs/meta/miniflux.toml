@@ -4,5 +4,5 @@ tags = ["docker-image", "rss"]
 [[managers]]
 name = "docker"
 image = "miniflux/miniflux"
-version = "2.3.2"
+version = "2.3.3"
 version_re = '^(\d+)\.(\d+)\.(\d+)$'
