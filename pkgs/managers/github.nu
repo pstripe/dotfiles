@@ -10,7 +10,7 @@ export def install [pkgs: table] {
 }
 
 def install_impl [pkg: record] {
-  print $"Installing ($pkg)..."
+  print $"Installing ($pkg.name)..."
 
   # download
   let asset = http get --headers {Authorization: $pkg.managers.token} https://api.github.com/repos/($pkg.managers.repo)/releases/tags/($pkg.managers.version)
