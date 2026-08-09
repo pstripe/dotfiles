@@ -41,11 +41,8 @@ export def check_updates [pkgs: table] {
 }
 
 export def post_install [pkgs: table] {
-  $pkgs | each {
-    cd ([$in.managers.docker_root $in.name] | path join)
-
-    ^docker compose up -d
-
-    cd -
-  }
+  $pkgs
+    | each { [$in.managers.docker_root $in.name docker-compose.yaml] | path join | path expand }
+    | where { $in | path exists  }
+    | each { ^docker compose --file $in up -d }
 }
