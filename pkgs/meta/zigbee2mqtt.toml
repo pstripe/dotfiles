@@ -4,5 +4,5 @@ tags = ["docker-image", "mqtt", "zigbee"]
 [[managers]]
 name = "docker"
 image = "koenkk/zigbee2mqtt"
-version = "2.10.1"
+version = "2.12.1"
 version_re = '^(\d+)\.(\d+)\.(\d+)$'
