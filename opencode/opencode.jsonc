@@ -1,4 +1,5 @@
 {
+  "autoupdate": false,
   "experimental": {
     // semble may spend a lot of time on first index
     "mcp_timeout": 600000
@@ -8,7 +9,7 @@
       "command": [ "semble" ],
       "type": "local",
       "enabled": true
-    }
+    },
   },
   "$schema": "https://opencode.ai/config.json",
   "lsp": {
@@ -16,7 +17,7 @@
       "command": ["gopls", "-remote=auto"],
       "extensions": [".go"],
       "disabled": false,
-    }
+    },
   },
   "formatter": {
     "md": {
@@ -27,8 +28,8 @@
       ],
       "extensions": [
         ".md"
-      ]
-    }
+      ],
+    },
   },
   "instructions": [
     "rules/cli_tools.md", // rg, fd
