@@ -4,7 +4,6 @@ packages = [
   "aerospace",
   "bat",
   "bottom",
-  "bun", # for opencode mcps
   "choose",
   "codebook",
   "delta",
@@ -28,7 +27,6 @@ packages = [
   "marksman",
   "nix",
   "nushell",
-  "opencode",
   "ouch",
   "uv",
   "semble",
