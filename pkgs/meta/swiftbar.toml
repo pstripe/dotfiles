@@ -1,0 +1,5 @@
+name = "swiftbar"
+tags = ["ui"]
+
+[[managers]]
+name = 'brew-cask'

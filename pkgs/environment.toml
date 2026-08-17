@@ -35,6 +35,7 @@ packages = [
   "orbstack",
   "ripgrep",
   "sd",
+  "swiftbar",
   "vscode-json-languageserver",
   "yaml-language-server",
   "yazi",
