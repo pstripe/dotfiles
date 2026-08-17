@@ -55,7 +55,7 @@ def check_updates_impl [pkg: record] {
     | get tag_name
 
   if ($newer_versions | is-not-empty) {
-    print $"($pkg) has newer versions:"
+    print $"($pkg.name):($pkg.managers.version) has newer versions:"
     print $newer_versions
   }
 }
