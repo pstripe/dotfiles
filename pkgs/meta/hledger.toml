@@ -4,7 +4,7 @@ tags = ['finance']
 [[managers]]
 name = 'github'
 repo = 'simonmichael/hledger'
-version = '1.52.1'
+version = '1.52.3'
 
 [managers.dist]
 filename_contains = 'linux-x64'
