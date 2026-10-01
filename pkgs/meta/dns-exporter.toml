@@ -1,0 +1,8 @@
+name = "dns-exporter"
+tags = ["docker-image", "metrics", "prometheus"]
+
+[[managers]]
+name = "docker"
+image = "tykling/dns_exporter"
+version = "1.2.3"
+version_re = '^(\d+)\.(\d+)\.(\d+)$'

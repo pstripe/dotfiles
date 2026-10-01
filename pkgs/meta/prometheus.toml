@@ -1,0 +1,8 @@
+name = "prometheus"
+tags = ["docker-image", "metrics"]
+
+[[managers]]
+name = "docker"
+image = "prom/prometheus"
+version = "v3.15.0"
+version_re = '^v(\d+)\.(\d+)\.(\d+)$'
