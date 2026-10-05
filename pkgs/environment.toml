@@ -29,7 +29,6 @@ packages = [
   "nushell",
   "ouch",
   "uv",
-  "semble",
   "orbstack",
   "ripgrep",
   "sd",
