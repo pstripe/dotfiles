@@ -8,6 +8,8 @@ LOCAL_LIB_DIR  = ${LOCAL_DIR}/lib
 EXTRA_CONFIGS  := $(addprefix ${CONFIG_DIR}/,nvim tmux)
 CONFIG_TARGETS := $(addprefix ${CONFIG_DIR}/,aerospace bat codebook git ghostty helix nix opencode fish bottom lazygit yazi)
 CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,phpactor)
+# colima/ also receives the VM state; colima/.gitignore keeps only the template.
+CONFIG_TARGETS += $(addprefix ${CONFIG_DIR}/,colima)
 HOME_TARGETS   := $(addprefix ${HOME}/,.editorconfig .zshrc .zshenv justfile)
 LIB_TARGETS    := $(addprefix ${LOCAL_LIB_DIR}/,just)
 

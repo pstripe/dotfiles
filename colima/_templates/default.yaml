@@ -1,0 +1,22 @@
+# Template for new colima profiles (colima 0.10.3).
+#
+# colima reads this file only when a profile has no config yet (or `runtime` is
+# empty in it), and then writes the full profile to <profile>/colima.yaml, which
+# is regenerated on every `colima start` and therefore not tracked.
+# To apply edits here to an existing profile: colima stop, rm default/colima.yaml,
+# colima start. Edit by hand: `colima template` rewrites this file in full.
+#
+# The template is not merged with colima's defaults: a missing field becomes a
+# zero value. So besides the overrides, it keeps the fields whose zero value
+# differs from the default.
+
+# Overrides.
+cpu: 6
+memory: 12
+rosetta: true
+
+# Defaults that must be spelled out.
+runtime: docker # empty runtime fails start
+disk: 100 # 0 for a new VM
+mounts: [] # [] mounts $HOME writable; a missing key mounts nothing
+sshConfig: true # false would skip the Include in ~/.ssh/config

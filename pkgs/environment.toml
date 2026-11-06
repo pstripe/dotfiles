@@ -6,9 +6,13 @@ packages = [
   "bottom",
   "choose",
   "codebook",
+  "colima",
   "delta",
   "deno",
   "direnv",
+  "docker-client",
+  "docker-compose",
+  "docker-credential-helpers",
   "eza",
   "fd",
   "fish",
@@ -28,8 +32,6 @@ packages = [
   "nix",
   "nushell",
   "ouch",
-  "uv",
-  "orbstack",
   "ripgrep",
   "sd",
   "swiftbar",
@@ -53,8 +55,4 @@ priority = 20
 
 [[managers]]
 name = "github"
-priority = 10
-
-[[managers]]
-name = "uv"
 priority = 10

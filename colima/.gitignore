@@ -1,0 +1,7 @@
+# This directory is ~/.config/colima, so it also holds the VM state
+# (_lima with the VM disk, _store, sockets, ssh_config, logs) and the generated
+# <profile>/colima.yaml. Track only the template.
+*
+!.gitignore
+!_templates/
+!_templates/default.yaml
