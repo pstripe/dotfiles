@@ -2,7 +2,7 @@
 	defaultBranch = main
 
 [branch]
-	sort = -commiterdate
+	sort = -committerdate
 
 [column]
 	ui = auto
