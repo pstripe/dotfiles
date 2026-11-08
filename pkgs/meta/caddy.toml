@@ -4,5 +4,5 @@ tags = ["docker-image", "server"]
 [[managers]]
 name = "docker"
 image = "caddy"
-version = "2.11.4"
+version = "2.11.9"
 version_re = '^(\d+)\.(\d+)\.(\d+)$'

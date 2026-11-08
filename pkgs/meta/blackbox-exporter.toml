@@ -4,5 +4,5 @@ tags = ["docker-image", "metrics", "prometheus"]
 [[managers]]
 name = "docker"
 image = "prom/blackbox-exporter"
-version = "v0.28.0"
+version = "v0.29.1"
 version_re = '^v(\d+)\.(\d+)\.(\d+)$'

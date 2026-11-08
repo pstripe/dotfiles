@@ -1,0 +1,8 @@
+name = "snmp-exporter"
+tags = ["docker-image", "metrics", "prometheus"]
+
+[[managers]]
+name = "docker"
+image = "prom/snmp-exporter"
+version = "v0.31.0"
+version_re = '^v(\d+)\.(\d+)\.(\d+)$'

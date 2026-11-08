@@ -4,5 +4,5 @@ tags = ["docker-image", "metrics", "dashboard"]
 [[managers]]
 name = "docker"
 image = "grafana/grafana"
-version = "13.2.3"
+version = "13.3.0"
 version_re = '^(\d+)\.(\d+)\.(\d+)$'
