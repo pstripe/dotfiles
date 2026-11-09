@@ -1,0 +1,8 @@
+name = "cadvisor-exporter"
+tags = ["docker-image", "metrics", "prometheus"]
+
+[[managers]]
+name = "docker"
+image = "cleanstart/cadvisor"
+version = "0.60.6"
+version_re = '^(\d+)\.(\d+)\.(\d+)$'

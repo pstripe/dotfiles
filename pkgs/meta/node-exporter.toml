@@ -1,0 +1,8 @@
+name = "node-exporter"
+tags = ["docker-image", "metrics", "prometheus"]
+
+[[managers]]
+name = "docker"
+image = "prom/node-exporter"
+version = "v1.12.1"
+version_re = '^v(\d+)\.(\d+)\.(\d+)$'

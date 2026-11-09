@@ -1,0 +1,8 @@
+name = "smartctl-exporter"
+tags = ["docker-image", "metrics", "prometheus"]
+
+[[managers]]
+name = "docker"
+image = "prometheuscommunity/smartctl-exporter"
+version = "v0.15.0"
+version_re = '^v(\d+)\.(\d+)\.(\d+)$'
