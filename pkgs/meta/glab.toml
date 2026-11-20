@@ -1,0 +1,5 @@
+name = "glab"
+tags = ["git", "gitlab"]
+
+[[managers]]
+name = 'nix'

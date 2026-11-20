@@ -22,6 +22,7 @@ packages = [
   "git",
   "go",
   "gopls",
+  "glab",
   "glow", # for yazi preview
   "helix",
   "just",
