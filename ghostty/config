@@ -1,10 +1,10 @@
 # Fonts
-font-family = "Cascadia Code NF"
-font-style = SemiLight
+font-family = "UbuntuSansMono NFP"
+font-style = Regular
 # freetype-load-flags = hinting,force-autohint,monochrome,autohint
 
 # Styling
-theme = Rose Pine Moon
+theme = Atom One Dark
 cursor-style-blink = false
 macos-titlebar-style = tabs
 
